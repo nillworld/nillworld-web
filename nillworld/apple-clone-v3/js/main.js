@@ -15,6 +15,7 @@
 			type: 'sticky',
 			heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
 			scrollHeight: 0,
+			//돔 객체
 			objs: {
 				container: document.querySelector('#scroll-section-0'),
 				messageA: document.querySelector('#scroll-section-0 .main-message.a'),
@@ -25,6 +26,7 @@
 				context: document.querySelector('#video-canvas-0').getContext('2d'),
 				videoImages: []
 			},
+			//값/ 수치를 담는 친구들
 			values: {
 				videoImageCount: 300,
 				imageSequence: [0, 299],
@@ -206,6 +208,7 @@
 		return rv;
 	}
 
+	// 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
 	function playAnimation() {
 		const objs = sceneInfo[currentScene].objs;
 		const values = sceneInfo[currentScene].values;
@@ -213,6 +216,8 @@
 		const scrollHeight = sceneInfo[currentScene].scrollHeight;
 		const scrollRatio = currentYOffset / scrollHeight;
 
+
+		//
 		switch (currentScene) {
 			case 0:
 				// console.log('0 play');
