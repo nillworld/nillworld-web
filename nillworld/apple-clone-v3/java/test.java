@@ -1,5 +1,6 @@
 
 import java.util.Arrays;
+import Character;
 
 // public class test {
     /* public static void main(String[] args) {
@@ -67,12 +68,11 @@ import java.util.Arrays;
         } */
 // }
 
-class Nill{
+class Developer2{
     /*   Nill == 정원일   */
-    private static Nill Nill;
+    private static Developer Nill;
     
-    
-    private static Nill It_is_Nill(){
+    private static Developer It_is_Nill(){
         if(Developer() && Character("Passionate but careful")){
             return Nill;
         }
@@ -85,9 +85,6 @@ class Nill{
         if(Developer() && Person("Who want to work together")){
             return Nill;
         }
-        if(Developer() && Person(ee)){
-            return Nill;
-        }
     }
 
 
@@ -95,10 +92,19 @@ class Nill{
 
 
 
-    private static Nill Developer(){
-        if(Character("ee") && Character("Passionate")){
-            return Nill;
-        }
+
+
+    private static boolean Person(String string) {
+        return false;
+    }
+    
+    private static boolean Developer() {
+        return false;
+    }
+
+
+    private static boolean Character(String string) {
+        return false;
     }
 
 
