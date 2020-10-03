@@ -45,6 +45,15 @@ public class Developer {
         }
     }
 
+    public static interface Person{
+        public void test(String a);
+    }
+    Person Character = character -> System.out.println(character);;
+
+
+
+
+
     Developer.Character(
         ("Passionate but careful") -> Developer;
         ("Diligent but witty") -> Developer;
@@ -81,6 +90,15 @@ public class Developer {
     }
 
 
+
+
+
+
+
+
+
+    fd
+    
     private static boolean Person(String string) {
         return false;
     }

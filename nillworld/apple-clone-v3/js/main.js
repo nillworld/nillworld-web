@@ -51,8 +51,8 @@
 		},
 		{
 			// 1
-			type: 'normal',
-			// heightNum: 5, // type normal에서는 필요 없음
+			type: 'sticky',
+			heightNum: 5, // type normal에서는 필요 없음
 			scrollHeight: 0,
 			objs: {
 				container: document.querySelector('#scroll-section-1')
