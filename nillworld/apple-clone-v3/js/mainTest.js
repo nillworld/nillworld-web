@@ -8,6 +8,7 @@
 	let delayedYOffset = 0;
 	let rafId;
 	let rafState;
+	let slide = document.getElementById('imgBox');
 
 	const sceneInfo = [
 		{
@@ -60,7 +61,8 @@
 			// heightNum: 5, // type normal에서는 필요 없음
 			scrollHeight: 0,
 			objs: {
-				container: document.querySelector('#scroll-section-1')
+				container: document.querySelector('#scroll-section-1'),
+				slide: document.querySelector('#scroll-section-1 div')
 			}
 		},
 		{
@@ -688,6 +690,9 @@
 	});
 
 	setCanvasImages();
+
+	
+
 
 })();
 
