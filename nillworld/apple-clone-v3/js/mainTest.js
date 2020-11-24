@@ -8,7 +8,6 @@
 	let delayedYOffset = 0;
 	let rafId;
 	let rafState;
-	let slide = document.getElementById('imgBox');
 
 	const sceneInfo = [
 		{
@@ -62,7 +61,11 @@
 			scrollHeight: 0,
 			objs: {
 				container: document.querySelector('#scroll-section-1'),
-				slide: document.querySelector('#scroll-section-1 div')
+				slideInputs: document.querySelectorAll('#slideImgBox input'),
+				slideLabels: document.querySelectorAll('#scroll-section-1 label'),
+				slideImgs: document.querySelector('#slideImgs'),
+				slidePrevBtn: document.querySelector('#scroll-section-1 .prev'),
+				slideNextBtn: document.querySelector('#scroll-section-1 .next')
 			}
 		},
 		{
@@ -544,8 +547,94 @@
 		}
 	}
 
-
-
+	
+	function slideElement(elmnt) {
+		var imgWidth = document.body.offsetWidth;
+		var slideInputs = sceneInfo[1].objs.slideInputs;
+		var slideLabels = sceneInfo[1].objs.slideLabels;
+		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
+		var nextBtn = sceneInfo[1].objs.slideNextBtn;
+		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		if (imgWidth > 1000){
+			imgWidth = 1000;
+		} 
+		elmnt.onmousedown = dragMouseDown; 
+		prevBtn.onclick = prevImg;
+		nextBtn.onclick = nextImg;
+			if(slideLabels[i].onclick) {
+				console.log('hehe');
+				changeBox(i);
+			}
+			
+		function dragMouseDown(e) { 
+			e = e || window.event; e.preventDefault(); 
+			pos3 = e.clientX; //pos4 = e.clientY; 
+			document.onmouseup = closeDragElement; 
+			document.onmousemove = elementDrag; 
+		} 
+		function elementDrag(e) {
+			var movedPosition = elmnt.style.left;
+			e = e || window.event; 
+			e.preventDefault(); 
+			pos1 = pos3 - e.clientX; 
+			//pos2 = pos4 - e.clientY; 
+			pos3 = e.clientX; 
+			//pos4 = e.clientY; 
+			//elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+			elmnt.style.transition= 0 + 's';
+			
+			
+		} 
+		function closeDragElement() {
+			document.onmouseup = null; 
+			document.onmousemove = null; 
+			var offsetMod = Math.abs(elmnt.offsetLeft - pos1) / imgWidth;
+			if(elmnt.offsetLeft - pos1 > 0){
+				elmnt.style.left = 0 + "px";
+				slideInputs[0].checked = true;
+			}
+			else if(offsetMod < 0.5){
+				elmnt.style.left = 0 + "px";
+				slideInputs[0].checked = true;
+			}
+			else if(offsetMod < 1.5){
+				elmnt.style.left = -imgWidth + "px";
+				slideInputs[1].checked = true;
+			}
+			else if(offsetMod < 2.5){
+				elmnt.style.left = -imgWidth*2 + "px";
+				slideInputs[2].checked = true;
+			}
+			else if(offsetMod < 3.5){
+				elmnt.style.left = -imgWidth*3 + "px";
+				slideInputs[3].checked = true;
+			}else if(offsetMod > 3.5){
+				elmnt.style.left = -imgWidth*3 + "px";
+				slideInputs[3].checked = true;
+			}
+			elmnt.style.transition= 0.2 + 's';
+		} 
+		function changeBox(i){
+					console.log(i);
+					slideImgs.style.left = -imgWidth * i + 'px';
+					slideImgs.style.transition= 0.3 + 's';
+		}
+		function prevImg(){
+			if(slideImgs.offsetLeft != 0){  
+				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth - 1].checked = true;
+				slideImgs.style.left = slideImgs.offsetLeft + imgWidth + 'px';
+				slideImgs.style.transition= 0.2 + 's';
+			}
+		}
+		function nextImg(){
+			if(slideImgs.offsetLeft != -imgWidth*3){  
+				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth + 1].checked = true;
+				slideImgs.style.left = slideImgs.offsetLeft - imgWidth + 'px';
+				slideImgs.style.transition= 0.2 + 's';
+			}
+		}
+	}
 	
 
 	window.addEventListener('load', () => {
@@ -566,7 +655,9 @@
                 }
                 tempScrollCount++;
             }, 20);
-        }
+		}
+			
+		slideElement(sceneInfo[1].objs.slideImgs);
 
         window.addEventListener('scroll', () => {
             yOffset = window.pageYOffset;
@@ -580,11 +671,12 @@
   		});
 
   		window.addEventListener('resize', () => {
+			sceneInfo[1].objs.slideImgs.style.left = 0 + 'px';
+			sceneInfo[1].objs.slideInputs[0].checked;
   			if (window.innerWidth > 900) {
   				setLayout();
   				sceneInfo[3].values.rectStartY = 0;
   			}
-
             if (currentScene === 3) {
                 // 추가 코드
                 // Scene 3의 요소들은 위치나 크기가 미리 정해지지 않고
@@ -608,7 +700,8 @@
                         tempScrollCount++;
                     }, 20);
                 }
-            }
+			}
+			
   		});
 
   		window.addEventListener('orientationchange', () => {
@@ -618,75 +711,6 @@
   		document.querySelector('.loading').addEventListener('transitionend', (e) => {
   			document.body.removeChild(e.currentTarget);
 		});
-
-
-
-		  
-		dragElement(document.getElementById("slide"));
-		var testq = document.getElementsByName("inputLabel");
-		var testt = document.getElementsByName("pos");
-		let slideBox = document.getElementById("slide");
-		
-
-
-		function dragElement(elmnt) { 
-			var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0; 
-			elmnt.onmousedown = dragMouseDown; 
-				
-			function dragMouseDown(e) { 
-				e = e || window.event; e.preventDefault(); 
-				pos3 = e.clientX; //pos4 = e.clientY; 
-				document.onmouseup = closeDragElement; 
-				document.onmousemove = elementDrag; 
-			} 
-			function elementDrag(e) {
-				var movedPosition = elmnt.style.left;
-				e = e || window.event; 
-				e.preventDefault(); 
-				pos1 = pos3 - e.clientX; 
-				//pos2 = pos4 - e.clientY; 
-				pos3 = e.clientX; 
-				//pos4 = e.clientY; 
-				//elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-				elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-				elmnt.style.transition= 0 + 's';
-				
-				
-			} 
-			function closeDragElement() { 
-				document.onmouseup = null; 
-				document.onmousemove = null; 
-				var offsetMod = Math.abs(elmnt.offsetLeft - pos1) / 300;
-				if(elmnt.offsetLeft - pos1 > 0){
-					elmnt.style.left = 0 + "px";
-					testt[0].checked = true;
-				}
-				else if(offsetMod < 0.5){
-					elmnt.style.left = 0 + "px";
-					testt[0].checked = true;
-				}
-				else if(offsetMod < 1.5){
-					elmnt.style.left = -300 + "px";
-					testt[1].checked = true;
-				}
-				else if(offsetMod < 2.5){
-					elmnt.style.left = -600 + "px";
-					testt[2].checked = true;
-				}
-				else if(offsetMod < 3.5){
-					elmnt.style.left = -900 + "px";
-					testt[3].checked = true;
-				}else if(offsetMod > 3.5){
-					elmnt.style.left = -900 + "px";
-					testt[3].checked = true;
-				}
-				elmnt.style.transition= 0.2 + 's';
-			} 
-		}
-
-		
-
-
 	});
 
 	setCanvasImages();
@@ -697,26 +721,5 @@
 })();
 
 
-function changeBox(){
-	for(var i = 0; i < testt.length; i++){
-		if(testt[i].checked){
-			slideBox.style.left = -300 * i + 'px';
-			slideBox.style.transition= 0.3 + 's';
-		}
-	}
-}
-function beforeImg(){
-	if(slideBox.offsetLeft != 0){  
-		testt[Math.abs(slideBox.offsetLeft)/300 - 1].checked = true;
-		slideBox.style.left = slideBox.offsetLeft + 300 + 'px';
-		slideBox.style.transition= 0.2 + 's';
-	}
-}
-function afterImg(){
-	if(slideBox.offsetLeft != -900){  
-		testt[Math.abs(slideBox.offsetLeft)/300 + 1].checked = true;
-		slideBox.style.left = slideBox.offsetLeft - 300 + 'px';
-		slideBox.style.transition= 0.2 + 's';
-	}
-}
+
 
