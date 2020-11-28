@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/default.css">
     <!-- <link rel="stylesheet" href="css/nillMain.css">  -->
-    <link rel="stylesheet" href="css/mainTest.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="before-load">
     <div class="loading">
@@ -64,17 +64,20 @@
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi sapiente voluptatum perspiciatis molestiae corporis vitae repellat autem. Eveniet modi fugit necessitatibus recusandae, accusantium, error obcaecati qui architecto maxime ex veniam.
 				</p>
 				<div class="slideArea">
-					<div id="slideImgBox" >
-						<input type="radio" name="slideRdio" id="pos1" checked>
-						<input type="radio" name="slideRdio" id="pos2">
-						<input type="radio" name="slideRdio" id="pos3">
-						<input type="radio" name="slideRdio" id="pos4">
-						<div id="slideImgs">
+					<div class="projectName">
+						Emoji
+					</div>
+					<div class="slideImgBox" >
+						<input type="radio" name="slideRdio" id="pos1" onclick="changeBox()" checked>
+						<input type="radio" name="slideRdio" id="pos2" onclick="changeBox()">
+						<input type="radio" name="slideRdio" id="pos3" onclick="changeBox()">
+						<input type="radio" name="slideRdio" id="pos4" onclick="changeBox()">
+						<div class="slideImgs">
 							<ul>
-								<li id="test2"></li>
-								<li></li>
-								<li></li>
-								<li></li>
+								<li class="emoji"></li>
+								<li class="emoji"></li>
+								<li class="emoji"></li>
+								<li class="emoji"></li>
 							</ul>
 						</div>
 						<p class="labels">
@@ -83,9 +86,9 @@
 							<label for="pos3" name="inputLabel"></label>
 							<label for="pos4" name="inputLabel"></label>
 						</p>
+						<a class="prev">&lt;</a>
+						<a class="next">&gt;</a>
 					</div>
-					<a class="prev">&lt;</a>
-					<a class="next">&gt;</a>
 				</div>
 			</div>
 			  
@@ -130,7 +133,7 @@
 		</footer>
     </div>
 
-	<script src="js/mainTest.js"></script>
+	<script src="js/main.js"></script>
 
 </body>
 </html>

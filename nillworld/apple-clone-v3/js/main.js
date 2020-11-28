@@ -13,7 +13,7 @@
 		{
 			// 0
 			type: 'sticky',
-			heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
+			heightNum: 7, // 브라우저 높이의 5배로 scrollHeight 세팅
 			scrollHeight: 0,
 			//돔 객체
 			objs: {
@@ -24,38 +24,57 @@
 				messageD: document.querySelector('#scroll-section-0 .main-message.d'),
 				canvas: document.querySelector('#video-canvas-0'),
 				context: document.querySelector('#video-canvas-0').getContext('2d'),
-				videoImages: []
+				videoImages: [],
+				profile_canvas: document.querySelector('.profile-img-canvas'),
+				profile_context: document.querySelector('.profile-img-canvas').getContext('2d'),
+				profileImg: []
 			},
 			//값/ 수치를 담는 친구들
 			values: {
-				videoImageCount: 300,
-				imageSequence: [0, 299],
-				canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
-				messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
-				messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
-				messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
-				messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
-				messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }],
-				messageB_translateY_in: [20, 0, { start: 0.3, end: 0.4 }],
-				messageC_translateY_in: [20, 0, { start: 0.5, end: 0.6 }],
-				messageD_translateY_in: [20, 0, { start: 0.7, end: 0.8 }],
-				messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }],
-				messageB_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
-				messageC_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
-				messageD_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
-				messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
-				messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
-				messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
-				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }]
+				videoImageCount: 371,
+				imageSequence: [0, 650],
+				canvas_opacity: [1, 0, { start: 0.7, end: 0.8 }],
+				messageA_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
+				messageB_opacity_in: [0, 1, { start: 0.2, end: 0.25 }],
+				messageC_opacity_in: [0, 1, { start: 0.35, end: 0.4 }],
+				messageD_opacity_in: [0, 1, { start: 0.5, end: 0.55 }],
+				messageA_translateY_in: [20, 0, { start: 0.05, end: 0.1 }],
+				messageB_translateY_in: [20, 0, { start: 0.2, end: 0.25 }],
+				messageC_translateY_in: [20, 0, { start: 0.35, end: 0.4 }],
+				messageD_translateY_in: [20, 0, { start: 0.5, end: 0.55 }],
+				messageA_opacity_out: [1, 0, { start: 0.15, end: 0.2 }],
+				messageB_opacity_out: [1, 0, { start: 0.3, end: 0.35 }],
+				messageC_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
+				messageD_opacity_out: [1, 0, { start: 0.6, end: 0.65 }],
+				messageA_translateY_out: [0, -20, { start: 0.15, end: 0.2 }],
+				messageB_translateY_out: [0, -20, { start: 0.3, end: 0.35 }],
+				messageC_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
+				messageD_translateY_out: [0, -20, { start: 0.6, end: 0.7 }],
+				profile_opacity_in: [0, 1, { start: 0.7, end: 0.8}],
+				profile_opacity_out: [1, 0, { start: 0.8, end: 0.9}]
 			}
 		},
 		{
 			// 1
 			type: 'sticky',
-			heightNum: 5, // type normal에서는 필요 없음
+			heightNum: 7, // type normal에서는 필요 없음
 			scrollHeight: 0,
 			objs: {
-				container: document.querySelector('#scroll-section-1')
+				container: document.querySelector('#scroll-section-1'),
+				slideArea: document.querySelector('.slideArea'),
+				slideInputs: document.querySelectorAll('.slideImgBox input'),
+				slideLabels: document.querySelector(".slideImgBox .labels"),
+				slideImgs: document.querySelector('.slideImgs'),
+				emojiImgs: document.querySelectorAll('.slideImgs .emoji'),
+				slidePrevBtn: document.querySelector('#scroll-section-1 .prev'),
+				slideNextBtn: document.querySelector('#scroll-section-1 .next'),
+				projectImg_emoji: [],
+				projectImg_macro: []
+			},
+			values: {
+				emojiCouint: 6,
+				emoji_opacity_in: [0, 1, { start: 0.1, end: 0.3 }],
+				emoji_opacity_out: [1, 0, { start: 0.65, end: 0.85 }],
 			}
 		},
 		{
@@ -127,22 +146,40 @@
 		let imgElem;
 		for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
 			imgElem = new Image();
-			imgElem.src = `./video/001/IMG_${6726 + i}.JPG`;
+			imgElem.src = `./video/01/Nill_code_${100+i}.JPG`;
 			sceneInfo[0].objs.videoImages.push(imgElem);
 		}
 
 		let imgElem2;
-		for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
-			imgElem2 = new Image();
-			imgElem2.src = `./video/002/IMG_${7027 + i}.JPG`;
-			sceneInfo[2].objs.videoImages.push(imgElem2);
-		}
+		imgElem2 = new Image();
+		imgElem2.src = `./images/profileImg.jpg`;
+		sceneInfo[0].objs.profileImg.push(imgElem2);
 
 		let imgElem3;
-		for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) {
+		for (let i = 0; i < sceneInfo[0].values.emojiCouint; i++) {
 			imgElem3 = new Image();
-			imgElem3.src = sceneInfo[3].objs.imagesPath[i];
-			sceneInfo[3].objs.images.push(imgElem3);
+			imgElem3.src = `./imges/projects/emoji/emoji_${i+1}.JPG`;
+			sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
+		}
+
+		let imgElem4;
+		imgElem4 = new Image();
+		imgElem4.src = `./images/profileImg.jpg`;
+		sceneInfo[1].objs.projectImg_macro.push(imgElem4);
+		
+
+		let imgElem5;
+		for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+			imgElem5 = new Image();
+			imgElem5.src = `./video/002/IMG_${7027 + i}.JPG`;
+			sceneInfo[2].objs.videoImages.push(imgElem5);
+		}
+
+		let imgElem6;
+		for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) {
+			imgElem6 = new Image();
+			imgElem6.src = sceneInfo[3].objs.imagesPath[i];
+			sceneInfo[3].objs.images.push(imgElem6);
 		}
 	}
 
@@ -173,12 +210,14 @@
 			if (totalScrollHeight >= yOffset) {
 				currentScene = i;
 				break;
+
 			}
 		}
 		document.body.setAttribute('id', `show-scene-${currentScene}`);
 
 		const heightRatio = window.innerHeight / 1080;
-		sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+		sceneInfo[0].objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${heightRatio})`;
+		sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio/4})`;
 		sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
 	}
 
@@ -223,9 +262,10 @@
 				// console.log('0 play');
 				// let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
 				// objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+				// objs.container.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
 				objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
 
-				if (scrollRatio <= 0.22) {
+				if (scrollRatio <= 0.125) {
 					// in
 					objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
 					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
@@ -235,7 +275,7 @@
 					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
 				}
 
-				if (scrollRatio <= 0.42) {
+				if (scrollRatio <= 0.275) {
 					// in
 					objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
 					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
@@ -245,7 +285,7 @@
 					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
 				}
 
-				if (scrollRatio <= 0.62) {
+				if (scrollRatio <= 0.425) {
 					// in
 					objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
 					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
@@ -255,7 +295,7 @@
 					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
 				}
 
-				if (scrollRatio <= 0.82) {
+				if (scrollRatio <= 0.575) {
 					// in
 					objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);
 					objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_in, currentYOffset)}%, 0)`;
@@ -263,10 +303,27 @@
 					// out
 					objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
 					objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
+					// objs.context.drawImage(objs.videoImages[470], 0, 0);
 				}
-
+				if (scrollRatio <= 0.8) {
+					objs.profile_canvas.style.opacity = calcValues(values.profile_opacity_in, currentYOffset);
+					objs.profile_context.drawImage(objs.profileImg[0], 0, 0);
+				} else {
+					objs.profile_canvas.style.opacity = calcValues(values.profile_opacity_out, currentYOffset);
+					sceneInfo[1].objs.emojiImgs[1].style.backgroundImage = `url('./images/profileImg.jpg')`;
+					sceneInfo[1].objs.emojiImgs[1].style.backgroundSize = `100%`;
+				}
 				break;
-
+			case 1:
+				objs.slideArea.style.display = `block`;
+				if (scrollRatio <= 0.5){
+					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
+					// objs.emojiImgs[1].style.backgroundImage = "url('./images/profileImg.jpg')";
+					// objs.emojiImgs[1].style.backgroundSize = "100%";
+				} else {
+					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_out, currentYOffset);
+				}
+				break;	
 			case 2:
 				// console.log('2 play');
 				// let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
@@ -503,9 +560,17 @@
 				if (objs.videoImages[sequence]) {
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
 				}
+				// 마지막 이미지에서 확대
+				if(currentScene === 0 && sequence >= 370){
+					objs.context.drawImage(objs.videoImages[370], 0, 0);
+					objs.canvas.style.transform = `translate3d(${-47+(sequence-370)*0.5}%, ${-50-(sequence-370)*1.9}%, 0) scale(${window.innerHeight/1080 + (sequence-370)*5/100})`
+				}
+				if(currentScene === 0 && sequence < 370){
+					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+					objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${window.innerHeight/1080})`
+				}
 			}
 		}
-
 		rafId = requestAnimationFrame(loop);
 
 		if (Math.abs(yOffset - delayedYOffset) < 1) {
@@ -513,6 +578,107 @@
 			rafState = false;
 		}
 	}
+
+	
+	function slideElement(elmnt) {
+		var imgWidth = document.body.offsetWidth;
+		var slideImgs = sceneInfo[1].objs.slideImgs;
+		var slideInputs = sceneInfo[1].objs.slideInputs;
+		var slideLabels = sceneInfo[1].objs.slideLabels;
+		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
+		var nextBtn = sceneInfo[1].objs.slideNextBtn;
+		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		var touchStartX;
+		var touchEndX;
+		if (imgWidth > 1000){
+			imgWidth = 1000;
+		} 
+		slideImgs.style.transition= 0.2 + 's';
+		slideImgs.addEventListener('touchstart', touchStart, false);
+		elmnt.onmousedown = dragMouseDown; 
+		prevBtn.onclick = prevImg;
+		nextBtn.onclick = nextImg;
+
+		function touchStart(e){
+			touchStartX = e.changedTouches[0].clientX;
+			slideImgs.addEventListener('touchend', touchEnd, false);
+		}
+		function touchEnd(e){
+			touchEndX = e.changedTouches[0].clientX;
+			if(touchEndX - touchStartX > window.innerWidth/3){
+				console.log(touchEndX - touchStartX);	
+				prevImg();		 
+			}
+			if(touchStartX - touchEndX > window.innerWidth/3)
+				nextImg();
+		}
+		function dragMouseDown(e) { 
+			e = e || window.event; e.preventDefault(); 
+			pos3 = e.clientX; //pos4 = e.clientY; 
+			document.onmouseup = closeDragElement; 
+			document.onmousemove = elementDrag; 
+		} 
+		function elementDrag(e) {
+			var movedPosition = elmnt.style.left;
+			e = e || window.event; 
+			e.preventDefault(); 
+			pos1 = pos3 - e.clientX; 
+			//pos2 = pos4 - e.clientY; 
+			pos3 = e.clientX; 
+			//pos4 = e.clientY; 
+			//elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+			elmnt.style.transition= 0 + 's';
+			
+			
+		} 
+		function closeDragElement() {
+			document.onmouseup = null; 
+			document.onmousemove = null; 
+			var offsetMod = Math.abs(elmnt.offsetLeft - pos1) / imgWidth;
+			if(elmnt.offsetLeft - pos1 > 0){
+				slideImgs.style.left = 0 + 'px';
+				slideInputs[0].checked = true;
+			}
+			else if(offsetMod < 0.5){
+				slideImgs.style.left = 0 + 'px';
+				slideInputs[0].checked = true;
+			}
+			else if(offsetMod < 1.5){
+				slideImgs.style.left = -imgWidth + 'px';
+				slideInputs[1].checked = true;
+			}
+			else if(offsetMod < 2.5){
+				slideImgs.style.left = -imgWidth*2 + 'px';
+				slideInputs[2].checked = true;
+			}
+			else if(offsetMod < 3.5){
+				slideImgs.style.left = -imgWidth*3 + 'px';
+				slideInputs[3].checked = true;
+			}else if(offsetMod > 3.5){
+				slideImgs.style.left = -imgWidth*3 + 'px';
+				slideInputs[3].checked = true;
+			}
+			elmnt.style.transition= 0.2 + 's';
+		} 
+		
+		function prevImg(){
+			if(slideImgs.offsetLeft != 0){  
+				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth - 1].checked = true;
+				slideImgs.style.left = slideImgs.offsetLeft + imgWidth + 'px';
+				slideImgs.style.transition= 0.2 + 's';
+				
+			}
+		}
+		function nextImg(){
+			if(slideImgs.offsetLeft != -imgWidth*3){  
+				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth + 1].checked = true;
+				slideImgs.style.left = slideImgs.offsetLeft - imgWidth + 'px';
+				slideImgs.style.transition= 0.2 + 's';
+			}
+		}
+	}
+	
 
 	window.addEventListener('load', () => {
 
@@ -532,8 +698,11 @@
                 }
                 tempScrollCount++;
             }, 20);
-        }
-
+		}
+			
+		slideElement(sceneInfo[1].objs.slideImgs);
+		
+				
         window.addEventListener('scroll', () => {
             yOffset = window.pageYOffset;
             scrollLoop();
@@ -546,11 +715,13 @@
   		});
 
   		window.addEventListener('resize', () => {
+			sceneInfo[1].objs.slideImgs.style.left = 0 + 'px';
+			sceneInfo[1].objs.slideInputs[0].checked;
+			slideElement(sceneInfo[1].objs.slideImgs);
   			if (window.innerWidth > 900) {
   				setLayout();
   				sceneInfo[3].values.rectStartY = 0;
   			}
-
             if (currentScene === 3) {
                 // 추가 코드
                 // Scene 3의 요소들은 위치나 크기가 미리 정해지지 않고
@@ -574,7 +745,8 @@
                         tempScrollCount++;
                     }, 20);
                 }
-            }
+			}
+			
   		});
 
   		window.addEventListener('orientationchange', () => {
@@ -583,10 +755,31 @@
 
   		document.querySelector('.loading').addEventListener('transitionend', (e) => {
   			document.body.removeChild(e.currentTarget);
-  		});
-
+		});
 	});
 
 	setCanvasImages();
 
+	
+
+
 })();
+
+function changeBox(){
+	var slideRdio = document.getElementsByName("slideRdio");
+	var slideImgs = document.querySelector('.slideImgs');
+	var imgWidth = document.body.offsetWidth;
+	if(imgWidth > 1000){
+		imgWidth = 1000;
+	}
+	for(var i = 0; i < slideRdio.length; i++){
+		if(slideRdio[i].checked){
+			slideImgs.style.left = -imgWidth * i + 'px';
+			slideImgs.style.transition= 0.3 + 's';
+		}
+	}
+	
+}
+
+
+
