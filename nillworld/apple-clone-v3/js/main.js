@@ -65,6 +65,7 @@
 				slideInputs: document.querySelectorAll('.slideImgBox input'),
 				slideLabels: document.querySelector(".slideImgBox .labels"),
 				slideImgs: document.querySelector('.slideImgs'),
+				slideImgUl: document.querySelector('.slideImgs ul'),
 				emojiImgs: document.querySelectorAll('.slideImgs .emoji'),
 				slidePrevBtn: document.querySelector('#scroll-section-1 .prev'),
 				slideNextBtn: document.querySelector('#scroll-section-1 .next'),
@@ -155,12 +156,12 @@
 		imgElem2.src = `./images/profileImg.jpg`;
 		sceneInfo[0].objs.profileImg.push(imgElem2);
 
-		let imgElem3;
-		for (let i = 0; i < sceneInfo[0].values.emojiCouint; i++) {
-			imgElem3 = new Image();
-			imgElem3.src = `./imges/projects/emoji/emoji_${i+1}.JPG`;
-			sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
-		}
+		// let imgElem3;
+		// for (let i = 0; i < sceneInfo[1].values.emojiCouint; i++) {
+		// 	imgElem3 = new Image();
+		// 	imgElem3.src = `./imges/projects/emoji/emoji_${i}.JPG`;
+		// 	sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
+		// }
 
 		let imgElem4;
 		imgElem4 = new Image();
@@ -310,12 +311,12 @@
 					objs.profile_context.drawImage(objs.profileImg[0], 0, 0);
 				} else {
 					objs.profile_canvas.style.opacity = calcValues(values.profile_opacity_out, currentYOffset);
-					sceneInfo[1].objs.emojiImgs[1].style.backgroundImage = `url('./images/profileImg.jpg')`;
-					sceneInfo[1].objs.emojiImgs[1].style.backgroundSize = `100%`;
 				}
 				break;
 			case 1:
 				objs.slideArea.style.display = `block`;
+
+
 				if (scrollRatio <= 0.5){
 					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
 					// objs.emojiImgs[1].style.backgroundImage = "url('./images/profileImg.jpg')";
@@ -581,13 +582,14 @@
 
 	
 	function slideElement(elmnt) {
-		var imgWidth = document.body.offsetWidth;
+		var slideArea = sceneInfo[1].objs.slideArea;
 		var slideImgs = sceneInfo[1].objs.slideImgs;
 		var slideInputs = sceneInfo[1].objs.slideInputs;
 		var slideLabels = sceneInfo[1].objs.slideLabels;
 		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
 		var nextBtn = sceneInfo[1].objs.slideNextBtn;
-		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		var imgWidth = document.body.offsetWidth * 0.95;
+		var pos1 = 0, pos3 = 0;
 		var touchStartX;
 		var touchEndX;
 		if (imgWidth > 1000){
@@ -606,7 +608,6 @@
 		function touchEnd(e){
 			touchEndX = e.changedTouches[0].clientX;
 			if(touchEndX - touchStartX > window.innerWidth/3){
-				console.log(touchEndX - touchStartX);	
 				prevImg();		 
 			}
 			if(touchStartX - touchEndX > window.innerWidth/3)
@@ -614,7 +615,7 @@
 		}
 		function dragMouseDown(e) { 
 			e = e || window.event; e.preventDefault(); 
-			pos3 = e.clientX; //pos4 = e.clientY; 
+			pos3 = e.clientX;
 			document.onmouseup = closeDragElement; 
 			document.onmousemove = elementDrag; 
 		} 
@@ -623,10 +624,7 @@
 			e = e || window.event; 
 			e.preventDefault(); 
 			pos1 = pos3 - e.clientX; 
-			//pos2 = pos4 - e.clientY; 
 			pos3 = e.clientX; 
-			//pos4 = e.clientY; 
-			//elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
 			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
 			elmnt.style.transition= 0 + 's';
 			
@@ -639,40 +637,83 @@
 			if(elmnt.offsetLeft - pos1 > 0){
 				slideImgs.style.left = 0 + 'px';
 				slideInputs[0].checked = true;
-			}
-			else if(offsetMod < 0.5){
+			}else if(offsetMod < 0.5){
 				slideImgs.style.left = 0 + 'px';
 				slideInputs[0].checked = true;
-			}
-			else if(offsetMod < 1.5){
+			}else if(offsetMod < 1.5){
 				slideImgs.style.left = -imgWidth + 'px';
 				slideInputs[1].checked = true;
-			}
-			else if(offsetMod < 2.5){
+			}else if(offsetMod < 2.5){
 				slideImgs.style.left = -imgWidth*2 + 'px';
 				slideInputs[2].checked = true;
-			}
-			else if(offsetMod < 3.5){
+			}else if(offsetMod < 3.5){
 				slideImgs.style.left = -imgWidth*3 + 'px';
 				slideInputs[3].checked = true;
-			}else if(offsetMod > 3.5){
-				slideImgs.style.left = -imgWidth*3 + 'px';
-				slideInputs[3].checked = true;
+			}else if(offsetMod < 4.5){
+				slideImgs.style.left = -imgWidth*4 + 'px';
+				slideInputs[4].checked = true;
+			}else if(offsetMod < 5.5){
+				slideImgs.style.left = -imgWidth*5 + 'px';
+				slideInputs[5].checked = true;
+			}else if(offsetMod < 6.5){
+				slideImgs.style.left = -imgWidth*6 + 'px';
+				slideInputs[6].checked = true;
+			}else if(offsetMod >= 6.5){
+				slideImgs.style.left = -imgWidth*7 + 'px';
+				slideInputs[7].checked = true;
 			}
 			elmnt.style.transition= 0.2 + 's';
 		} 
 		
 		function prevImg(){
 			if(slideImgs.offsetLeft != 0){  
-				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth - 1].checked = true;
+				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+				if(aroundSection < 0.5){
+					aroundSection = 0;
+				}else if(aroundSection >= 0.5 && aroundSection < 1.5){
+					aroundSection = 1;
+				}else if(aroundSection >= 1.5 && aroundSection < 2.5){
+					aroundSection = 2;
+				}else if(aroundSection >= 2.5 && aroundSection < 3.5){
+					aroundSection = 3;
+				}else if(aroundSection >= 3.5 && aroundSection < 4.5){
+					aroundSection = 4;
+				}else if(aroundSection >= 4.5 && aroundSection < 5.5){
+					aroundSection = 5;
+				}else if(aroundSection >= 5.5 && aroundSection < 6.5){
+					aroundSection = 6;
+				}else if(aroundSection >= 6.5){
+					aroundSection = 7;
+				}
+				slideInputs[aroundSection - 1].checked = true;
 				slideImgs.style.left = slideImgs.offsetLeft + imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 				
 			}
 		}
 		function nextImg(){
-			if(slideImgs.offsetLeft != -imgWidth*3){  
-				slideInputs[Math.abs(slideImgs.offsetLeft)/imgWidth + 1].checked = true;
+			if(slideImgs.offsetLeft != -Math.round(imgWidth)*3){  
+				console.log(Math.round(imgWidth*3));
+				console.log(slideImgs.offsetLeft);
+				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+				if(aroundSection < 0.5){
+					aroundSection = 0;
+				}else if(aroundSection >= 0.5 && aroundSection < 1.5){
+					aroundSection = 1;
+				}else if(aroundSection >= 1.5 && aroundSection < 2.5){
+					aroundSection = 2;
+				}else if(aroundSection >= 2.5 && aroundSection < 3.5){
+					aroundSection = 3;
+				}else if(aroundSection >= 3.5 && aroundSection < 4.5){
+					aroundSection = 4;
+				}else if(aroundSection >= 4.5 && aroundSection < 5.5){
+					aroundSection = 5;
+				}else if(aroundSection >= 5.5 && aroundSection < 6.5){
+					aroundSection = 6;
+				}else if(aroundSection >= 6.5){
+					aroundSection = 7;
+				}
+				slideInputs[aroundSection + 1].checked = true;
 				slideImgs.style.left = slideImgs.offsetLeft - imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 			}
@@ -699,7 +740,7 @@
                 tempScrollCount++;
             }, 20);
 		}
-			
+		
 		slideElement(sceneInfo[1].objs.slideImgs);
 		
 				
@@ -765,10 +806,11 @@
 
 })();
 
+
 function changeBox(){
 	var slideRdio = document.getElementsByName("slideRdio");
 	var slideImgs = document.querySelector('.slideImgs');
-	var imgWidth = document.body.offsetWidth;
+	var imgWidth = document.body.offsetWidth * 0.95;
 	if(imgWidth > 1000){
 		imgWidth = 1000;
 	}
