@@ -61,6 +61,7 @@
 			scrollHeight: 0,
 			objs: {
 				container: document.querySelector('#scroll-section-1'),
+				projects: document.querySelector('#projects'),
 				slideArea: document.querySelector('.slideArea'),
 				slideInputs: document.querySelectorAll('.slideImgBox input'),
 				slideLabels: document.querySelector(".slideImgBox .labels"),
@@ -69,13 +70,20 @@
 				emojiImgs: document.querySelectorAll('.slideImgs .emoji'),
 				slidePrevBtn: document.querySelector('#scroll-section-1 .prev'),
 				slideNextBtn: document.querySelector('#scroll-section-1 .next'),
+				emojiImg: document.querySelectorAll('.emoji img'),
+				project_canvas: document.querySelector('.projectFirstPage'),
+				project_context: document.querySelector('.projectFirstPage').getContext('2d'),
 				projectImg_emoji: [],
 				projectImg_macro: []
 			},
 			values: {
+				//projects_translateY_in: [100, 0, { start: 0.2, end: 0.7 }],
+				//projects_translateY_out: [0, -20, { start: 0.3, end: 0.4 }],
+				projects_opacity_in: [0, 1, { start: 0, end: 0.2}],
+				projects_opacity_out: [1, 0, { start: 0.35, end: 0.4}],
 				emojiCouint: 6,
-				emoji_opacity_in: [0, 1, { start: 0.1, end: 0.3 }],
-				emoji_opacity_out: [1, 0, { start: 0.65, end: 0.85 }],
+				emoji_opacity_in: [0, 1, { start: 0.3, end: 0.45 }],
+				emoji_opacity_out: [1, 0, { start: 0.75, end: 0.9 }],
 			}
 		},
 		{
@@ -156,19 +164,11 @@
 		imgElem2.src = `./images/profileImg.jpg`;
 		sceneInfo[0].objs.profileImg.push(imgElem2);
 
-		// let imgElem3;
-		// for (let i = 0; i < sceneInfo[1].values.emojiCouint; i++) {
-		// 	imgElem3 = new Image();
-		// 	imgElem3.src = `./imges/projects/emoji/emoji_${i}.JPG`;
-		// 	sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
-		// }
-
-		let imgElem4;
-		imgElem4 = new Image();
-		imgElem4.src = `./images/profileImg.jpg`;
-		sceneInfo[1].objs.projectImg_macro.push(imgElem4);
+		let imgElem3;
+		imgElem3 = new Image();
+		imgElem3.src = `./images/projects/emoji/emoji_7.jpg`;
+		sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
 		
-
 		let imgElem5;
 		for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
 			imgElem5 = new Image();
@@ -218,7 +218,8 @@
 
 		const heightRatio = window.innerHeight / 1080;
 		sceneInfo[0].objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${heightRatio})`;
-		sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio/4})`;
+		sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
+		//sceneInfo[1].objs.projects.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
 		sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
 	}
 
@@ -246,6 +247,12 @@
 		}
 
 		return rv;
+	}
+
+	function imgChange(length, direction, projectName){
+		for(let i = 0; i < length; i++){
+			direction[i].src = `./images/projects/${projectName}/${projectName}_${i}.jpg`
+		}
 	}
 
 	// 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
@@ -312,18 +319,50 @@
 				} else {
 					objs.profile_canvas.style.opacity = calcValues(values.profile_opacity_out, currentYOffset);
 				}
+				if (scrollRatio > 0.8){
+					const objs = sceneInfo[1].objs;
+					objs.projects.style.position = `relative`;
+					if(window.pageYOffset > prevScrollHeight + sceneInfo[0].scrollHeight + (window.innerHeight/2)){
+						objs.projects.style.position = `fixed`;
+					}else{
+						objs.projects.style.position = `relative`;
+						objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
+					}
+				} else {
+					// objs.projects.style.display = `fixed`;
+				}
 				break;
 			case 1:
+				if(window.pageYOffset > prevScrollHeight + (window.innerHeight/2)){
+					objs.projects.style.position = `fixed`;
+					objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + (scrollRatio - window.innerHeight/(scrollHeight * 2)) * 7})`
+				}else{
+					objs.projects.style.position = `relative`;
+					objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
+				}
+				if(scrollRatio <= 0.3){
+					objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
+				}else{
+					objs.projects.style.opacity = calcValues(values.projects_opacity_out, currentYOffset);
+				}
+				if(scrollRatio <= 0.4){
+					objs.projects.style.zIndex = `1`;
+				}else{
+					objs.projects.style.zIndex = `-1`;
+				}
+				objs.projects.style.height = window.innerHeight;
+				// objs.projects.style.transform = calcValues(values.)
 				objs.slideArea.style.display = `block`;
-
-
+				// objs.projects.style.transform = `translate3d(0, ${calcValues(values.projects_translateY_in, currentYOffset)}%, 0)`;
 				if (scrollRatio <= 0.5){
+					// objs.projects.style.opacity = calcValues([0, 1, { start: 0.05, end: 0.5 }], currentYOffset);
 					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
-					// objs.emojiImgs[1].style.backgroundImage = "url('./images/profileImg.jpg')";
-					// objs.emojiImgs[1].style.backgroundSize = "100%";
+					imgChange(8, objs.emojiImg, 'emoji');
+					// objs.project_context.drawImage(objs.projectImg_emoji[0], 0, 0);
 				} else {
 					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_out, currentYOffset);
 				}
+				
 				break;	
 			case 2:
 				// console.log('2 play');
@@ -592,9 +631,18 @@
 		var pos1 = 0, pos3 = 0;
 		var touchStartX;
 		var touchEndX;
-		if (imgWidth > 1000){
-			imgWidth = 1000;
-		} 
+		if (imgWidth > 1200){
+			imgWidth = 1200;
+		}
+		//  화면 높이 < Img 높이 + 상단바 + 프로젝트 타이틀 + 라벨버튼
+		if (window.innerHeight < imgWidth / 1000 * 540 + 50 + 50 + 30) {
+			slideArea.style.maxWidth = `${window.innerHeight / 540 * 1000 * 0.7}px`;
+			imgWidth = window.innerHeight / 540 * 1000 * 0.7;
+			slideArea.style.top = `55%`;
+		} else {
+			slideArea.style.maxWidth = `1200px`;
+			slideArea.style.top = `50%`;
+		}
 		slideImgs.style.transition= 0.2 + 's';
 		slideImgs.addEventListener('touchstart', touchStart, false);
 		elmnt.onmousedown = dragMouseDown; 
@@ -607,10 +655,11 @@
 		}
 		function touchEnd(e){
 			touchEndX = e.changedTouches[0].clientX;
-			if(touchEndX - touchStartX > window.innerWidth/3){
+			if(touchEndX - touchStartX > imgWidth/3){
+				console.log(imgWidth);
 				prevImg();		 
 			}
-			if(touchStartX - touchEndX > window.innerWidth/3)
+			if(touchStartX - touchEndX > imgWidth/3)
 				nextImg();
 		}
 		function dragMouseDown(e) { 
@@ -627,8 +676,6 @@
 			pos3 = e.clientX; 
 			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
 			elmnt.style.transition= 0 + 's';
-			
-			
 		} 
 		function closeDragElement() {
 			document.onmouseup = null; 
@@ -692,9 +739,7 @@
 			}
 		}
 		function nextImg(){
-			if(slideImgs.offsetLeft != -Math.round(imgWidth)*3){  
-				console.log(Math.round(imgWidth*3));
-				console.log(slideImgs.offsetLeft);
+			if(slideImgs.offsetLeft != -Math.round(imgWidth)*7){
 				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
 				if(aroundSection < 0.5){
 					aroundSection = 0;
@@ -811,8 +856,8 @@ function changeBox(){
 	var slideRdio = document.getElementsByName("slideRdio");
 	var slideImgs = document.querySelector('.slideImgs');
 	var imgWidth = document.body.offsetWidth * 0.95;
-	if(imgWidth > 1000){
-		imgWidth = 1000;
+	if(imgWidth > 1200){
+		imgWidth = 1200;
 	}
 	for(var i = 0; i < slideRdio.length; i++){
 		if(slideRdio[i].checked){
