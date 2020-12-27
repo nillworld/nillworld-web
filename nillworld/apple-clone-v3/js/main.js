@@ -51,7 +51,8 @@
 				messageC_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
 				messageD_translateY_out: [0, -20, { start: 0.6, end: 0.7 }],
 				profile_opacity_in: [0, 1, { start: 0.7, end: 0.8}],
-				profile_opacity_out: [1, 0, { start: 0.8, end: 0.9}]
+				profile_opacity_out: [1, 0, { start: 0.8, end: 0.9}],
+				projects_opacity_in: [0, 1, { start: 0.99, end: 1.19}],
 			}
 		},
 		{
@@ -155,7 +156,7 @@
 		let imgElem;
 		for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
 			imgElem = new Image();
-			imgElem.src = `./video/01/Nill_code_${100+i}.JPG`;
+			imgElem.src = `./video/01/Nill-code-${100+i}.jpg`;
 			sceneInfo[0].objs.videoImages.push(imgElem);
 		}
 
@@ -251,7 +252,7 @@
 
 	function imgChange(length, direction, projectName){
 		for(let i = 0; i < length; i++){
-			direction[i].src = `./images/projects/${projectName}/${projectName}_${i}.jpg`
+			direction[i].src = `./images/projects/${projectName}/${projectName}-${i}.jpg`
 		}
 	}
 
@@ -322,9 +323,13 @@
 				if (scrollRatio > 0.8){
 					const objs = sceneInfo[1].objs;
 					objs.projects.style.position = `relative`;
-					if(window.pageYOffset > prevScrollHeight + sceneInfo[0].scrollHeight + (window.innerHeight/2)){
+					if(window.pageYOffset > sceneInfo[0].scrollHeight + window.innerHeight/9) {
+						console.log(window.pageYOffset, sceneInfo[0].scrollHeight + window.innerHeight/9);
+						objs.projects.style.top = `40vh`;
 						objs.projects.style.position = `fixed`;
 					}else{
+						objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
+						objs.projects.style.top = `0vh`;
 						objs.projects.style.position = `relative`;
 						objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
 					}
@@ -333,10 +338,12 @@
 				}
 				break;
 			case 1:
-				if(window.pageYOffset > prevScrollHeight + (window.innerHeight/2)){
+				if(window.pageYOffset > prevScrollHeight + window.innerHeight/9){
+					objs.projects.style.top = `40vh`;
 					objs.projects.style.position = `fixed`;
-					objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + (scrollRatio - window.innerHeight/(scrollHeight * 2)) * 7})`
+					objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + scrollRatio * 7})`
 				}else{
+					objs.projects.style.top = `0vh`;
 					objs.projects.style.position = `relative`;
 					objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
 				}
@@ -593,9 +600,16 @@
 
 		if (!enterNewScene) {
 			if (currentScene === 0 || currentScene === 2) {
-				const currentYOffset = delayedYOffset - prevScrollHeight;
 				const objs = sceneInfo[currentScene].objs;
 				const values = sceneInfo[currentScene].values;
+				let currentYOffset = delayedYOffset - prevScrollHeight;
+				//모바일 바운스로인한 clcValues 함수 typeError 방지
+				if(currentYOffset < 0){
+					objs.canvas.style.top = `300%`;
+					currentYOffset = 0;
+				}else{
+					objs.canvas.style.top = `50%`;
+				}
 				let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
 				if (objs.videoImages[sequence]) {
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
@@ -607,7 +621,7 @@
 				}
 				if(currentScene === 0 && sequence < 370){
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-					objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${window.innerHeight/1080})`
+					objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${window.innerHeight/1080})`;
 				}
 			}
 		}
@@ -620,9 +634,8 @@
 	}
 
 	
-	function slideElement(elmnt) {
+	function slideElement(slideImgs) {
 		var slideArea = sceneInfo[1].objs.slideArea;
-		var slideImgs = sceneInfo[1].objs.slideImgs;
 		var slideInputs = sceneInfo[1].objs.slideInputs;
 		var slideLabels = sceneInfo[1].objs.slideLabels;
 		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
@@ -631,6 +644,9 @@
 		var pos1 = 0, pos3 = 0;
 		var touchStartX;
 		var touchEndX;
+		var touchMovedStartX;
+		var touchMovedEndX;
+
 		if (imgWidth > 1200){
 			imgWidth = 1200;
 		}
@@ -645,43 +661,57 @@
 		}
 		slideImgs.style.transition= 0.2 + 's';
 		slideImgs.addEventListener('touchstart', touchStart, false);
-		elmnt.onmousedown = dragMouseDown; 
+		slideImgs.onmousedown = dragMouseDown; 
 		prevBtn.onclick = prevImg;
 		nextBtn.onclick = nextImg;
 
 		function touchStart(e){
+			e = e || window.event; 
+			e.preventDefault();
 			touchStartX = e.changedTouches[0].clientX;
+			slideImgs.addEventListener('touchmove', touchMove, false);
 			slideImgs.addEventListener('touchend', touchEnd, false);
 		}
 		function touchEnd(e){
+			e = e || window.event; 
+			e.preventDefault();
 			touchEndX = e.changedTouches[0].clientX;
-			if(touchEndX - touchStartX > imgWidth/3){
-				console.log(imgWidth);
+			console.log(touchEndX, touchStartX);
+			if(touchEndX - touchStartX > imgWidth/5){
 				prevImg();		 
 			}
-			if(touchStartX - touchEndX > imgWidth/3)
+			if(touchStartX - touchEndX > imgWidth/5)
 				nextImg();
 		}
+		function touchMove(e) {
+			e = e || window.event; 
+			e.preventDefault();
+			touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX; 
+			touchMovedStartX = e.changedTouches[0].clientX; 
+			slideImgs.style.left = (slideImgs.offsetLeft - touchMovedEndX) + "px";
+			slideImgs.style.transition= 0 + 's';
+		}
 		function dragMouseDown(e) { 
-			e = e || window.event; e.preventDefault(); 
+			e = e || window.event; 
+			e.preventDefault(); 
 			pos3 = e.clientX;
 			document.onmouseup = closeDragElement; 
 			document.onmousemove = elementDrag; 
 		} 
 		function elementDrag(e) {
-			var movedPosition = elmnt.style.left;
+			var movedPosition = slideImgs.style.left;
 			e = e || window.event; 
 			e.preventDefault(); 
 			pos1 = pos3 - e.clientX; 
 			pos3 = e.clientX; 
-			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-			elmnt.style.transition= 0 + 's';
+			slideImgs.style.left = (slideImgs.offsetLeft - pos1) + "px";
+			slideImgs.style.transition= 0 + 's';
 		} 
 		function closeDragElement() {
 			document.onmouseup = null; 
 			document.onmousemove = null; 
-			var offsetMod = Math.abs(elmnt.offsetLeft - pos1) / imgWidth;
-			if(elmnt.offsetLeft - pos1 > 0){
+			var offsetMod = Math.abs(slideImgs.offsetLeft - (pos1 * imgWidth / 10)) / imgWidth;
+			if(slideImgs.offsetLeft - pos1 > 0){
 				slideImgs.style.left = 0 + 'px';
 				slideInputs[0].checked = true;
 			}else if(offsetMod < 0.5){
@@ -709,7 +739,7 @@
 				slideImgs.style.left = -imgWidth*7 + 'px';
 				slideInputs[7].checked = true;
 			}
-			elmnt.style.transition= 0.2 + 's';
+			slideImgs.style.transition= 0.2 + 's';
 		} 
 		
 		function prevImg(){
@@ -802,7 +832,9 @@
 
   		window.addEventListener('resize', () => {
 			sceneInfo[1].objs.slideImgs.style.left = 0 + 'px';
-			sceneInfo[1].objs.slideInputs[0].checked;
+			sceneInfo[1].objs.slideInputs[0].checked = true;
+			
+			console.log(sceneInfo[1].objs.slideInputs[0].checked);
 			slideElement(sceneInfo[1].objs.slideImgs);
   			if (window.innerWidth > 900) {
   				setLayout();

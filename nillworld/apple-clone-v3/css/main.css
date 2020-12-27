@@ -8,7 +8,7 @@ body {
 	overflow-x: hidden;
 	color: rgb(29, 29, 31);
 	letter-spacing: -0.05em;
-	background: white;
+	background:  rgb(29, 29, 31);
 }
 p {
 	line-height: 1.6;
@@ -131,11 +131,10 @@ body.before-load {
 }
 #scroll-section-1 .description{
 	display: flex;
-	text-align: center;
 	justify-content: center;
 }
 #scroll-section-1 h2{
-	top: 38vh;
+	/* top: 38vh; */
 	z-index: 5;
 	font-size: 5rem;
 	text-align: center;
@@ -175,6 +174,7 @@ ul,li{
 }
 .slideImgs{
 	position:relative;
+	transition:1s;
 }
 .slideImgs ul{
 	width:800%;
@@ -411,9 +411,6 @@ label{
 	.description {
 		padding: 0;
 		font-size: 2rem;
-	}
-	.description strong {
-		font-size: 6rem;
 	}
 	#scroll-section-1 h2{
 		font-size: 7vw;
