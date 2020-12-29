@@ -642,6 +642,8 @@
 		var nextBtn = sceneInfo[1].objs.slideNextBtn;
 		var emojiLength = sceneInfo[1].values.emojiCouint;
 		var imgWidth = document.body.offsetWidth * 0.95;
+		var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+		var section = 0;
 		var pos1 = 0, pos3 = 0;
 		var touchStartX;
 		var touchEndX;
@@ -745,7 +747,6 @@
 		
 		function prevImg(){
 			if(slideImgs.offsetLeft != 0){  
-				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
 				section = Math.round(aroundSection);
 				if(section > emojiLength - 1){
 					section = emojiLength - 1;
@@ -758,7 +759,6 @@
 		}
 		function nextImg(){
 			if(slideImgs.offsetLeft != -Math.round(imgWidth)*7){
-				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
 				section = Math.round(aroundSection);
 				if(section > emojiLength - 1){
 					section = emojiLength - 1;
