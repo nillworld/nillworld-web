@@ -82,7 +82,7 @@
 				//projects_translateY_out: [0, -20, { start: 0.3, end: 0.4 }],
 				projects_opacity_in: [0, 1, { start: 0, end: 0.2}],
 				projects_opacity_out: [1, 0, { start: 0.35, end: 0.4}],
-				emojiCouint: 6,
+				emojiCouint: 8,
 				emoji_opacity_in: [0, 1, { start: 0.3, end: 0.45 }],
 				emoji_opacity_out: [1, 0, { start: 0.75, end: 0.9 }],
 			}
@@ -361,10 +361,10 @@
 				// objs.projects.style.transform = calcValues(values.)
 				objs.slideArea.style.display = `block`;
 				// objs.projects.style.transform = `translate3d(0, ${calcValues(values.projects_translateY_in, currentYOffset)}%, 0)`;
-				if (scrollRatio <= 0.5){
+				if (scrollRatio <= 0.9){
 					// objs.projects.style.opacity = calcValues([0, 1, { start: 0.05, end: 0.5 }], currentYOffset);
 					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
-					imgChange(8, objs.emojiImg, 'emoji');
+					imgChange(values.emojiCouint, objs.emojiImg, 'emoji');
 					// objs.project_context.drawImage(objs.projectImg_emoji[0], 0, 0);
 				} else {
 					objs.slideArea.style.opacity = calcValues(values.emoji_opacity_out, currentYOffset);
@@ -640,6 +640,7 @@
 		var slideLabels = sceneInfo[1].objs.slideLabels;
 		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
 		var nextBtn = sceneInfo[1].objs.slideNextBtn;
+		var emojiLength = sceneInfo[1].values.emojiCouint;
 		var imgWidth = document.body.offsetWidth * 0.95;
 		var pos1 = 0, pos3 = 0;
 		var touchStartX;
@@ -710,7 +711,7 @@
 		function closeDragElement() {
 			document.onmouseup = null; 
 			document.onmousemove = null; 
-			var offsetMod = Math.abs(slideImgs.offsetLeft - (pos1 * imgWidth / 10)) / imgWidth;
+			var offsetMod = Math.abs(slideImgs.offsetLeft - pos1) / imgWidth;
 			if(slideImgs.offsetLeft - pos1 > 0){
 				slideImgs.style.left = 0 + 'px';
 				slideInputs[0].checked = true;
@@ -745,25 +746,12 @@
 		function prevImg(){
 			if(slideImgs.offsetLeft != 0){  
 				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
-				if(aroundSection < 0.5){
-					aroundSection = 0;
-				}else if(aroundSection >= 0.5 && aroundSection < 1.5){
-					aroundSection = 1;
-				}else if(aroundSection >= 1.5 && aroundSection < 2.5){
-					aroundSection = 2;
-				}else if(aroundSection >= 2.5 && aroundSection < 3.5){
-					aroundSection = 3;
-				}else if(aroundSection >= 3.5 && aroundSection < 4.5){
-					aroundSection = 4;
-				}else if(aroundSection >= 4.5 && aroundSection < 5.5){
-					aroundSection = 5;
-				}else if(aroundSection >= 5.5 && aroundSection < 6.5){
-					aroundSection = 6;
-				}else if(aroundSection >= 6.5){
-					aroundSection = 7;
+				section = Math.round(aroundSection);
+				if(section > emojiLength - 1){
+					section = emojiLength - 1;
 				}
-				slideInputs[aroundSection - 1].checked = true;
-				slideImgs.style.left = slideImgs.offsetLeft + imgWidth + 'px';
+				slideInputs[section - 1].checked = true;
+				slideImgs.style.left = -(section - 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 				
 			}
@@ -771,25 +759,12 @@
 		function nextImg(){
 			if(slideImgs.offsetLeft != -Math.round(imgWidth)*7){
 				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
-				if(aroundSection < 0.5){
-					aroundSection = 0;
-				}else if(aroundSection >= 0.5 && aroundSection < 1.5){
-					aroundSection = 1;
-				}else if(aroundSection >= 1.5 && aroundSection < 2.5){
-					aroundSection = 2;
-				}else if(aroundSection >= 2.5 && aroundSection < 3.5){
-					aroundSection = 3;
-				}else if(aroundSection >= 3.5 && aroundSection < 4.5){
-					aroundSection = 4;
-				}else if(aroundSection >= 4.5 && aroundSection < 5.5){
-					aroundSection = 5;
-				}else if(aroundSection >= 5.5 && aroundSection < 6.5){
-					aroundSection = 6;
-				}else if(aroundSection >= 6.5){
-					aroundSection = 7;
+				section = Math.round(aroundSection);
+				if(section > emojiLength - 1){
+					section = emojiLength - 1;
 				}
-				slideInputs[aroundSection + 1].checked = true;
-				slideImgs.style.left = slideImgs.offsetLeft - imgWidth + 'px';
+				slideInputs[section + 1].checked = true;
+				slideImgs.style.left = -(section + 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 			}
 		}
