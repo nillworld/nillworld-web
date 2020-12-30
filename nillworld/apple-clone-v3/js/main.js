@@ -338,6 +338,7 @@
 				}
 				break;
 			case 1:
+				slideElement(objs.slideImgs);
 				if(window.pageYOffset > prevScrollHeight + window.innerHeight/9){
 					objs.projects.style.top = `40vh`;
 					objs.projects.style.position = `fixed`;
@@ -635,16 +636,16 @@
 
 	
 	function slideElement(slideImgs) {
-		var slideArea = sceneInfo[1].objs.slideArea;
-		var slideInputs = sceneInfo[1].objs.slideInputs;
-		var slideLabels = sceneInfo[1].objs.slideLabels;
-		var prevBtn = sceneInfo[1].objs.slidePrevBtn;
-		var nextBtn = sceneInfo[1].objs.slideNextBtn;
-		var emojiLength = sceneInfo[1].values.emojiCouint;
-		var imgWidth = document.body.offsetWidth * 0.95;
-		var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
-		var section = 0;
-		var pos1 = 0, pos3 = 0;
+		var objs = sceneInfo[currentScene].objs;
+		var values = sceneInfo[currentScene].values;
+		var slideArea = objs.slideArea;
+		var slideInputs = objs.slideInputs;
+		var slideLabels = objs.slideLabels;
+		var prevBtn = objs.slidePrevBtn;
+		var nextBtn = objs.slideNextBtn;
+		var emojiLength = values.emojiCouint;
+		var imgWidth = Math.round(document.body.offsetWidth * 0.95);
+		var pos1, pos2, pos3 = 0;
 		var touchStartX;
 		var touchEndX;
 		var touchMovedStartX;
@@ -697,7 +698,9 @@
 		function dragMouseDown(e) { 
 			e = e || window.event; 
 			e.preventDefault(); 
+			pos2 = e.clientX;
 			pos3 = e.clientX;
+			beforeSlideLeft = slideImgs.offsetLeft;
 			document.onmouseup = closeDragElement; 
 			document.onmousemove = elementDrag; 
 		} 
@@ -710,61 +713,51 @@
 			slideImgs.style.left = (slideImgs.offsetLeft - pos1) + "px";
 			slideImgs.style.transition= 0 + 's';
 		} 
-		function closeDragElement() {
+		function closeDragElement(e) {
 			document.onmouseup = null; 
 			document.onmousemove = null; 
-			var offsetMod = Math.abs(slideImgs.offsetLeft - pos1) / imgWidth;
-			if(slideImgs.offsetLeft - pos1 > 0){
-				slideImgs.style.left = 0 + 'px';
-				slideInputs[0].checked = true;
-			}else if(offsetMod < 0.5){
-				slideImgs.style.left = 0 + 'px';
-				slideInputs[0].checked = true;
-			}else if(offsetMod < 1.5){
-				slideImgs.style.left = -imgWidth + 'px';
-				slideInputs[1].checked = true;
-			}else if(offsetMod < 2.5){
-				slideImgs.style.left = -imgWidth*2 + 'px';
-				slideInputs[2].checked = true;
-			}else if(offsetMod < 3.5){
-				slideImgs.style.left = -imgWidth*3 + 'px';
-				slideInputs[3].checked = true;
-			}else if(offsetMod < 4.5){
-				slideImgs.style.left = -imgWidth*4 + 'px';
-				slideInputs[4].checked = true;
-			}else if(offsetMod < 5.5){
-				slideImgs.style.left = -imgWidth*5 + 'px';
-				slideInputs[5].checked = true;
-			}else if(offsetMod < 6.5){
-				slideImgs.style.left = -imgWidth*6 + 'px';
-				slideInputs[6].checked = true;
-			}else if(offsetMod >= 6.5){
-				slideImgs.style.left = -imgWidth*7 + 'px';
-				slideInputs[7].checked = true;
+			pos1 = pos2 - e.clientX;
+			var aroundSection = Math.abs(beforeSlideLeft)/imgWidth;
+			slideSection = Math.round(aroundSection);
+			if(pos1 > imgWidth/4){
+				slideSection += 1;	
 			}
+			if(pos1 < -imgWidth/4){
+				console.log(pos1);
+				slideSection -= 1;
+			}
+			if(slideImgs.offsetLeft > 0){
+				slideSection = 0;
+			}
+			if(slideImgs.offsetLeft < -(emojiLength - 1) * imgWidth){
+				slideSection = emojiLength - 1;
+			}
+			console.log(slideSection);
+			slideInputs[slideSection].checked = true;
+			slideImgs.style.left = -(slideSection) * imgWidth + 'px';
 			slideImgs.style.transition= 0.2 + 's';
 		} 
 		
 		function prevImg(){
-			if(slideImgs.offsetLeft != 0){  
-				section = Math.round(aroundSection);
-				if(section > emojiLength - 1){
-					section = emojiLength - 1;
+			if(slideImgs.offsetLeft < 0){  
+				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+				slideSection = Math.round(aroundSection);
+				if(slideSection > emojiLength - 1){
+					slideSection = emojiLength - 1;
 				}
-				slideInputs[section - 1].checked = true;
-				slideImgs.style.left = -(section - 1) * imgWidth + 'px';
+				slideInputs[slideSection - 1].checked = true;
+				slideImgs.style.left = -(slideSection - 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 				
 			}
 		}
 		function nextImg(){
-			if(slideImgs.offsetLeft != -Math.round(imgWidth)*7){
-				section = Math.round(aroundSection);
-				if(section > emojiLength - 1){
-					section = emojiLength - 1;
-				}
-				slideInputs[section + 1].checked = true;
-				slideImgs.style.left = -(section + 1) * imgWidth + 'px';
+			if(slideImgs.offsetLeft > -Math.round(imgWidth)*(emojiLength-1)){
+				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+				slideSection = Math.round(aroundSection);
+				console.log(slideImgs.offsetLeft);
+				slideInputs[slideSection + 1].checked = true;
+				slideImgs.style.left = -(slideSection + 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 			}
 		}
@@ -790,8 +783,6 @@
                 tempScrollCount++;
             }, 20);
 		}
-		
-		slideElement(sceneInfo[1].objs.slideImgs);
 		
 				
         window.addEventListener('scroll', () => {
