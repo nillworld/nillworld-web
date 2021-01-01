@@ -681,10 +681,10 @@
 			e.preventDefault();
 			touchEndX = e.changedTouches[0].clientX;
 			console.log(touchEndX, touchStartX);
-			if(touchEndX - touchStartX > imgWidth/5){
+			if(touchEndX - touchStartX > imgWidth/2){
 				prevImg();		 
 			}
-			if(touchStartX - touchEndX > imgWidth/5)
+			if(touchStartX - touchEndX > imgWidth/2)
 				nextImg();
 		}
 		function touchMove(e) {
