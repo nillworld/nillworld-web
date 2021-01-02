@@ -33,7 +33,7 @@
 			values: {
 				videoImageCount: 371,
 				imageSequence: [0, 650],
-				canvas_opacity: [1, 0, { start: 0.7, end: 0.8 }],
+				canvas_opacity: [0.7, 0, { start: 0.7, end: 0.8 }],
 				messageA_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
 				messageB_opacity_in: [0, 1, { start: 0.2, end: 0.25 }],
 				messageC_opacity_in: [0, 1, { start: 0.35, end: 0.4 }],
