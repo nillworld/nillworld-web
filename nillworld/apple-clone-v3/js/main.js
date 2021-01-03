@@ -673,7 +673,7 @@
 			e = e || window.event; 
 			e.preventDefault();
 			touchStartX = e.changedTouches[0].clientX;
-			slideImgs.addEventListener('touchmove', touchMove, false);
+			// slideImgs.addEventListener('touchmove', touchMove, false);
 			slideImgs.addEventListener('touchend', touchEnd, false);
 		}
 		function touchEnd(e){
