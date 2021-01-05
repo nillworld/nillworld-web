@@ -665,6 +665,7 @@
 		}
 		slideImgs.style.transition= 0.2 + 's';
 		slideImgs.addEventListener('touchstart', touchStart, false);
+		slideImgs.addEventListener('touchmove', touchMove, false);
 		slideImgs.onmousedown = dragMouseDown; 
 		prevBtn.onclick = prevImg;
 		nextBtn.onclick = nextImg;
@@ -673,17 +674,16 @@
 			e = e || window.event; 
 			e.preventDefault();
 			touchStartX = e.changedTouches[0].clientX;
-			slideImgs.addEventListener('touchmove', touchMove, false);
+			// slideImgs.addEventListener('touchmove', touchMove, false);
 			slideImgs.addEventListener('touchend', touchEnd, false);
 		}
 		function touchEnd(e){
-			console.log('hi');
 			e = e || window.event; 
 			e.preventDefault();
 			touchEndX = e.changedTouches[0].clientX;
 			console.log(touchEndX, touchStartX);
 			if(touchEndX - touchStartX > imgWidth/2){
-				prevImg();		 
+				prevImg();	 
 			}
 			if(touchStartX - touchEndX > imgWidth/2)
 				nextImg();
@@ -693,8 +693,9 @@
 			e.preventDefault();
 			touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX; 
 			touchMovedStartX = e.changedTouches[0].clientX; 
-			slideImgs.style.left = (slideImgs.offsetLeft - touchMovedEndX) + "px";
+			slideImgs.style.left = (slideImgs.offsetLeft - touchMovedEndX/10) + "px";
 			slideImgs.style.transition= 0 + 's';
+			slideImgs.addEventListener('touchend', touchEnd, false);
 		}
 		function dragMouseDown(e) { 
 			e = e || window.event; 
