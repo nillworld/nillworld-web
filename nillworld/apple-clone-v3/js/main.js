@@ -4,6 +4,7 @@
 	let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
 	let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
 	let enterNewScene = false; // 새로운 scene이 시작된 순간 true
+	let slideState = true; // 슬라이드 touch이벤트 중복 방지
 	let acc = 0.2;
 	let delayedYOffset = 0;
 	let rafId;
@@ -665,7 +666,6 @@
 		}
 		slideImgs.style.transition= 0.2 + 's';
 		slideImgs.addEventListener('touchstart', touchStart, false);
-		slideImgs.addEventListener('touchmove', touchMove, false);
 		slideImgs.onmousedown = dragMouseDown; 
 		prevBtn.onclick = prevImg;
 		nextBtn.onclick = nextImg;
@@ -673,29 +673,43 @@
 		function touchStart(e){
 			e = e || window.event; 
 			e.preventDefault();
-			touchStartX = e.changedTouches[0].clientX;
-			// slideImgs.addEventListener('touchmove', touchMove, false);
-			slideImgs.addEventListener('touchend', touchEnd, false);
-		}
-		function touchEnd(e){
-			e = e || window.event; 
-			e.preventDefault();
-			touchEndX = e.changedTouches[0].clientX;
-			console.log(touchEndX, touchStartX);
-			if(touchEndX - touchStartX > imgWidth/2){
-				prevImg();	 
+			if(slideState){
+				touchStartX = e.changedTouches[0].clientX;
+				slideImgs.addEventListener('touchmove', touchMove, false);
 			}
-			if(touchStartX - touchEndX > imgWidth/2)
-				nextImg();
+			slideState = false;			
+			//slideImgs.addEventListener('touchend', touchEnd, false);
 		}
 		function touchMove(e) {
 			e = e || window.event; 
 			e.preventDefault();
-			touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX; 
-			touchMovedStartX = e.changedTouches[0].clientX; 
-			slideImgs.style.left = (slideImgs.offsetLeft - touchMovedEndX/10) + "px";
+			touchMovedEndX = touchStartX - e.changedTouches[0].clientX; 
+			touchStartX = e.changedTouches[0].clientX; 
+			slideImgs.style.left = (slideImgs.offsetLeft - touchMovedEndX) + "px";
 			slideImgs.style.transition= 0 + 's';
+			touchMovedEndX = 0;
 			slideImgs.addEventListener('touchend', touchEnd, false);
+		}
+		function touchEnd(e){
+			slideState = true;
+			e = e || window.event; 
+			e.preventDefault();
+			touchEndX = e.changedTouches[0].clientX;
+			if(touchEndX - touchStartX > 0){
+				if(touchEndX - touchStartX > imgWidth/3){
+					prevImg();	 
+				}else{
+					stayImg();
+				}
+			}else{
+				if(touchStartX - touchEndX > imgWidth/3){
+					nextImg();	
+				}else{
+					stayImg();
+				}
+			}
+			
+			
 		}
 		function dragMouseDown(e) { 
 			e = e || window.event; 
@@ -734,7 +748,6 @@
 			if(slideImgs.offsetLeft < -(emojiLength - 1) * imgWidth){
 				slideSection = emojiLength - 1;
 			}
-			console.log(slideSection);
 			slideInputs[slideSection].checked = true;
 			slideImgs.style.left = -(slideSection) * imgWidth + 'px';
 			slideImgs.style.transition= 0.2 + 's';
@@ -757,11 +770,25 @@
 			if(slideImgs.offsetLeft > -Math.round(imgWidth)*(emojiLength-1)){
 				var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
 				slideSection = Math.round(aroundSection);
-				console.log(slideImgs.offsetLeft);
 				slideInputs[slideSection + 1].checked = true;
 				slideImgs.style.left = -(slideSection + 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
 			}
+		}
+		function stayImg(){
+			var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
+			if(slideImgs.offsetLeft > 0){
+				slideImgs.style.left = 0 + "px";
+				return;
+			}
+			if(aroundSection > emojiLength-1){
+				slideImgs.style.left = (1-emojiLength) * imgWidth + "px";
+				return;
+			}
+			slideSection = Math.round(aroundSection);
+			slideInputs[slideSection].checked = true;
+			slideImgs.style.left = -(slideSection) * imgWidth + 'px';
+			slideImgs.style.transition= 0.2 + 's';
 		}
 	}
 	
