@@ -763,7 +763,11 @@
 				slideInputs[slideSection - 1].checked = true;
 				slideImgs.style.left = -(slideSection - 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
-				
+			}
+			if(slideImgs.offsetLeft >= 0){ 
+				slideInputs[emojiLength].checked = true;
+				slideImgs.style.left = -(emojiLength-1) * imgWidth + 'px';
+				slideImgs.style.transition= 0 + 's';
 			}
 		}
 		function nextImg(){

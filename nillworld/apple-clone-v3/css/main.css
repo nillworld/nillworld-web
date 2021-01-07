@@ -230,10 +230,10 @@ label{
 	background:#666;
 }
 #pos1:checked~.prev{
-	display: none;
+	/* display: none; */
 }
 #pos8:checked~.next{
-	display: none;
+	/* display: none; */
 }
 .prev, .next {
 	cursor: pointer;
