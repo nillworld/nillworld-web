@@ -763,9 +763,8 @@
 				slideInputs[slideSection - 1].checked = true;
 				slideImgs.style.left = -(slideSection - 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
-			}
-			if(slideImgs.offsetLeft >= 0){ 
-				slideInputs[emojiLength].checked = true;
+			}else{ 
+				slideInputs[emojiLength-1].checked = true;
 				slideImgs.style.left = -(emojiLength-1) * imgWidth + 'px';
 				slideImgs.style.transition= 0 + 's';
 			}
@@ -777,7 +776,12 @@
 				slideInputs[slideSection + 1].checked = true;
 				slideImgs.style.left = -(slideSection + 1) * imgWidth + 'px';
 				slideImgs.style.transition= 0.2 + 's';
+			}else{
+				slideInputs[0].checked = true;
+				slideImgs.style.left = 0 + 'px';
+				slideImgs.style.transition= 0 + 's';
 			}
+
 		}
 		function stayImg(){
 			var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
