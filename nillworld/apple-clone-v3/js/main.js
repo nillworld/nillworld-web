@@ -786,11 +786,13 @@
 		function stayImg(){
 			var aroundSection = Math.abs(slideImgs.offsetLeft)/imgWidth;
 			if(slideImgs.offsetLeft > 0){
-				slideImgs.style.left = 0 + "px";
+				slideInputs[emojiLength-1].checked = true;
+			slideImgs.style.left = -(emojiLength-1) * imgWidth + 'px';
 				return;
 			}
 			if(aroundSection > emojiLength-1){
-				slideImgs.style.left = (1-emojiLength) * imgWidth + "px";
+				slideImgs.style.left = 0 + "px";
+				slideInputs[0].checked = true;
 				return;
 			}
 			slideSection = Math.round(aroundSection);
