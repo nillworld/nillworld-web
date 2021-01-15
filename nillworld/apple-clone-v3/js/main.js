@@ -63,7 +63,7 @@
 			scrollHeight: 0,
 			objs: {
 				container: document.querySelector('#scroll-section-1'),
-				projects: document.querySelector('#projects'),
+				projects: document.querySelector('#projects')
 			},
 			values: {
 			}
@@ -146,10 +146,10 @@
 		imgElem2.src = `./images/profileImg.jpg`;
 		sceneInfo[0].objs.profileImg.push(imgElem2);
 
-		let imgElem3;
-		imgElem3 = new Image();
-		imgElem3.src = `./images/projects/emoji/emoji_7.jpg`;
-		sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
+		// let imgElem3;
+		// imgElem3 = new Image();
+		// imgElem3.src = `./images/projects/emoji/emoji_7.jpg`;
+		// sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
 		
 		let imgElem5;
 		for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
@@ -231,12 +231,6 @@
 		return rv;
 	}
 
-	function imgChange(length, direction, projectName){
-		for(let i = 0; i < length; i++){
-			direction[i].src = `./images/projects/${projectName}/${projectName}-${i}.jpg`
-		}
-	}
-
 	// 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
 	function playAnimation() {
 		const objs = sceneInfo[currentScene].objs;
@@ -303,19 +297,11 @@
 				}
 				break;
 			case 1:
-					
+				break;
 			case 2:
 				// console.log('2 play');
-				// let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
-				// objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
-
-				if (scrollRatio <= 0.5) {
-					// in
-					objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset);
-				} else {
-					// out
-					objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset);
-				}
+				let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
+				objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
 
 				if (scrollRatio <= 0.32) {
 					// in
