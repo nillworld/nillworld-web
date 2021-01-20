@@ -199,7 +199,7 @@
 		document.body.setAttribute('id', `show-scene-${currentScene}`);
 
 		const heightRatio = window.innerHeight / 1080;
-		sceneInfo[0].objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${heightRatio * 2})`;
+		sceneInfo[0].objs.canvas.style.transform = `translate3d(-30%, -35%, 0) scale(${window.innerHeight/675})`;
 		sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
 		//sceneInfo[1].objs.projects.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
 		sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
@@ -536,12 +536,12 @@
 				// 마지막 이미지에서 확대
 				if(currentScene === 0 && sequence >= 370){
 					objs.context.drawImage(objs.videoImages[370], 0, 0);
-					objs.canvas.style.transform = `translate3d(${-47+(sequence-370)*0.5}%, ${-50-(sequence-370)*1.9}%, 0) scale(${window.innerHeight/1080 * 2 + (sequence-370)*5/100})`
+					objs.canvas.style.transform = `translate3d(${-30 + (sequence-370)*1.5}%, ${-35-sequence/5 - (sequence-370)*1.5}%, 0) scale(${window.innerHeight/675+ (sequence-370)*5/100})`
 					//만약 세로 길이가 짧다면 코드 화면(캔버스)을 조금씩 위로 옮김
 				}
 				if(currentScene === 0 && sequence < 370){
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-					objs.canvas.style.transform = `translate3d(-47%, -50%, 0) scale(${window.innerHeight/1080 * 2})`;
+					objs.canvas.style.transform = `translate3d(-30%, ${-35-sequence/5}%, 0) scale(${window.innerHeight/675})`;
 				}
 			}
 		}
