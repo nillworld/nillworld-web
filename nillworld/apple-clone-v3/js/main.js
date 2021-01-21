@@ -9,6 +9,7 @@
 	let delayedYOffset = 0;
 	let rafId;
 	let rafState;
+	let canvasRatio;
 
 	const sceneInfo = [
 		{
@@ -34,7 +35,7 @@
 			values: {
 				videoImageCount: 371,
 				imageSequence: [0, 650],
-				canvas_opacity: [0.7, 0, { start: 0.7, end: 0.8 }],
+				canvas_opacity: [1, 0, { start: 0.7, end: 0.8 }],
 				messageA_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
 				messageB_opacity_in: [0, 1, { start: 0.2, end: 0.25 }],
 				messageC_opacity_in: [0, 1, { start: 0.35, end: 0.4 }],
@@ -197,9 +198,13 @@
 			}
 		}
 		document.body.setAttribute('id', `show-scene-${currentScene}`);
-
+		if(window.innerHeight/704 >= window.innerWidth/720){
+			canvasRatio = window.innerHeight/675 * 0.7;
+		}else{
+			canvasRatio = window.innerWidth/1200 * 0.9;
+		}
 		const heightRatio = window.innerHeight / 1080;
-		sceneInfo[0].objs.canvas.style.transform = `translate3d(-30%, -35%, 0) scale(${window.innerHeight/675})`;
+		sceneInfo[0].objs.canvas.style.transform = `translate3d(-30%, -35%, 0) scale(${canvasRatio})`;
 		sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
 		//sceneInfo[1].objs.projects.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
 		sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
@@ -533,15 +538,22 @@
 				if (objs.videoImages[sequence]) {
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
 				}
+				let canvasTopRatio;				
+				if(window.innerHeight/704 >= window.innerWidth/720){
+					canvasRatio = window.innerHeight/675 * 0.7;
+					canvasTopRatio = 10;
+				}else{
+					canvasRatio = window.innerWidth/1200 * 0.9;
+					canvasTopRatio = 0;
+				}
 				// 마지막 이미지에서 확대
 				if(currentScene === 0 && sequence >= 370){
 					objs.context.drawImage(objs.videoImages[370], 0, 0);
-					objs.canvas.style.transform = `translate3d(${-30 + (sequence-370)*1.5}%, ${-35-sequence/5 - (sequence-370)*1.5}%, 0) scale(${window.innerHeight/675+ (sequence-370)*5/100})`
-					//만약 세로 길이가 짧다면 코드 화면(캔버스)을 조금씩 위로 옮김
+					objs.canvas.style.transform = `translate3d(${-30 + (sequence-370)*1.5}%, ${-35-sequence/5 + canvasTopRatio - (sequence-370)*1.5}%, 0) scale(${canvasRatio+ (sequence-370)*5/100})`
 				}
 				if(currentScene === 0 && sequence < 370){
 					objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-					objs.canvas.style.transform = `translate3d(-30%, ${-35-sequence/5}%, 0) scale(${window.innerHeight/675})`;
+					objs.canvas.style.transform = `translate3d(-30%, ${-35 - sequence/5 + canvasTopRatio}%, 0) scale(${canvasRatio})`;
 				}
 			}
 		}
