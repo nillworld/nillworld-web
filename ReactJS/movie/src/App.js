@@ -1,6 +1,6 @@
 
 function Personality(properties){
-  return <div>Hello {properties.wish} Nill</div>
+  return <div>Hello {properties.nill} Nill</div>
 }
 function Movies({name}){
   return (
@@ -15,6 +15,7 @@ function Movies2({name, picture}){
       <img src={picture} alt={name} />
     </div>);
 }
+
 
 const movieList = [
   {
@@ -32,11 +33,15 @@ const movieList = [
   }
 ]
 
+function movieTest(test){
+  return <Movies2 key={test.id} name={test.name} picture={test.img}/>
+}
+
 function App() {
   return (
     <div className="App">
       <h1>NillWorld</h1>
-      <Personality wish="awesome" />
+      <Personality nill="awesome" />
       <Movies name="Inception" />
       <Movies name="About time" />
       <Movies name="Frozen" />
@@ -44,6 +49,9 @@ function App() {
         {movieList.map(movie => (
           <Movies2 key={movie.id} name={movie.name} picture={movie.img} />
         ))}
+      </div>
+      <div>
+        {movieList.map(movieTest)}
       </div>
     </div>
   );
