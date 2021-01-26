@@ -1,4 +1,3 @@
-# nillworldWeb
-Nill World website
+# nillworld!
+Nill World for learning
 
-## test readme
