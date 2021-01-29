@@ -1,18 +1,28 @@
+import React from 'react';
+import Test from './Test';
+import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Personality(properties){
   return <div>Hello {properties.nill} Nill</div>
 }
+
 function Movies({name}){
   return (
     <div>
       The movie name is {name}
     </div>);
 }
+
 function Movies2({name, picture}){
   return (
     <div>
-      The movie name is {name}
-      <img src={picture} alt={name} />
+      <ul>
+        <li>
+          The movie name is {name}
+        </li>
+          <img src={picture} alt={name} width="300px" />
+      </ul>
     </div>);
 }
 
@@ -41,6 +51,15 @@ function App() {
   return (
     <div className="App">
       <h1>NillWorld</h1>
+      <ul>
+        <li>
+          <Link to='/'>home</Link>
+        </li>
+        <li>
+          <Link to='/test'>test</Link>
+        </li>
+      </ul>
+      <Route path="/test" component={Test} />
       <Personality nill="awesome" />
       <Movies name="Inception" />
       <Movies name="About time" />
