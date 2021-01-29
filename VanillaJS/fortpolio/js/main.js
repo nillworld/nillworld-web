@@ -155,7 +155,7 @@
 		let imgElem5;
 		for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
 			imgElem5 = new Image();
-			imgElem5.src = `./video/002/IMG_${7027 + i}.JPG`;
+			imgElem5.src = `./video/02/IMG_${7027 + i}.JPG`;
 			sceneInfo[2].objs.videoImages.push(imgElem5);
 		}
 
