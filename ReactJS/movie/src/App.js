@@ -1,10 +1,15 @@
 import React from 'react';
 import Test from './Test';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function Personality(properties){
   return <div>Hello {properties.nill} Nill</div>
+}
+
+Personality.PropTypes = {
+  
 }
 
 function Movies({name}){
