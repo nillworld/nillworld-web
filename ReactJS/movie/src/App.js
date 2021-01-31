@@ -63,6 +63,9 @@ function App() {
         <li>
           <Link to='/test'>test</Link>
         </li>
+        <li>
+          <Link to='/test'>test</Link>
+        </li>
       </ul>
       <Route path="/test" component={Test} />
       <Personality nill="awesome" />
