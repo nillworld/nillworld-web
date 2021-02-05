@@ -27,6 +27,7 @@ class App extends React.Component {
     this.getMovies();
   }
   render() {
+    //이렇게 하지 않으면 밑에 this.state.movies.map으로 써야함
     const { isLoading, movies } = this.state;
     return (
       <div>
