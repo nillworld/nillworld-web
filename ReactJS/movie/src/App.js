@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Movie from "./Movie";
+import "./App.css";
 
 //App 컨포넌트에는 state가 필요하기에 function이 아닌 class로 컨포넌트를 만듬
 class App extends React.Component {
@@ -30,10 +31,14 @@ class App extends React.Component {
     //이렇게 하지 않으면 밑에 this.state.movies.map으로 써야함
     const { isLoading, movies } = this.state;
     return (
-      <div>
-        {isLoading
-          ? "Loading..."
-          : movies.map((movie) => (
+      <section className="container">
+        {isLoading ? (
+          <div className="loader">
+            <span className="loader__text">Loading...</span>
+          </div>
+        ) : (
+          <div className="movies">
+            {movies.map((movie) => (
               <Movie
                 key={movie.id}
                 id={movie.id}
@@ -41,9 +46,12 @@ class App extends React.Component {
                 title={movie.title}
                 summary={movie.summary}
                 poster={movie.medium_cover_image}
+                genres={movie.genres}
               />
             ))}
-      </div>
+          </div>
+        )}
+      </section>
     );
   }
 }
