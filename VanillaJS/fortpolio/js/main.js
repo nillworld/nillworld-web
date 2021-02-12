@@ -699,14 +699,14 @@
           objs.context.drawImage(objs.videoImages[370], 0, 0);
           objs.canvas.style.transform = `translate3d(${
             -50 + (sequence - 370) / 2
-          }%, ${10 - sequence / 5 - (sequence - 370)}%, 0) scale(${
+          }%, ${10 - sequence / 6 - (sequence - 370)}%, 0) scale(${
             1 + (sequence - 370) / 30
           })`;
         }
         if (currentScene === 0 && sequence < 370) {
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
           objs.canvas.style.transform = `translate3d(-50%, ${
-            10 - sequence / 5
+            10 - sequence / 6
           }%, 0) scale(1)`;
         }
       }
