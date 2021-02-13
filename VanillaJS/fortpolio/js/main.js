@@ -65,9 +65,11 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-1"),
-        projects: document.querySelector("#projects"),
+        possible_message: document.querySelector(".possible-message"),
       },
-      values: {},
+      values: {
+        message_space_in: [-1],
+      },
     },
     {
       // 2
@@ -365,6 +367,11 @@
         }
         break;
       case 1:
+        if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.6) {
+          objs.possible_message.classList.add("sticky-elem");
+        } else {
+          objs.possible_message.classList.remove("sticky-elem");
+        }
         break;
       case 2:
         // console.log('2 play');

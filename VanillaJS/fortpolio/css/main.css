@@ -132,15 +132,28 @@ body.before-load {
 }
 #scroll-section-1 .description {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
 }
 #scroll-section-1 h2 {
   /* top: 38vh; */
+  width: 100%;
   z-index: 5;
-  font-size: 5rem;
+  font-size: 13vw;
   text-align: center;
   justify-content: center;
   color: rgba(255, 255, 255);
+}
+#scroll-section-1 .possible-message {
+  width: 100%;
+  height: 100vh;
+  top: 24vh;
+  letter-spacing: -1vw;
+  opacity: 1;
+}
+#scroll-section-1 .possible-upper {
+  font-size: 10vw;
+  color: rgb(30, 30, 30);
+  letter-spacing: -2vw;
 }
 
 #scroll-section-2 .main-message {
