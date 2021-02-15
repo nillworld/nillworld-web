@@ -367,7 +367,7 @@
         }
         break;
       case 1:
-        if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.6) {
+        if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.5) {
           objs.possible_message.classList.add("sticky-elem");
         } else {
           objs.possible_message.classList.remove("sticky-elem");
