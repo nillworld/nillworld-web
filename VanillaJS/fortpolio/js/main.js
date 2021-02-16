@@ -68,6 +68,7 @@
         possible_message: document.querySelector(".possible-message"),
       },
       values: {
+        container_backColor: [30, 30, 30, { start: 0.1, end: 0.4 }],
         message_space_in: [-1],
       },
     },
