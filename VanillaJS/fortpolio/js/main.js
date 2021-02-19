@@ -368,11 +368,11 @@
         }
         break;
       case 1:
-        if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.5) {
-          objs.possible_message.classList.add("sticky-elem");
-        } else {
-          objs.possible_message.classList.remove("sticky-elem");
-        }
+        // if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.5) {
+        //   objs.possible_message.classList.add("sticky-elem");
+        // } else {
+        //   objs.possible_message.classList.remove("sticky-elem");
+        // }
         break;
       case 2:
         // console.log('2 play');
