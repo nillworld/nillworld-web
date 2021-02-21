@@ -65,11 +65,13 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-1"),
-        possible_message: document.querySelector(".possible-message"),
+        main_message: document.querySelector(".main-message h2"),
       },
       values: {
-        container_backColor: [30, 30, 30, { start: 0.1, end: 0.4 }],
-        message_space_in: [-1],
+        main_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
+        main_taranslateY_in: [20, 0, { start: 0.05, end: 0.1 }],
+        main_opacity_out: [1, 0, { start: 0.15, end: 0.2 }],
+        main_taranslateY_out: [0, -20, { start: 0.15, end: 0.2 }],
       },
     },
     {
@@ -373,6 +375,28 @@
         // } else {
         //   objs.possible_message.classList.remove("sticky-elem");
         // }
+
+        if (scrollRatio <= 0.125) {
+          // in
+          objs.main_message.style.opacity = calcValues(
+            values.main_opacity_in,
+            currentYOffset
+          );
+          objs.main_message.style.transform = `translate3d(0, ${calcValues(
+            values.main_taranslateY_in,
+            currentYOffset
+          )}%, 0)`;
+        } else {
+          // out
+          objs.main_message.style.opacity = calcValues(
+            values.main_opacity_out,
+            currentYOffset
+          );
+          objs.main_message.style.transform = `translate3d(0, ${calcValues(
+            values.main_taranslateY_out,
+            currentYOffset
+          )}%, 0)`;
+        }
         break;
       case 2:
         // console.log('2 play');
