@@ -66,12 +66,19 @@
       objs: {
         container: document.querySelector("#scroll-section-1"),
         main_message: document.querySelector(".main-message h2"),
+        project_canvas: document.querySelector(".project-canvas"),
+        project_context: document
+          .querySelector(".project-canvas")
+          .getContext("2d"),
+        projectImg: [],
       },
       values: {
         main_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
         main_taranslateY_in: [20, 0, { start: 0.05, end: 0.1 }],
         main_opacity_out: [1, 0, { start: 0.15, end: 0.2 }],
         main_taranslateY_out: [0, -20, { start: 0.15, end: 0.2 }],
+        project_opacity_in: [0, 1, { start: 0.17, end: 0.27 }],
+        project_opacity_out: [1, 0, { start: 0.33, end: 0.43 }],
       },
     },
     {
@@ -152,10 +159,10 @@
     imgElem2.src = `./images/profileImg.jpg`;
     sceneInfo[0].objs.profileImg.push(imgElem2);
 
-    // let imgElem3;
-    // imgElem3 = new Image();
-    // imgElem3.src = `./images/projects/emoji/emoji_7.jpg`;
-    // sceneInfo[1].objs.projectImg_emoji.push(imgElem3);
+    let imgElem3;
+    imgElem3 = new Image();
+    imgElem3.src = `./images/projects/automouse.png`;
+    sceneInfo[1].objs.projectImg.push(imgElem3);
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
@@ -396,6 +403,18 @@
             values.main_taranslateY_out,
             currentYOffset
           )}%, 0)`;
+        }
+        if (scrollRatio <= 0.3) {
+          objs.project_canvas.style.opacity = calcValues(
+            values.project_opacity_in,
+            currentYOffset
+          );
+          objs.project_context.drawImage(objs.projectImg[0], 0, 0);
+        } else {
+          objs.project_canvas.style.opacity = calcValues(
+            values.project_opacity_out,
+            currentYOffset
+          );
         }
         break;
       case 2:
