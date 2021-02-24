@@ -47,7 +47,7 @@ body.before-load {
 .local-nav-sticky .local-nav {
   position: fixed;
   top: 0;
-  background: rgba(34, 33, 33, 0.8);
+  background: rgba(34, 33, 33, 0.1);
   /* for iPhone */
   -webkit-backdrop-filter: saturate(180%) blur(15px);
   -moz-backdrop-filter: saturate(180%) blur(15px);
@@ -146,7 +146,6 @@ body.before-load {
 #scroll-section-1 .project {
   align-items: center;
   text-align: center;
-  height: 100%;
   top: 50px;
 }
 .sticky-elem-canvas .project-canvas {

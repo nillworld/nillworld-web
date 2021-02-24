@@ -79,7 +79,7 @@
         main_opacity_out: [1, 0, { start: 0.15, end: 0.2 }],
         main_taranslateY_out: [0, -20, { start: 0.15, end: 0.2 }],
         project_opacity_in: [0, 1, { start: 0.17, end: 0.27 }],
-        project_opacity_out: [1, 0, { start: 0.33, end: 0.43 }],
+        project_opacity_out: [1, 0.3, { start: 0.33, end: 0.43 }],
       },
     },
     {
@@ -364,12 +364,12 @@
           )}%, 0)`;
           // objs.context.drawImage(objs.videoImages[470], 0, 0);
         }
+        objs.profile_context.drawImage(objs.profileImg[0], 0, 0);
         if (scrollRatio <= 0.8) {
           objs.profile_canvas.style.opacity = calcValues(
             values.profile_opacity_in,
             currentYOffset
           );
-          objs.profile_context.drawImage(objs.profileImg[0], 0, 0);
         } else {
           objs.profile_canvas.style.opacity = calcValues(
             values.profile_opacity_out,
@@ -421,12 +421,12 @@
             currentYOffset
           )}%, 0)`;
         }
+        objs.project_context.drawImage(objs.projectImg[0], 0, 0);
         if (scrollRatio <= 0.3) {
           objs.project_canvas.style.opacity = calcValues(
             values.project_opacity_in,
             currentYOffset
           );
-          objs.project_context.drawImage(objs.projectImg[0], 0, 0);
         } else {
           objs.project_canvas.style.opacity = calcValues(
             values.project_opacity_out,
