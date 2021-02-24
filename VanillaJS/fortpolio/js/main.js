@@ -66,6 +66,7 @@
       objs: {
         container: document.querySelector("#scroll-section-1"),
         main_message: document.querySelector(".main-message h2"),
+        project_div: document.querySelector("#scroll-section-1 .project"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document
           .querySelector(".project-canvas")
@@ -383,6 +384,22 @@
         //   objs.possible_message.classList.remove("sticky-elem");
         // }
 
+        // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
+        const widthRatio_1 = window.innerWidth / objs.project_canvas.width;
+        const heightRatio_1 = window.innerHeight / objs.project_canvas.height;
+        let canvasScaleRatio_1;
+
+        if (widthRatio_1 <= heightRatio_1) {
+          // 캔버스보다 브라우저 창이 홀쭉한 경우
+          objs.project_canvas.height = window.innerHeight;
+        } else {
+          // 캔버스보다 브라우저 창이 납작한 경우
+          if (window.innerWidth < 1200) {
+            objs.project_canvas.width = window.innerWidth;
+          } else {
+            objs.project_canvas.width = 1200;
+          }
+        }
         if (scrollRatio <= 0.125) {
           // in
           objs.main_message.style.opacity = calcValues(
