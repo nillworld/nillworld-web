@@ -149,7 +149,9 @@ body.before-load {
   top: 50px;
 }
 .sticky-elem-canvas .project-canvas {
-  max-width: 1200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 /* #scroll-section-1 .possible-message {

@@ -217,10 +217,26 @@
     } else {
       canvasRatio = (window.innerWidth / 1200) * 0.9;
     }
-    const heightRatio = window.innerHeight / 1080;
+    const heightRatio = window.innerHeight / 900;
+    let section1_canvas_scale;
+    if (window.innerWidth / 1200 >= window.innerHeight / 900) {
+      if (window.innerWidth >= 1200) {
+        section1_canvas_scale = 1;
+        console.log("1");
+        console.log(section1_canvas_scale);
+      } else {
+        section1_canvas_scale = window.innerWidth / 1200;
+        console.log("2");
+        console.log(section1_canvas_scale);
+      }
+    } else {
+      section1_canvas_scale = window.innerHeight / 900;
+      console.log("3");
+      console.log(section1_canvas_scale);
+    }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
-    //sceneInfo[1].objs.projects.style.transform = `translate3d(-50%, -49%, 0) scale(${heightRatio})`;
+    sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -384,22 +400,25 @@
         //   objs.possible_message.classList.remove("sticky-elem");
         // }
 
-        // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
-        const widthRatio_1 = window.innerWidth / objs.project_canvas.width;
-        const heightRatio_1 = window.innerHeight / objs.project_canvas.height;
-        let canvasScaleRatio_1;
+        // if (scrollRatio >= 0.1) {
+        //   // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
+        //   const widthRatio = window.innerWidth / objs.project_canvas.width;
+        //   const heightRatio = window.innerHeight / objs.project_canvas.height;
+        //   let canvasScaleRatio_1;
 
-        if (widthRatio_1 <= heightRatio_1) {
-          // 캔버스보다 브라우저 창이 홀쭉한 경우
-          objs.project_canvas.height = window.innerHeight;
-        } else {
-          // 캔버스보다 브라우저 창이 납작한 경우
-          if (window.innerWidth < 1200) {
-            objs.project_canvas.width = window.innerWidth;
-          } else {
-            objs.project_canvas.width = 1200;
-          }
-        }
+        //   if (widthRatio <= heightRatio) {
+        //     // 캔버스보다 브라우저 창이 홀쭉한 경우
+        //     objs.project_canvas.height = window.innerHeight;
+        //   } else {
+        //     // 캔버스보다 브라우저 창이 납작한 경우
+        //     if (window.innerWidth < 1200) {
+        //       objs.project_canvas.width = window.innerWidth;
+        //     } else {
+        //       objs.project_canvas.width = 1200;
+        //     }
+        //   }
+        // }
+
         if (scrollRatio <= 0.125) {
           // in
           objs.main_message.style.opacity = calcValues(
@@ -436,10 +455,10 @@
         break;
       case 2:
         // console.log('2 play');
-        let sequence2 = Math.round(
-          calcValues(values.imageSequence, currentYOffset)
-        );
-        objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+        // let sequence2 = Math.round(
+        //   calcValues(values.imageSequence, currentYOffset)
+        // );
+        // objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
 
         if (scrollRatio <= 0.32) {
           // in
