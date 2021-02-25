@@ -11,12 +11,12 @@
   let canvasRatio;
 
   const sceneInfo = [
+    // 0
     {
-      // 0
       type: "sticky",
-      heightNum: 7, // 브라우저 높이의 5배로 scrollHeight 세팅
+      heightNum: 7, //Multiples of browser height
       scrollHeight: 0,
-      //돔 객체
+      //DOM Object
       objs: {
         container: document.querySelector("#scroll-section-0"),
         messageA: document.querySelector("#scroll-section-0 .main-message.a"),
@@ -30,9 +30,10 @@
         profile_context: document.querySelector(".profile-img-canvas").getContext("2d"),
         profileImg: [],
       },
-      //값/ 수치를 담는 친구들
+      //Valus, Numbers
       values: {
         videoImageCount: 371,
+        //even img sequence is 371, It's made 650 for codevideo last img ZoomIn and profile canvas show up
         imageSequence: [0, 650],
         canvas_opacity: [1, 0, { start: 0.7, end: 0.8 }],
         messageA_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
@@ -56,30 +57,34 @@
         projects_opacity_in: [0, 1, { start: 0.99, end: 1.19 }],
       },
     },
+    // 1
     {
-      // 1
       type: "sticky",
-      heightNum: 7, // type normal에서는 필요 없음
+      heightNum: 13, // type normal에서는 필요 없음
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-1"),
         main_message: document.querySelector(".main-message h2"),
         project_div: document.querySelector("#scroll-section-1 .project"),
+        project_message: document.querySelector(".project-message"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
         projectImg: [],
+        project_message_height: document.querySelector(".project-message-height"),
       },
       values: {
-        main_opacity_in: [0, 1, { start: 0.05, end: 0.1 }],
-        main_taranslateY_in: [20, 0, { start: 0.05, end: 0.1 }],
-        main_opacity_out: [1, 0, { start: 0.15, end: 0.2 }],
-        main_taranslateY_out: [0, -20, { start: 0.15, end: 0.2 }],
-        project_opacity_in: [0, 1, { start: 0.17, end: 0.27 }],
-        project_opacity_out: [1, 0.3, { start: 0.33, end: 0.43 }],
+        main_opacity_in: [0, 1, { start: 0.0, end: 0.07 }],
+        main_taranslateY_in: [20, 0, { start: 0.0, end: 0.07 }],
+        automouse_img_opacity_in: [0, 1, { start: 0.2, end: 0.3 }],
+        automouse_txt_opacity_in: [0, 1, { start: 0.45, end: 0.6 }],
+        main_opacity_out: [1, 0, { start: 0.13, end: 0.17 }],
+        main_taranslateY_out: [0, -20, { start: 0.13, end: 0.17 }],
+        automouse_img_opacity_out: [1, 0.3, { start: 0.4, end: 0.45 }],
+        automouse_txt_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
       },
     },
+    // 2
     {
-      // 2
       type: "sticky",
       heightNum: 5,
       scrollHeight: 0,
@@ -115,8 +120,8 @@
         pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }],
       },
     },
+    // 3
     {
-      // 3
       type: "sticky",
       heightNum: 5,
       scrollHeight: 0,
@@ -203,34 +208,30 @@
       }
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
-    if (window.innerHeight / 704 >= window.innerWidth / 720) {
-      canvasRatio = (window.innerHeight / 675) * 0.7;
-    } else {
-      canvasRatio = (window.innerWidth / 1200) * 0.9;
-    }
     const heightRatio = window.innerHeight / 900;
     let section1_canvas_scale;
     //when long height, top rate up (cuz of local bar -> 50px)
     let projectYtrans = 0;
+    let project_message_width_Ratio = 0.9;
     if (window.innerWidth / 1200 >= window.innerHeight / 900) {
       section1_canvas_scale = window.innerHeight / 900;
-      console.log("3");
     } else {
       if (window.innerWidth >= 1200) {
         section1_canvas_scale = 1;
-        console.log("1");
-        console.log(section1_canvas_scale);
       } else {
         projectYtrans = -5;
         //minus scrollbar width -> 20
         section1_canvas_scale = (window.innerWidth - 20) / 1200;
-        console.log("2");
-        console.log(section1_canvas_scale);
       }
+    }
+    if (section1_canvas_scale * 1200 > 700) {
+      project_message_width_Ratio = 0.6;
     }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
+    sceneInfo[1].objs.project_message_height.style.height = `${window.innerHeight * sceneInfo[1].heightNum * 0.5}px`;
+    sceneInfo[1].objs.project_message.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -325,32 +326,8 @@
         }
         break;
       case 1:
-        // if (window.pageYOffset > prevScrollHeight + window.innerHeight * 0.5) {
-        //   objs.possible_message.classList.add("sticky-elem");
-        // } else {
-        //   objs.possible_message.classList.remove("sticky-elem");
-        // }
-
-        // if (scrollRatio >= 0.1) {
-        //   // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
-        //   const widthRatio = window.innerWidth / objs.project_canvas.width;
-        //   const heightRatio = window.innerHeight / objs.project_canvas.height;
-        //   let canvasScaleRatio_1;
-
-        //   if (widthRatio <= heightRatio) {
-        //     // 캔버스보다 브라우저 창이 홀쭉한 경우
-        //     objs.project_canvas.height = window.innerHeight;
-        //   } else {
-        //     // 캔버스보다 브라우저 창이 납작한 경우
-        //     if (window.innerWidth < 1200) {
-        //       objs.project_canvas.width = window.innerWidth;
-        //     } else {
-        //       objs.project_canvas.width = 1200;
-        //     }
-        //   }
-        // }
-
-        if (scrollRatio <= 0.125) {
+        objs.project_context.drawImage(objs.projectImg[0], 0, 0);
+        if (scrollRatio <= 0.1) {
           // in
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_in, currentYOffset)}%, 0)`;
@@ -359,20 +336,19 @@
           objs.main_message.style.opacity = calcValues(values.main_opacity_out, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_out, currentYOffset)}%, 0)`;
         }
-        objs.project_context.drawImage(objs.projectImg[0], 0, 0);
-        if (scrollRatio <= 0.3) {
-          objs.project_canvas.style.opacity = calcValues(values.project_opacity_in, currentYOffset);
+        if (scrollRatio <= 0.33) {
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_in, currentYOffset);
         } else {
-          objs.project_canvas.style.opacity = calcValues(values.project_opacity_out, currentYOffset);
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
         }
+        // if (scrollRatio < 0.625) {
+        //   objs.project_message.style.opacity = calcValues(values.automouse_txt_opacity_in, currentYOffset);
+        // } else {
+        //   objs.project_message.style.opacity = calcValues(values.automouse_txt_opacity_out, currentYOffset);
+        // }
         break;
       case 2:
         // console.log('2 play');
-        // let sequence2 = Math.round(
-        //   calcValues(values.imageSequence, currentYOffset)
-        // );
-        // objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
-
         if (scrollRatio <= 0.32) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -589,24 +565,20 @@
         if (objs.videoImages[sequence]) {
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         }
-        let canvasTopRatio;
-        if (window.innerHeight / 704 >= window.innerWidth / 720) {
-          canvasRatio = (window.innerHeight / 675) * 0.7;
-          canvasTopRatio = 10;
-        } else {
-          canvasRatio = (window.innerWidth / 1200) * 0.9;
-          canvasTopRatio = 0;
-        }
-        // 마지막 이미지에서 확대
+
+        const canvas_Ratio = (window.innerWidth * 704) / (window.innerHeight * 720);
+        const canvas_transY = 10 - (sequence * canvas_Ratio * 0.5) / 6;
+        // section-0 canvas codeVideo last img ZoomIn
         if (currentScene === 0 && sequence >= 370) {
           objs.context.drawImage(objs.videoImages[370], 0, 0);
-          objs.canvas.style.transform = `translate3d(${-50 + (sequence - 370) / 2}%, ${10 - sequence / 6 - (sequence - 370)}%, 0) scale(${
+          objs.canvas.style.transform = `translate3d(${-50 + (sequence - 370) / 2}%, ${canvas_transY - (sequence - 370)}%, 0) scale(${
             1 + (sequence - 370) / 30
           })`;
         }
+        // section-0 canvas codeVide zumout
         if (currentScene === 0 && sequence < 370) {
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-          objs.canvas.style.transform = `translate3d(-50%, ${10 - sequence / 6}%, 0) scale(1)`;
+          objs.canvas.style.transform = `translate3d(-50%, ${canvas_transY}%, 0) scale(1)`;
         }
       }
     }

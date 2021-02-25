@@ -142,6 +142,7 @@ body.before-load {
   text-align: center;
   justify-content: center;
   color: rgba(255, 255, 255);
+  opacity: 0;
 }
 #scroll-section-1 .project {
   align-items: center;
@@ -152,8 +153,18 @@ body.before-load {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: -1;
 }
-
+.project-message {
+  font-size: 2rem;
+  width: 80%;
+  z-index: 3;
+}
+.project-message-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
 /* #scroll-section-1 .possible-message {
   width: 100%;
   height: 100vh;
@@ -269,7 +280,7 @@ body.before-load {
   bottom: 0;
   left: 0;
   z-index: 100;
-  background: white;
+  background: rgb(29, 29, 31);
   opacity: 0;
   transition: 0.5s;
 }
@@ -301,7 +312,7 @@ body.before-load {
   animation: loading-spin 3s infinite;
 }
 .loading-circle circle {
-  stroke: black;
+  stroke: white;
   stroke-width: 4;
   /* getTotalLength()로 stroke의 길이를 얻어올 수 있음 */
   stroke-dasharray: 157;
