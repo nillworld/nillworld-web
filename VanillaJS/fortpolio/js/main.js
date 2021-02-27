@@ -67,10 +67,10 @@
         main_message: document.querySelector(".main-message h2"),
         project_div: document.querySelector("#scroll-section-1 .project"),
         project_message: document.querySelector(".project-message"),
+        project_message_title: document.querySelector(".project-message-title"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
         projectImg: [],
-        project_message_height: document.querySelector(".project-message-height"),
       },
       values: {
         main_opacity_in: [0, 1, { start: 0.0, end: 0.07 }],
@@ -230,7 +230,7 @@
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
-    sceneInfo[1].objs.project_message_height.style.height = `${window.innerHeight * sceneInfo[1].heightNum * 0.5}px`;
+    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.5}px`;
     sceneInfo[1].objs.project_message.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
@@ -662,3 +662,11 @@
 
   setCanvasImages();
 })();
+
+// const videoElem = document.querySelector(".videotest");
+// videoElem.addEventListener("loadeddata", function () {
+//   init();
+// });
+// function init() {
+//   videoElem.currentTime = videoElem.duration;
+// }
