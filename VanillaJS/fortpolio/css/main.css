@@ -155,15 +155,29 @@ body.before-load {
   left: 50%;
   z-index: -1;
 }
+.loop-video {
+  max-width: 1200px;
+  z-index: 5;
+}
+#v4-video {
+  width: 100%;
+}
 .project-message {
-  font-size: 2rem;
+  font-size: 1.8em;
   width: 80%;
   z-index: 3;
+  margin-bottom: 60vh;
 }
 .project-message-title {
-  font-size: 3rem;
+  font-size: 2em;
   text-align: center;
   margin-bottom: 20px;
+}
+#video-mention {
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  z-index: 3;
 }
 /* #scroll-section-1 .possible-message {
   width: 100%;

@@ -68,19 +68,19 @@
         project_div: document.querySelector("#scroll-section-1 .project"),
         project_message: document.querySelector(".project-message"),
         project_message_title: document.querySelector(".project-message-title"),
+        loop_video: document.querySelector(".loop-video"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
         projectImg: [],
       },
       values: {
-        main_opacity_in: [0, 1, { start: 0.0, end: 0.07 }],
-        main_taranslateY_in: [20, 0, { start: 0.0, end: 0.07 }],
-        automouse_img_opacity_in: [0, 1, { start: 0.2, end: 0.3 }],
-        automouse_txt_opacity_in: [0, 1, { start: 0.45, end: 0.6 }],
-        main_opacity_out: [1, 0, { start: 0.13, end: 0.17 }],
-        main_taranslateY_out: [0, -20, { start: 0.13, end: 0.17 }],
-        automouse_img_opacity_out: [1, 0.3, { start: 0.4, end: 0.45 }],
-        automouse_txt_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
+        main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
+        main_taranslateY_in: [20, 0, { start: 0.0, end: 0.06 }],
+        automouse_img_opacity_in: [0, 1, { start: 0.14, end: 0.19 }],
+        main_opacity_out: [1, 0, { start: 0.11, end: 0.14 }],
+        main_taranslateY_out: [0, -20, { start: 0.11, end: 0.14 }],
+        automouse_img_opacity_down: [1, 0.3, { start: 0.23, end: 0.26 }],
+        automouse_img_opacity_out: [0.3, 0, { start: 0.35, end: 0.38 }],
       },
     },
     // 2
@@ -213,11 +213,11 @@
     //when long height, top rate up (cuz of local bar -> 50px)
     let projectYtrans = 0;
     let project_message_width_Ratio = 0.9;
-    if (window.innerWidth / 1200 >= window.innerHeight / 900) {
-      section1_canvas_scale = window.innerHeight / 900;
+    if (window.innerWidth >= 1200 && window.innerHeight >= 900) {
+      section1_canvas_scale = 1;
     } else {
-      if (window.innerWidth >= 1200) {
-        section1_canvas_scale = 1;
+      if (window.innerWidth / 1200 >= window.innerHeight / 900) {
+        section1_canvas_scale = window.innerHeight / 900;
       } else {
         projectYtrans = -5;
         //minus scrollbar width -> 20
@@ -225,13 +225,15 @@
       }
     }
     if (section1_canvas_scale * 1200 > 700) {
-      project_message_width_Ratio = 0.6;
+      project_message_width_Ratio = 0.7;
     }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
-    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.5}px`;
+    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
+    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
     sceneInfo[1].objs.project_message.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
+    sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -336,16 +338,15 @@
           objs.main_message.style.opacity = calcValues(values.main_opacity_out, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_out, currentYOffset)}%, 0)`;
         }
-        if (scrollRatio <= 0.33) {
+        if (scrollRatio <= 0.21) {
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_in, currentYOffset);
+        } else {
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_down, currentYOffset);
+        }
+        if (scrollRatio <= 0.3) {
         } else {
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
         }
-        // if (scrollRatio < 0.625) {
-        //   objs.project_message.style.opacity = calcValues(values.automouse_txt_opacity_in, currentYOffset);
-        // } else {
-        //   objs.project_message.style.opacity = calcValues(values.automouse_txt_opacity_out, currentYOffset);
-        // }
         break;
       case 2:
         // console.log('2 play');
