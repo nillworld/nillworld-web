@@ -68,9 +68,11 @@
         project_div: document.querySelector("#scroll-section-1 .project"),
         project_message: document.querySelector(".project-message"),
         project_message_title: document.querySelector(".project-message-title"),
+        project_message_title: document.querySelector(".project-message-title"),
         loop_video: document.querySelector(".loop-video"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
+        imagesPath: ["./images/projects/automouse.png", "./images/projects/theia-code.png"],
         projectImg: [],
       },
       values: {
@@ -159,9 +161,11 @@
     sceneInfo[0].objs.profileImg.push(imgElem2);
 
     let imgElem3;
-    imgElem3 = new Image();
-    imgElem3.src = `./images/projects/automouse.png`;
-    sceneInfo[1].objs.projectImg.push(imgElem3);
+    for (let i = 0; i < sceneInfo[1].objs.imagesPath.length; i++) {
+      imgElem3 = new Image();
+      imgElem3.src = sceneInfo[1].objs.imagesPath[i];
+      sceneInfo[1].objs.projectImg.push(imgElem3);
+    }
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
@@ -328,13 +332,11 @@
         }
         break;
       case 1:
-        objs.project_context.drawImage(objs.projectImg[0], 0, 0);
         if (scrollRatio <= 0.1) {
-          // in
+          objs.project_context.drawImage(objs.projectImg[0], 0, 0);
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_in, currentYOffset)}%, 0)`;
         } else {
-          // out
           objs.main_message.style.opacity = calcValues(values.main_opacity_out, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_out, currentYOffset)}%, 0)`;
         }
@@ -345,6 +347,7 @@
         }
         if (scrollRatio <= 0.3) {
         } else {
+          objs.project_context.drawImage(objs.projectImg[1], 0, 0);
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
         }
         break;
