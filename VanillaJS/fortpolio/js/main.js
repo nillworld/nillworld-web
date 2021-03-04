@@ -67,8 +67,8 @@
         main_message: document.querySelector(".main-message h2"),
         project_div: document.querySelector("#scroll-section-1 .project"),
         project_message: document.querySelector(".project-message"),
-        project_message_title: document.querySelector(".project-message-title"),
-        project_message_title: document.querySelector(".project-message-title"),
+        project_automouse_title: document.querySelector(".project-message-title.automouse"),
+        project_nas_title: document.querySelector(".project-message-title.nas-server"),
         loop_video: document.querySelector(".loop-video"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
@@ -83,6 +83,8 @@
         main_taranslateY_out: [0, -20, { start: 0.11, end: 0.14 }],
         automouse_img_opacity_down: [1, 0.3, { start: 0.23, end: 0.26 }],
         automouse_img_opacity_out: [0.3, 0, { start: 0.35, end: 0.38 }],
+        nas_img_opacity_in: [0, 1, { start: 0.45, end: 0.5 }],
+        nas_img_opacity_down: [1, 0.3, { start: 0.53, end: 0.55 }],
       },
     },
     // 2
@@ -234,8 +236,8 @@
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
-    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
-    sceneInfo[1].objs.project_message_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
+    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
+    sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.2}px`;
     sceneInfo[1].objs.project_message.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
@@ -333,7 +335,6 @@
         break;
       case 1:
         if (scrollRatio <= 0.1) {
-          objs.project_context.drawImage(objs.projectImg[0], 0, 0);
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_in, currentYOffset)}%, 0)`;
         } else {
@@ -347,8 +348,16 @@
         }
         if (scrollRatio <= 0.3) {
         } else {
-          objs.project_context.drawImage(objs.projectImg[1], 0, 0);
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
+        }
+        if (scrollRatio <= 0.4) {
+          objs.project_context.drawImage(objs.projectImg[0], 0, 0);
+        } else {
+          objs.project_context.drawImage(objs.projectImg[1], 0, 0);
+          objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_in, currentYOffset);
+        }
+        if (scrollRatio <= 0.52) {
+          // objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_down, currentYOffset);
         }
         break;
       case 2:
