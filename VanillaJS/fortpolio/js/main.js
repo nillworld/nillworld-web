@@ -75,6 +75,17 @@
         project_context: document.querySelector(".project-canvas").getContext("2d"),
         imagesPath: ["./images/projects/automouse.png", "./images/projects/theia-code.png"],
         projectImg: [],
+        slideArea: document.querySelector(".slideArea"),
+        slideInputs: document.querySelectorAll(".slideImgBox input"),
+        slideLabels: document.querySelector(".slideImgBox .labels"),
+        slideImgs: document.querySelector(".slideImgs"),
+        slideImgUl: document.querySelector(".slideImgs ul"),
+        emojiImgs: document.querySelectorAll(".slideImgs .emoji"),
+        slidePrevBtn: document.querySelector("#scroll-section-1 .prev"),
+        slideNextBtn: document.querySelector("#scroll-section-1 .next"),
+        emojiImg: document.querySelectorAll(".emoji img"),
+        projectImg_emoji: [],
+        projectImg_macro: [],
       },
       values: {
         main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
@@ -86,6 +97,13 @@
         automouse_img_opacity_out: [0.2, 0, { start: 0.35, end: 0.38 }],
         nas_img_opacity_in: [0, 1, { start: 0.45, end: 0.49 }],
         nas_img_opacity_down: [1, 0.1, { start: 0.53, end: 0.55 }],
+        //projects_translateY_in: [100, 0, { start: 0.2, end: 0.7 }],
+        //projects_translateY_out: [0, -20, { start: 0.3, end: 0.4 }],
+        projects_opacity_in: [0, 1, { start: 0, end: 0.2 }],
+        projects_opacity_out: [1, 0, { start: 0.35, end: 0.4 }],
+        emojiCouint: 8,
+        emoji_opacity_in: [0, 1, { start: 0.3, end: 0.45 }],
+        emoji_opacity_out: [1, 0, { start: 0.75, end: 0.9 }],
       },
     },
     // 2
@@ -362,6 +380,43 @@
         } else {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_down, currentYOffset);
         }
+
+        ////////////////////////////////////////////
+        slideElement(objs.slideImgs);
+        if (window.pageYOffset > prevScrollHeight + window.innerHeight / 9) {
+          objs.projects.style.top = `40vh`;
+          objs.projects.style.position = `fixed`;
+          objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + scrollRatio * 7})`;
+        } else {
+          objs.projects.style.top = `0vh`;
+          objs.projects.style.position = `relative`;
+          objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
+        }
+        if (scrollRatio <= 0.3) {
+          objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
+        } else {
+          objs.projects.style.opacity = calcValues(values.projects_opacity_out, currentYOffset);
+        }
+        if (scrollRatio <= 0.4) {
+          objs.projects.style.zIndex = `1`;
+        } else {
+          objs.projects.style.zIndex = `-1`;
+        }
+        objs.projects.style.height = window.innerHeight;
+        // objs.projects.style.transform = calcValues(values.)
+        objs.slideArea.style.display = `block`;
+        // objs.projects.style.transform = `translate3d(0, ${calcValues(values.projects_translateY_in, currentYOffset)}%, 0)`;
+        if (scrollRatio <= 0.9) {
+          // objs.projects.style.opacity = calcValues([0, 1, { start: 0.05, end: 0.5 }], currentYOffset);
+          objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
+          imgChange(values.emojiCouint, objs.emojiImg, "emoji");
+          // objs.project_context.drawImage(objs.projectImg_emoji[0], 0, 0);
+        } else {
+          objs.slideArea.style.opacity = calcValues(values.emoji_opacity_out, currentYOffset);
+        }
+
+        ////////////////////////////////////////////
+
         break;
       case 2:
         // console.log('2 play');
@@ -606,6 +661,174 @@
     }
   }
 
+  ///////////////////////////////////////////////////
+  function slideElement(slideImgs) {
+    var objs = sceneInfo[currentScene].objs;
+    var values = sceneInfo[currentScene].values;
+    var slideArea = objs.slideArea;
+    var slideInputs = objs.slideInputs;
+    var slideLabels = objs.slideLabels;
+    var prevBtn = objs.slidePrevBtn;
+    var nextBtn = objs.slideNextBtn;
+    var emojiLength = values.emojiCouint;
+    var imgWidth = Math.round(document.body.offsetWidth * 0.95);
+    var pos1,
+      pos2,
+      pos3 = 0;
+    var touchStartX;
+    var touchEndX;
+    var touchMovedStartX;
+    var touchMovedEndX;
+
+    if (imgWidth > 1200) {
+      imgWidth = 1200;
+    }
+    //  화면 높이 < Img 높이 + 상단바 + 프로젝트 타이틀 + 라벨버튼
+    if (window.innerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
+      slideArea.style.maxWidth = `${(window.innerHeight / 540) * 1000 * 0.7}px`;
+      imgWidth = (window.innerHeight / 540) * 1000 * 0.7;
+      slideArea.style.top = `55%`;
+    } else {
+      slideArea.style.maxWidth = `1200px`;
+      slideArea.style.top = `50%`;
+    }
+    slideImgs.style.transition = 0.2 + "s";
+    slideImgs.addEventListener("touchstart", touchStart, false);
+    slideImgs.onmousedown = dragMouseDown;
+    prevBtn.onclick = prevImg;
+    nextBtn.onclick = nextImg;
+
+    function touchStart(e) {
+      e = e || window.event;
+      e.preventDefault();
+      if (slideState) {
+        touchStartX = e.changedTouches[0].clientX;
+        slideImgs.addEventListener("touchmove", touchMove, false);
+      }
+      slideState = false;
+      //slideImgs.addEventListener('touchend', touchEnd, false);
+    }
+    function touchMove(e) {
+      e = e || window.event;
+      e.preventDefault();
+      touchMovedEndX = touchStartX - e.changedTouches[0].clientX;
+      touchStartX = e.changedTouches[0].clientX;
+      slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
+      slideImgs.style.transition = 0 + "s";
+      touchMovedEndX = 0;
+      slideImgs.addEventListener("touchend", touchEnd, false);
+    }
+    function touchEnd(e) {
+      slideState = true;
+      e = e || window.event;
+      e.preventDefault();
+      touchEndX = e.changedTouches[0].clientX;
+      if (touchEndX - touchStartX > 0) {
+        if (touchEndX - touchStartX > imgWidth / 3) {
+          prevImg();
+        } else {
+          stayImg();
+        }
+      } else {
+        if (touchStartX - touchEndX > imgWidth / 3) {
+          nextImg();
+        } else {
+          stayImg();
+        }
+      }
+    }
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos2 = e.clientX;
+      pos3 = e.clientX;
+      beforeSlideLeft = slideImgs.offsetLeft;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    }
+    function elementDrag(e) {
+      var movedPosition = slideImgs.style.left;
+      e = e || window.event;
+      e.preventDefault();
+      pos1 = pos3 - e.clientX;
+      pos3 = e.clientX;
+      slideImgs.style.left = slideImgs.offsetLeft - pos1 + "px";
+      slideImgs.style.transition = 0 + "s";
+    }
+    function closeDragElement(e) {
+      document.onmouseup = null;
+      document.onmousemove = null;
+      pos1 = pos2 - e.clientX;
+      var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
+      slideSection = Math.round(aroundSection);
+      if (pos1 > imgWidth / 4) {
+        slideSection += 1;
+      }
+      if (pos1 < -imgWidth / 4) {
+        console.log(pos1);
+        slideSection -= 1;
+      }
+      if (slideImgs.offsetLeft > 0) {
+        slideSection = 0;
+      }
+      if (slideImgs.offsetLeft < -(emojiLength - 1) * imgWidth) {
+        slideSection = emojiLength - 1;
+      }
+      slideInputs[slideSection].checked = true;
+      slideImgs.style.left = -slideSection * imgWidth + "px";
+      slideImgs.style.transition = 0.2 + "s";
+    }
+
+    function prevImg() {
+      if (slideImgs.offsetLeft < 0) {
+        var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+        slideSection = Math.round(aroundSection);
+        if (slideSection > emojiLength - 1) {
+          slideSection = emojiLength - 1;
+        }
+        slideInputs[slideSection - 1].checked = true;
+        slideImgs.style.left = -(slideSection - 1) * imgWidth + "px";
+        slideImgs.style.transition = 0.2 + "s";
+      } else {
+        slideInputs[emojiLength - 1].checked = true;
+        slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
+        slideImgs.style.transition = 0 + "s";
+      }
+    }
+    function nextImg() {
+      if (slideImgs.offsetLeft > -Math.round(imgWidth) * (emojiLength - 1)) {
+        var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+        slideSection = Math.round(aroundSection);
+        slideInputs[slideSection + 1].checked = true;
+        slideImgs.style.left = -(slideSection + 1) * imgWidth + "px";
+        slideImgs.style.transition = 0.2 + "s";
+      } else {
+        slideInputs[0].checked = true;
+        slideImgs.style.left = 0 + "px";
+        slideImgs.style.transition = 0 + "s";
+      }
+    }
+    function stayImg() {
+      var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+      if (slideImgs.offsetLeft > 0) {
+        slideInputs[emojiLength - 1].checked = true;
+        slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
+        return;
+      }
+      if (aroundSection > emojiLength - 1) {
+        slideImgs.style.left = 0 + "px";
+        slideInputs[0].checked = true;
+        return;
+      }
+      slideSection = Math.round(aroundSection);
+      slideInputs[slideSection].checked = true;
+      slideImgs.style.left = -slideSection * imgWidth + "px";
+      slideImgs.style.transition = 0.2 + "s";
+    }
+  }
+
+  ///////////////////////////////////////////////////
+
   window.addEventListener("load", () => {
     document.body.classList.remove("before-load");
     setLayout();
@@ -637,6 +860,14 @@
     });
 
     window.addEventListener("resize", () => {
+      ///////////////////////////////////////////
+      sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
+      sceneInfo[1].objs.slideInputs[0].checked = true;
+
+      console.log(sceneInfo[1].objs.slideInputs[0].checked);
+      slideElement(sceneInfo[1].objs.slideImgs);
+      ///////////////////////////////////////////
+
       setLayout();
       if (window.innerWidth > 900) {
         sceneInfo[3].values.rectStartY = 0;
@@ -686,3 +917,20 @@
 // function init() {
 //   videoElem.currentTime = videoElem.duration;
 // }
+
+/////////////////////////////////////////////
+function changeBox() {
+  var slideRdio = document.getElementsByName("slideRdio");
+  var slideImgs = document.querySelector(".slideImgs");
+  var imgWidth = document.body.offsetWidth * 0.95;
+  if (imgWidth > 1200) {
+    imgWidth = 1200;
+  }
+  for (var i = 0; i < slideRdio.length; i++) {
+    if (slideRdio[i].checked) {
+      slideImgs.style.left = -imgWidth * i + "px";
+      slideImgs.style.transition = 0.3 + "s";
+    }
+  }
+}
+/////////////////////////////////////////////
