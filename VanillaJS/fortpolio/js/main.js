@@ -383,26 +383,27 @@
 
         ////////////////////////////////////////////
         slideElement(objs.slideImgs);
-        if (window.pageYOffset > prevScrollHeight + window.innerHeight / 9) {
-          objs.projects.style.top = `40vh`;
-          objs.projects.style.position = `fixed`;
-          objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + scrollRatio * 7})`;
-        } else {
-          objs.projects.style.top = `0vh`;
-          objs.projects.style.position = `relative`;
-          objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
-        }
-        if (scrollRatio <= 0.3) {
-          objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
-        } else {
-          objs.projects.style.opacity = calcValues(values.projects_opacity_out, currentYOffset);
-        }
-        if (scrollRatio <= 0.4) {
-          objs.projects.style.zIndex = `1`;
-        } else {
-          objs.projects.style.zIndex = `-1`;
-        }
-        objs.projects.style.height = window.innerHeight;
+        // if (window.pageYOffset > prevScrollHeight + window.innerHeight / 9) {
+        //   objs.projects.style.top = `40vh`;
+        //   objs.projects.style.position = `fixed`;
+        //   objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + scrollRatio * 7})`;
+        // } else {
+        //   objs.projects.style.top = `0vh`;
+        //   objs.projects.style.position = `relative`;
+        //   objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
+        // }
+        // if (scrollRatio <= 0.3) {
+        //   objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
+        // } else {
+        //   objs.projects.style.opacity = calcValues(values.projects_opacity_out, currentYOffset);
+        // }
+        // if (scrollRatio <= 0.4) {
+        //   objs.projects.style.zIndex = `1`;
+        // } else {
+        //   objs.projects.style.zIndex = `-1`;
+        // }
+        // objs.projects.style.height = window.innerHeight;
+
         // objs.projects.style.transform = calcValues(values.)
         objs.slideArea.style.display = `block`;
         // objs.projects.style.transform = `translate3d(0, ${calcValues(values.projects_translateY_in, currentYOffset)}%, 0)`;
