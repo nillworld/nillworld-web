@@ -289,6 +289,15 @@
     return rv;
   }
 
+  ///////////////////////////////////////////////
+  function imgChange(length, direction, projectName) {
+    for (let i = 0; i < length; i++) {
+      direction[i].src = `./images/projects/${projectName}/${projectName}-${i}.jpg`;
+    }
+  }
+
+  ////////////////////////////////////////////////
+
   // 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
   function playAnimation() {
     const objs = sceneInfo[currentScene].objs;
