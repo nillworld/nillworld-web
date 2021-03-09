@@ -54,7 +54,6 @@
         messageD_translateY_out: [0, -20, { start: 0.6, end: 0.7 }],
         profile_opacity_in: [0, 0.7, { start: 0.7, end: 0.8 }],
         profile_opacity_out: [0.7, 0, { start: 0.8, end: 0.95 }],
-        projects_opacity_in: [0, 1, { start: 0.99, end: 1.19 }],
       },
     },
     // 1
@@ -70,6 +69,7 @@
         message_div_nas: document.querySelector(".project-message.nas-server"),
         project_automouse_title: document.querySelector(".project-message-title.automouse"),
         project_nas_title: document.querySelector(".project-message-title.nas-server"),
+        project_apple_title: document.querySelector(".project-message.apple-page"),
         loop_video: document.querySelector(".loop-video"),
         project_canvas: document.querySelector(".project-canvas"),
         project_context: document.querySelector(".project-canvas").getContext("2d"),
@@ -86,6 +86,10 @@
         emojiImg: document.querySelectorAll(".emoji img"),
         projectImg_emoji: [],
         projectImg_macro: [],
+        apple_canvas: document.querySelector("#apple-canvas"),
+        apple_context: document.querySelector("#apple-canvas").getContext("2d"),
+        apple_imgesPath: ["./images/apple-0.png", "./images/apple-1.png", "./images/apple-2.png"],
+        apple_imges: [],
       },
       values: {
         main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
@@ -95,15 +99,11 @@
         main_taranslateY_out: [0, -20, { start: 0.11, end: 0.14 }],
         automouse_img_opacity_down: [1, 0.2, { start: 0.23, end: 0.26 }],
         automouse_img_opacity_out: [0.2, 0, { start: 0.35, end: 0.38 }],
-        nas_img_opacity_in: [0, 1, { start: 0.45, end: 0.49 }],
+        nas_img_opacity_in: [0, 1, { start: 0.43, end: 0.47 }],
         nas_img_opacity_down: [1, 0.1, { start: 0.53, end: 0.55 }],
-        //projects_translateY_in: [100, 0, { start: 0.2, end: 0.7 }],
-        //projects_translateY_out: [0, -20, { start: 0.3, end: 0.4 }],
-        projects_opacity_in: [0, 1, { start: 0, end: 0.2 }],
-        projects_opacity_out: [1, 0, { start: 0.35, end: 0.4 }],
+        nas_img_opacity_out: [0.1, 0, { start: 0.65, end: 0.67 }],
         emojiCouint: 8,
-        emoji_opacity_in: [0, 1, { start: 0.3, end: 0.45 }],
-        emoji_opacity_out: [1, 0, { start: 0.75, end: 0.9 }],
+        apple_canvas_in: [0, 1, { start: 0.72, end: 0.75 }],
       },
     },
     // 2
@@ -188,6 +188,13 @@
       sceneInfo[1].objs.projectImg.push(imgElem3);
     }
 
+    let imgElem4;
+    for (let i = 0; i < sceneInfo[1].objs.apple_imgesPath.length; i++) {
+      imgElem4 = new Image();
+      imgElem4.src = sceneInfo[1].objs.apple_imgesPath[i];
+      sceneInfo[1].objs.apple_imges.push(imgElem4);
+    }
+
     let imgElem5;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
       imgElem5 = new Image();
@@ -238,6 +245,7 @@
     //when long height, top rate up (cuz of local bar -> 50px)
     let projectYtrans = 0;
     let project_message_width_Ratio = 0.9;
+    let apple_canvas_Ratio = 1;
     if (window.innerWidth >= 1200 && window.innerHeight >= 900) {
       section1_canvas_scale = 1;
     } else {
@@ -252,15 +260,19 @@
     if (section1_canvas_scale * 1200 > 700) {
       project_message_width_Ratio = 0.7;
     }
+    if (window.innerWidth < 570) {
+      apple_canvas_Ratio = 0.7;
+    }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
-    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.3}px`;
+    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.28}px`;
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.18}px`;
-    sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.25}px`;
+    sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.22}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
+    sceneInfo[1].objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio * apple_canvas_Ratio})`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -364,6 +376,8 @@
         }
         break;
       case 1:
+        imgChange(values.emojiCouint, objs.emojiImg, "emoji");
+        slideElement(objs.slideImgs);
         if (scrollRatio <= 0.1) {
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_in, currentYOffset)}%, 0)`;
@@ -371,62 +385,35 @@
           objs.main_message.style.opacity = calcValues(values.main_opacity_out, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_out, currentYOffset)}%, 0)`;
         }
-        if (scrollRatio <= 0.21) {
-          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_in, currentYOffset);
-        } else {
-          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_down, currentYOffset);
-        }
-        if (scrollRatio <= 0.3) {
-        } else {
-          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
-        }
         if (scrollRatio <= 0.4) {
           objs.project_context.drawImage(objs.projectImg[0], 0, 0);
         } else {
           objs.project_context.drawImage(objs.projectImg[1], 0, 0);
+        }
+        if (scrollRatio <= 0.21) {
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_in, currentYOffset);
+        } else if (scrollRatio <= 0.3) {
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_down, currentYOffset);
+        } else if (scrollRatio <= 0.4) {
+          objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
+        } else if (scrollRatio <= 0.52) {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_in, currentYOffset);
-        }
-        if (scrollRatio <= 0.52) {
-        } else {
+        } else if (scrollRatio <= 0.57) {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_down, currentYOffset);
-        }
-
-        ////////////////////////////////////////////
-        slideElement(objs.slideImgs);
-        // if (window.pageYOffset > prevScrollHeight + window.innerHeight / 9) {
-        //   objs.projects.style.top = `40vh`;
-        //   objs.projects.style.position = `fixed`;
-        //   objs.projects.style.transform = `translate3d(0, 0, 0) scale(${1 + scrollRatio * 7})`;
-        // } else {
-        //   objs.projects.style.top = `0vh`;
-        //   objs.projects.style.position = `relative`;
-        //   objs.projects.style.transform = `translate3d(0, 0, 0) scale(1)`;
-        // }
-        // if (scrollRatio <= 0.3) {
-        //   objs.projects.style.opacity = calcValues(values.projects_opacity_in, currentYOffset);
-        // } else {
-        //   objs.projects.style.opacity = calcValues(values.projects_opacity_out, currentYOffset);
-        // }
-        // if (scrollRatio <= 0.4) {
-        //   objs.projects.style.zIndex = `1`;
-        // } else {
-        //   objs.projects.style.zIndex = `-1`;
-        // }
-        // objs.projects.style.height = window.innerHeight;
-
-        // objs.projects.style.transform = calcValues(values.)
-        objs.slideArea.style.display = `block`;
-        // objs.projects.style.transform = `translate3d(0, ${calcValues(values.projects_translateY_in, currentYOffset)}%, 0)`;
-        if (scrollRatio <= 0.9) {
-          // objs.projects.style.opacity = calcValues([0, 1, { start: 0.05, end: 0.5 }], currentYOffset);
-          objs.slideArea.style.opacity = calcValues(values.emoji_opacity_in, currentYOffset);
-          imgChange(values.emojiCouint, objs.emojiImg, "emoji");
-          // objs.project_context.drawImage(objs.projectImg_emoji[0], 0, 0);
         } else {
-          objs.slideArea.style.opacity = calcValues(values.emoji_opacity_out, currentYOffset);
+          objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_out, currentYOffset);
         }
-
-        ////////////////////////////////////////////
+        if (scrollRatio <= 0.79) {
+          objs.apple_context.drawImage(objs.apple_imges[0], 0, 0);
+          objs.apple_canvas.style.opacity = calcValues(values.apple_canvas_in, currentYOffset);
+          objs.apple_canvas.style.backgroundColor = "rgba(30, 30, 30, 1)";
+        } else if (scrollRatio <= 0.83) {
+          objs.apple_context.drawImage(objs.apple_imges[1], 0, 0);
+          objs.apple_canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+        } else {
+          objs.apple_context.clearRect(0, 0, objs.apple_canvas.width, objs.apple_canvas.height);
+          objs.apple_context.drawImage(objs.apple_imges[2], 0, 0);
+        }
 
         break;
       case 2:
