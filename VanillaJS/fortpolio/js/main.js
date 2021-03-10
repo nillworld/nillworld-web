@@ -84,12 +84,13 @@
         slidePrevBtn: document.querySelector("#scroll-section-1 .prev"),
         slideNextBtn: document.querySelector("#scroll-section-1 .next"),
         emojiImg: document.querySelectorAll(".emoji img"),
-        projectImg_emoji: [],
-        projectImg_macro: [],
         apple_canvas: document.querySelector("#apple-canvas"),
+        this_canvas: document.querySelector("#this-canvas"),
         apple_context: document.querySelector("#apple-canvas").getContext("2d"),
-        apple_imgesPath: ["./images/apple-0.png", "./images/apple-1.png", "./images/apple-2.png"],
+        this_context: document.querySelector("#this-canvas").getContext("2d"),
+        apple_imgesPath: ["./images/apple-0.png", "./images/apple-1.png", "./images/whiteboard.png"],
         apple_imges: [],
+        this_imges: [],
       },
       values: {
         main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
@@ -194,6 +195,10 @@
       imgElem4.src = sceneInfo[1].objs.apple_imgesPath[i];
       sceneInfo[1].objs.apple_imges.push(imgElem4);
     }
+    let imgElem4_1;
+    imgElem4_1 = new Image();
+    imgElem4_1.src = `./images/apple-2.png`;
+    sceneInfo[1].objs.this_imges.push(imgElem4_1);
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
@@ -273,6 +278,7 @@
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.22}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio * apple_canvas_Ratio})`;
+    sceneInfo[1].objs.this_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -410,9 +416,12 @@
         } else if (scrollRatio <= 0.83) {
           objs.apple_context.drawImage(objs.apple_imges[1], 0, 0);
           objs.apple_canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+          objs.this_context.clearRect(0, 0, objs.apple_canvas.width, objs.apple_canvas.height);
         } else {
-          objs.apple_context.clearRect(0, 0, objs.apple_canvas.width, objs.apple_canvas.height);
-          objs.apple_context.drawImage(objs.apple_imges[2], 0, 0);
+          let resized_positionX = window.innerWidth / 2 - 130;
+          let resized_positionY = window.innerHeight / 2 - 15;
+          objs.this_context.drawImage(objs.this_imges[0], resized_positionX, resized_positionY, 260, 160);
+          objs.apple_context.drawImage(objs.apple_imges[2], resized_positionX, resized_positionY, 260, 160);
         }
 
         break;
