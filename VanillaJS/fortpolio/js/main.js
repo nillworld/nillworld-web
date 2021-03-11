@@ -197,7 +197,7 @@
     }
     let imgElem4_1;
     imgElem4_1 = new Image();
-    imgElem4_1.src = `./images/apple-2.png`;
+    imgElem4_1.src = `./images/this-1.png`;
     sceneInfo[1].objs.this_imges.push(imgElem4_1);
 
     let imgElem5;
@@ -250,7 +250,6 @@
     //when long height, top rate up (cuz of local bar -> 50px)
     let projectYtrans = 0;
     let project_message_width_Ratio = 0.9;
-    let apple_canvas_Ratio = 1;
     if (window.innerWidth >= 1200 && window.innerHeight >= 900) {
       section1_canvas_scale = 1;
     } else {
@@ -265,9 +264,6 @@
     if (section1_canvas_scale * 1200 > 700) {
       project_message_width_Ratio = 0.7;
     }
-    if (window.innerWidth < 570) {
-      apple_canvas_Ratio = 0.7;
-    }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
@@ -277,7 +273,6 @@
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.18}px`;
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.22}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
-    sceneInfo[1].objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio * apple_canvas_Ratio})`;
     sceneInfo[1].objs.this_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
@@ -413,15 +408,11 @@
           objs.apple_context.drawImage(objs.apple_imges[0], 0, 0);
           objs.apple_canvas.style.opacity = calcValues(values.apple_canvas_in, currentYOffset);
           objs.apple_canvas.style.backgroundColor = "rgba(30, 30, 30, 1)";
-        } else if (scrollRatio <= 0.83) {
+          objs.this_context.clearRect(0, 0, objs.this_canvas.width, objs.this_canvas.height);
+        } else {
           objs.apple_context.drawImage(objs.apple_imges[1], 0, 0);
           objs.apple_canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-          objs.this_context.clearRect(0, 0, objs.apple_canvas.width, objs.apple_canvas.height);
-        } else {
-          let resized_positionX = window.innerWidth / 2 - 130;
-          let resized_positionY = window.innerHeight / 2 - 15;
-          objs.this_context.drawImage(objs.this_imges[0], resized_positionX, resized_positionY, 260, 160);
-          objs.apple_context.drawImage(objs.apple_imges[2], resized_positionX, resized_positionY, 260, 160);
+          objs.this_context.clearRect(0, 0, objs.this_canvas.width, objs.this_canvas.height);
         }
 
         break;
@@ -657,6 +648,24 @@
         if (currentScene === 0 && sequence < 370) {
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
           objs.canvas.style.transform = `translate3d(-50%, ${canvas_transY}%, 0) scale(1)`;
+        }
+      }
+      if (currentScene === 1) {
+        const objs = sceneInfo[currentScene].objs;
+        let currentYOffset = delayedYOffset - prevScrollHeight;
+        let section2_ratio = currentYOffset / (window.innerHeight * 13);
+        let apple_canvas_Ratio = 1;
+        if (window.innerWidth < 570) {
+          apple_canvas_Ratio = 0.65;
+        }
+        if (section2_ratio < 0.83) {
+          objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${apple_canvas_Ratio})`;
+        } else {
+          scale_section2_ratio = 0.02 + Math.pow((section2_ratio - 0.83) * 9, 7);
+          objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${scale_section2_ratio * 5})`;
+          objs.this_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${scale_section2_ratio})`;
+          objs.apple_context.drawImage(objs.apple_imges[2], 0, 0);
+          objs.this_context.drawImage(objs.this_imges[0], 0, 0);
         }
       }
     }
