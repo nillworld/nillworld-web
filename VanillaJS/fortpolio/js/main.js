@@ -86,13 +86,18 @@
         emojiImg: document.querySelectorAll(".emoji img"),
         apple_canvas: document.querySelector("#apple-canvas"),
         this_canvas: document.querySelector("#this-canvas"),
+        jump_canvas: document.querySelector("#jump"),
         apple_context: document.querySelector("#apple-canvas").getContext("2d"),
         this_context: document.querySelector("#this-canvas").getContext("2d"),
+        jump_context: document.querySelector("#jump").getContext("2d"),
         apple_imgesPath: ["./images/apple-0.png", "./images/apple-1.png", "./images/whiteboard.png"],
         apple_imges: [],
         this_imges: [],
+        videoImages: [],
       },
       values: {
+        videoImageCount: 26,
+        imageSequence: [0, 25],
         main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
         main_taranslateY_in: [20, 0, { start: 0.0, end: 0.06 }],
         automouse_img_opacity_in: [0, 1, { start: 0.14, end: 0.19 }],
@@ -105,6 +110,7 @@
         nas_img_opacity_out: [0.1, 0, { start: 0.65, end: 0.67 }],
         emojiCouint: 8,
         apple_canvas_in: [0, 1, { start: 0.72, end: 0.75 }],
+        apple_canvas_out: [1, 0, { start: 0.85, end: 1 }],
       },
     },
     // 2
@@ -195,10 +201,18 @@
       imgElem4.src = sceneInfo[1].objs.apple_imgesPath[i];
       sceneInfo[1].objs.apple_imges.push(imgElem4);
     }
+
     let imgElem4_1;
     imgElem4_1 = new Image();
     imgElem4_1.src = `./images/this-1.png`;
     sceneInfo[1].objs.this_imges.push(imgElem4_1);
+
+    let imgElem4_2;
+    for (let i = 0; i < sceneInfo[1].values.videoImageCount; i++) {
+      imgElem4_2 = new Image();
+      imgElem4_2.src = `./video/03/jump-${i}.jpg`;
+      sceneInfo[1].objs.videoImages.push(imgElem4_2);
+    }
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
@@ -274,6 +288,7 @@
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.22}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
+    sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -413,6 +428,7 @@
           objs.apple_context.drawImage(objs.apple_imges[1], 0, 0);
           objs.apple_canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
           objs.this_context.clearRect(0, 0, objs.this_canvas.width, objs.this_canvas.height);
+          objs.apple_canvas.style.opacity = calcValues(values.apple_canvas_out, currentYOffset);
         }
 
         break;
@@ -629,6 +645,7 @@
           currentYOffset = 0;
         } else {
           sceneInfo[2].objs.canvas.style.top = `50%`;
+          currentYOffset = delayedYOffset - prevScrollHeight;
         }
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
         if (objs.videoImages[sequence]) {
@@ -652,6 +669,7 @@
       }
       if (currentScene === 1) {
         const objs = sceneInfo[currentScene].objs;
+        const values = sceneInfo[currentScene].values;
         let currentYOffset = delayedYOffset - prevScrollHeight;
         let section2_ratio = currentYOffset / (window.innerHeight * 13);
         let apple_canvas_Ratio = 1;
@@ -660,10 +678,17 @@
         }
         if (section2_ratio < 0.83) {
           objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${apple_canvas_Ratio})`;
+          objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
+          // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+          let sequence2 = Math.round((section2_ratio * 100 - 83) * 2);
+          console.log(sequence2);
           scale_section2_ratio = 0.02 + Math.pow((section2_ratio - 0.83) * 9, 7);
           objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${scale_section2_ratio * 5})`;
           objs.this_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${scale_section2_ratio})`;
+          if (objs.videoImages[sequence2]) {
+            objs.jump_context.drawImage(objs.videoImages[sequence2], 0, 0);
+          }
           objs.apple_context.drawImage(objs.apple_imges[2], 0, 0);
           objs.this_context.drawImage(objs.this_imges[0], 0, 0);
         }
