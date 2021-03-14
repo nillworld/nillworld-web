@@ -1,7 +1,14 @@
-<svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg" width="300px">
+<style>
+  .test {
+    background-color: blue;
+  }
+</style>
+
+<svg viewBox="0 0 40 180" xmlns="http://www.w3.org/2000/svg" width="300px" class="test">
   <style>
     .small {
       font: italic 13px sans-serif;
+      background-color: black;
     }
     .heavy {
       font: bold 30px sans-serif;
@@ -12,7 +19,10 @@
     }
   </style>
   <!-- fixed, top, z-index -->
-  <text x="20" y="35" class="small">My</text>
+  <text x="10" y="35" class="small">
+    <tspan x="100" , y="100">First tspan</tspan>
+    <tspan x="200" , y="100">second tspan</tspan>
+  </text>
   <text x="40" y="35" class="heavy">cat</text>
   <text x="55" y="55" class="small">is</text>
   <text x="65" y="55" class="Rrrrr">Grumpy!</text>

@@ -171,6 +171,7 @@ body.before-load {
 }
 #v4-video {
   width: 100%;
+  opacity: 1;
 }
 .project-message {
   font-size: 1.8em;

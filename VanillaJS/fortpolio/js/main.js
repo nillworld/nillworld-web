@@ -681,7 +681,7 @@
           objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-          let sequence2 = Math.round((section2_ratio * 100 - 83) * 2);
+          let sequence2 = Math.round((section2_ratio * 100 - 85) * 2);
           console.log(sequence2);
           scale_section2_ratio = 0.02 + Math.pow((section2_ratio - 0.83) * 9, 7);
           objs.apple_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${scale_section2_ratio * 5})`;
