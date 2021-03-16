@@ -314,11 +314,33 @@ label {
 }
 
 /* ========================================================= */
-
-.apple-page {
-  position: relative;
+#show-scene-1 #scroll-section-1 #this-back-div {
+  /* transform: translate3d(-50%, -50%, 0); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 1;
 }
-.apple-canvas {
+#this-div {
+  opacity: 0;
+  background-color: white;
+  z-index: 3;
+  float: left;
+  scale: 0.5;
+}
+#this-div svg {
+  margin-bottom: -5px;
+  margin-right: -5px;
+}
+#scroll-section-1 .main-message.a {
+  top: 40vh;
+  font-size: 3vw;
+}
+#scroll-section-1 .main-message.b {
+  top: 42vh;
+}
+#jump-canvas {
   opacity: 0;
 }
 

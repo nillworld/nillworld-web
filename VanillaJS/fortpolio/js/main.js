@@ -83,25 +83,36 @@
         slidePrevBtn: document.querySelector("#scroll-section-1 .prev"),
         slideNextBtn: document.querySelector("#scroll-section-1 .next"),
         emojiImg: document.querySelectorAll(".emoji img"),
-        jump_canvas: document.querySelector("#jump"),
-        jump_context: document.querySelector("#jump").getContext("2d"),
+        messageA: document.querySelector("#scroll-section-1 .main-message.a"),
+        messageB: document.querySelector("#scroll-section-1 .main-message.b"),
+        this_back_div: document.querySelector("#this-back-div"),
+        this_div: document.querySelector("#this-div"),
+        jump_canvas: document.querySelector("#jump-canvas"),
+        jump_context: document.querySelector("#jump-canvas").getContext("2d"),
         videoImages: [],
       },
       values: {
-        backColor_black: [30, 0, { start: 0.0, end: 0.1 }],
+        emojiCouint: 8,
         videoImageCount: 26,
         imageSequence: [0, 25],
-        main_opacity_in: [0, 1, { start: 0.0, end: 0.06 }],
-        main_taranslateY_in: [20, 0, { start: 0.0, end: 0.06 }],
-        automouse_img_opacity_in: [0, 1, { start: 0.14, end: 0.19 }],
-        main_opacity_out: [1, 0, { start: 0.11, end: 0.14 }],
-        main_taranslateY_out: [0, -20, { start: 0.11, end: 0.14 }],
-        automouse_img_opacity_down: [1, 0.2, { start: 0.23, end: 0.26 }],
-        automouse_img_opacity_out: [0.2, 0, { start: 0.35, end: 0.38 }],
-        nas_img_opacity_in: [0, 1, { start: 0.43, end: 0.47 }],
-        nas_img_opacity_down: [1, 0.1, { start: 0.53, end: 0.55 }],
-        nas_img_opacity_out: [0.1, 0, { start: 0.65, end: 0.67 }],
-        emojiCouint: 8,
+        main_opacity_in: [0, 1, { start: 0.0, end: 0.04 }],
+        main_taranslateY_in: [20, 0, { start: 0.0, end: 0.04 }],
+        main_opacity_out: [1, 0, { start: 0.09, end: 0.11 }],
+        main_taranslateY_out: [0, -20, { start: 0.09, end: 0.11 }],
+        automouse_img_opacity_in: [0, 1, { start: 0.11, end: 0.16 }],
+        automouse_img_opacity_down: [1, 0.2, { start: 0.2, end: 0.22 }],
+        automouse_img_opacity_out: [0.2, 0, { start: 0.31, end: 0.34 }],
+        nas_img_opacity_in: [0, 1, { start: 0.39, end: 0.42 }],
+        nas_img_opacity_down: [1, 0.1, { start: 0.46, end: 0.48 }],
+        nas_img_opacity_out: [0.1, 0, { start: 0.58, end: 0.61 }],
+        backColor_black: [30, 0, { start: 0.63, end: 0.68 }],
+        messageA_opacity_in: [0, 1, { start: 0.68, end: 0.7 }],
+        messageA_opacity_out: [1, 0, { start: 0.73, end: 0.74 }],
+        messageB_opacity_in: [0, 1, { start: 0.74, end: 0.76 }],
+        messageB_opacity_out: [1, 0, { start: 0.78, end: 0.79 }],
+        this_in: [0, 1, { start: 0.79, end: 0.81 }],
+        this_out: [1, 0, { start: 0.97, end: 0.98 }],
+        jump_in: [0, 1, { start: 0.93, end: 0.97 }],
       },
     },
     // 2
@@ -262,10 +273,11 @@
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
-    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.28}px`;
-    sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.18}px`;
-    sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.22}px`;
+    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.24}px`;
+    sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
+    sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
+    sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
@@ -370,35 +382,53 @@
         }
         break;
       case 1:
+        objs.container.style.backgroundColor = `rgba(${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(
+          values.backColor_black,
+          currentYOffset
+        )}, ${calcValues(values.backColor_black, currentYOffset)}, 1)`;
         imgChange(values.emojiCouint, objs.emojiImg, "emoji");
         slideElement(objs.slideImgs);
-        if (scrollRatio <= 0.1) {
-          objs.container.style.backgroundColor = `rgba(${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(values.backColor_black, currentYOffset)}, 1)`;
+        if (scrollRatio <= 0.08) {
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_in, currentYOffset)}%, 0)`;
         } else {
           objs.main_message.style.opacity = calcValues(values.main_opacity_out, currentYOffset);
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_taranslateY_out, currentYOffset)}%, 0)`;
         }
-        if (scrollRatio <= 0.4) {
+        if (scrollRatio <= 0.36) {
           objs.project_context.drawImage(objs.projectImg[0], 0, 0);
         } else {
           objs.project_context.drawImage(objs.projectImg[1], 0, 0);
         }
-        if (scrollRatio <= 0.21) {
+        if (scrollRatio <= 0.18) {
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_in, currentYOffset);
-        } else if (scrollRatio <= 0.3) {
+        } else if (scrollRatio <= 0.25) {
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_down, currentYOffset);
-        } else if (scrollRatio <= 0.4) {
+        } else if (scrollRatio <= 0.36) {
           objs.project_canvas.style.opacity = calcValues(values.automouse_img_opacity_out, currentYOffset);
-        } else if (scrollRatio <= 0.52) {
+        } else if (scrollRatio <= 0.43) {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_in, currentYOffset);
         } else if (scrollRatio <= 0.57) {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_down, currentYOffset);
         } else {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_out, currentYOffset);
         }
-        if (scrollRatio <= 0.7) {
+        if (scrollRatio <= 0.71) {
+          objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+        } else {
+          objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+        }
+        if (scrollRatio <= 0.77) {
+          objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+        } else {
+          objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+        }
+        if (scrollRatio <= 0.81) {
+          objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
+          objs.jump_canvas.style.opacity = 0;
+        } else {
+          objs.this_div.style.opacity = calcValues(values.this_out, currentYOffset);
+          objs.jump_canvas.style.opacity = 1;
         }
 
         break;
@@ -648,7 +678,8 @@
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
           let sequence2 = Math.round((section2_ratio * 100 - 85) * 2);
           console.log(sequence2);
-          scale_section2_ratio = 0.02 + Math.pow((section2_ratio - 0.83) * 9, 7);
+          let scale_section2_ratio = 1 + Math.pow((section2_ratio - 0.81) * 20, 5);
+          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
           if (objs.videoImages[sequence2]) {
             objs.jump_context.drawImage(objs.videoImages[sequence2], 0, 0);
           }
