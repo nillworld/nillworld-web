@@ -123,8 +123,13 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-2"),
+        jump_canvas: document.querySelector("#jump-canvas-2"),
+        jump_context: document.querySelector("#jump-canvas-2").getContext("2d"),
+        jumpImg: [],
       },
-      values: {},
+      values: {
+        jump_out: [1, 0, { start: 0, end: 0.2 }],
+      },
     },
     // 3
     {
@@ -214,6 +219,10 @@
       imgElem4.src = `./video/03/jump-${i}.jpg`;
       sceneInfo[1].objs.videoImages.push(imgElem4);
     }
+    let imgElem4_1;
+    imgElem4_1 = new Image();
+    imgElem4_1.src = `./video/03/jump-25.jpg`;
+    sceneInfo[2].objs.jumpImg.push(imgElem4_1);
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
@@ -296,6 +305,7 @@
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
+    sceneInfo[2].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
     sceneInfo[3].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -455,6 +465,8 @@
 
         break;
       case 2:
+        objs.jump_context.drawImage(objs.jumpImg[0], 0, 0);
+        objs.jump_canvas.style.opacity = calcValues(values.jump_out, currentYOffset);
         break;
       case 3:
         // console.log('2 play');
