@@ -112,21 +112,32 @@
         messageB_opacity_out: [1, 0, { start: 0.78, end: 0.79 }],
         this_in: [0, 1, { start: 0.79, end: 0.81 }],
         this_out: [1, 0, { start: 0.97, end: 0.98 }],
+        this_white_opacity: [1, 0, { start: 0.85, end: 0.92 }],
         jump_in: [0, 1, { start: 0.93, end: 0.97 }],
       },
     },
-    // 2
+    //2
     {
       type: "sticky",
       heightNum: 5,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-2"),
-        messageA: document.querySelector("#scroll-section-2 .a"),
-        messageB: document.querySelector("#scroll-section-2 .b"),
-        messageC: document.querySelector("#scroll-section-2 .c"),
-        pinB: document.querySelector("#scroll-section-2 .b .pin"),
-        pinC: document.querySelector("#scroll-section-2 .c .pin"),
+      },
+      values: {},
+    },
+    // 3
+    {
+      type: "sticky",
+      heightNum: 5,
+      scrollHeight: 0,
+      objs: {
+        container: document.querySelector("#scroll-section-3"),
+        messageA: document.querySelector("#scroll-section-3 .a"),
+        messageB: document.querySelector("#scroll-section-3 .b"),
+        messageC: document.querySelector("#scroll-section-3 .c"),
+        pinB: document.querySelector("#scroll-section-3 .b .pin"),
+        pinC: document.querySelector("#scroll-section-3 .c .pin"),
         canvas: document.querySelector("#video-canvas-1"),
         context: document.querySelector("#video-canvas-1").getContext("2d"),
         videoImages: [],
@@ -152,13 +163,13 @@
         pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }],
       },
     },
-    // 3
+    // 4
     {
       type: "sticky",
       heightNum: 5,
       scrollHeight: 0,
       objs: {
-        container: document.querySelector("#scroll-section-3"),
+        container: document.querySelector("#scroll-section-4"),
         canvasCaption: document.querySelector(".canvas-caption"),
         canvas: document.querySelector(".image-blend-canvas"),
         context: document.querySelector(".image-blend-canvas").getContext("2d"),
@@ -205,17 +216,17 @@
     }
 
     let imgElem5;
-    for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+    for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
       imgElem5 = new Image();
       imgElem5.src = `./video/02/IMG_${7027 + i}.JPG`;
-      sceneInfo[2].objs.videoImages.push(imgElem5);
+      sceneInfo[3].objs.videoImages.push(imgElem5);
     }
 
     let imgElem6;
-    for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) {
+    for (let i = 0; i < sceneInfo[4].objs.imagesPath.length; i++) {
       imgElem6 = new Image();
-      imgElem6.src = sceneInfo[3].objs.imagesPath[i];
-      sceneInfo[3].objs.images.push(imgElem6);
+      imgElem6.src = sceneInfo[4].objs.imagesPath[i];
+      sceneInfo[4].objs.images.push(imgElem6);
     }
   }
 
@@ -268,6 +279,12 @@
     if (section1_canvas_scale * 1200 > 700) {
       project_message_width_Ratio = 0.7;
     }
+    let jump_canvas_Ratio = 1;
+    if (window.innerWidth / 1920 >= window.innerHeight / 1080) {
+      jump_canvas_Ratio = window.innerWidth / 1920;
+    } else {
+      jump_canvas_Ratio = window.innerHeight / 1080;
+    }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, -49%, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
@@ -278,8 +295,8 @@
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
-    sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
-    sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+    sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
+    sceneInfo[3].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
   function calcValues(values, currentYOffset) {
@@ -423,16 +440,23 @@
         } else {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
         }
-        if (scrollRatio <= 0.81) {
+        if (scrollRatio <= 0.85) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
           objs.jump_canvas.style.opacity = 0;
         } else {
           objs.this_div.style.opacity = calcValues(values.this_out, currentYOffset);
           objs.jump_canvas.style.opacity = 1;
         }
+        if (scrollRatio <= 0.93) {
+          objs.this_div.style.backgroundColor = `rgba(255, 255, 255, ${calcValues(values.this_white_opacity, currentYOffset)})`;
+        } else {
+          objs.this_div.style.backgroundColor = `rgba(255, 255, 255, 0)`;
+        }
 
         break;
       case 2:
+        break;
+      case 3:
         // console.log('2 play');
         if (scrollRatio <= 0.32) {
           // in
@@ -470,8 +494,8 @@
 
         // currentScene 3에서 쓰는 캔버스를 미리 그려주기 시작
         if (scrollRatio > 0.9) {
-          const objs = sceneInfo[3].objs;
-          const values = sceneInfo[3].values;
+          const objs = sceneInfo[4].objs;
+          const values = sceneInfo[4].values;
           const widthRatio = window.innerWidth / objs.canvas.width;
           const heightRatio = window.innerHeight / objs.canvas.height;
           let canvasScaleRatio;
@@ -505,7 +529,7 @@
 
         break;
 
-      case 3:
+      case 4:
         // console.log('3 play');
         let step = 0;
         // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
@@ -635,7 +659,7 @@
     delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
 
     if (!enterNewScene) {
-      if (currentScene === 0 || currentScene === 2) {
+      if (currentScene === 0 || currentScene === 3) {
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
         let currentYOffset = delayedYOffset - prevScrollHeight;
@@ -644,7 +668,7 @@
           objs.canvas.style.top = `300%`;
           currentYOffset = 0;
         } else {
-          sceneInfo[2].objs.canvas.style.top = `50%`;
+          sceneInfo[3].objs.canvas.style.top = `50%`;
           currentYOffset = delayedYOffset - prevScrollHeight;
         }
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
@@ -676,7 +700,7 @@
           objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-          let sequence2 = Math.round((section2_ratio * 100 - 85) * 2);
+          let sequence2 = Math.round((section2_ratio * 100 - 85) * 2.5);
           console.log(sequence2);
           let scale_section2_ratio = 1 + Math.pow((section2_ratio - 0.81) * 20, 5);
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
@@ -896,8 +920,6 @@
       ///////////////////////////////////////////
       sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
       sceneInfo[1].objs.slideInputs[0].checked = true;
-
-      console.log(sceneInfo[1].objs.slideInputs[0].checked);
       slideElement(sceneInfo[1].objs.slideImgs);
       ///////////////////////////////////////////
 
