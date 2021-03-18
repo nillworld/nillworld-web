@@ -130,15 +130,19 @@
         main_message_nothing: document.querySelector("#nothing"),
         main_message_upper: document.querySelector("#possible-upper"),
         main_message_space: document.querySelector("#possible-space"),
+        possible_activities: document.querySelector("#possible-activities"),
       },
       values: {
-        jump_out: [1, 0.2, { start: 0, end: 0.15 }],
-        main_message_opacity: [0, 1, { start: 0.15, end: 0.2 }],
+        jump_opacity_down: [1, 0.2, { start: 0, end: 0.15 }],
+        main_message_opacity_in: [0, 1, { start: 0.15, end: 0.2 }],
         main_message_spacing: [-4, -1.5, { start: 0.15, end: 0.2 }],
         main_message_nothing_opacity: [1, 0, { start: 0.25, end: 0.3 }],
-        main_message_translateY: [0, -10, { start: 0.28, end: 0.33 }],
+        main_message_translateY_middle: [0, -10, { start: 0.28, end: 0.33 }],
         main_message_upper_opacity: [0, 1, { start: 0.28, end: 0.33 }],
         main_message_space_spacing: [-0.8, 2, { start: 0.28, end: 0.33 }],
+        jump_opacity_out: [0.2, 0, { start: 0.36, end: 0.4 }],
+        main_message_translateY_out: [-10, -100, { start: 0.4, end: 0.5 }],
+        main_message_opacity_out: [1, 0, { start: 0.4, end: 0.47 }],
       },
     },
     // 3
@@ -316,6 +320,7 @@
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
     sceneInfo[2].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
+    sceneInfo[2].objs.possible_activities.style.marginTop = `${window.innerHeight * sceneInfo[2].heightNum * 0.45}px`;
     sceneInfo[3].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
@@ -478,20 +483,23 @@
       case 2:
         objs.jump_context.drawImage(objs.jumpImg[0], 0, 0);
         if (scrollRatio <= 0.32) {
-          objs.jump_canvas.style.opacity = calcValues(values.jump_out, currentYOffset);
+          objs.jump_canvas.style.opacity = calcValues(values.jump_opacity_down, currentYOffset);
         } else {
+          objs.jump_canvas.style.opacity = calcValues(values.jump_opacity_out, currentYOffset);
         }
         if (scrollRatio <= 0.22) {
-          objs.main_message.style.opacity = calcValues(values.main_message_opacity, currentYOffset);
+          objs.main_message.style.opacity = calcValues(values.main_message_opacity_in, currentYOffset);
           objs.main_message.style.letterSpacing = `${calcValues(values.main_message_spacing, currentYOffset)}vw`;
         } else {
           objs.main_message_nothing.style.opacity = calcValues(values.main_message_nothing_opacity, currentYOffset);
-          objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_message_translateY, currentYOffset)}vw, 0)`;
           objs.main_message_upper.style.opacity = calcValues(values.main_message_upper_opacity, currentYOffset);
           objs.main_message_space.style.letterSpacing = `${calcValues(values.main_message_space_spacing, currentYOffset)}vw`;
+          objs.main_message.style.opacity = calcValues(values.main_message_opacity_out, currentYOffset);
         }
-        if (scrollRatio <= 0.22) {
+        if (scrollRatio <= 0.33) {
+          objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_message_translateY_middle, currentYOffset)}vw, 0)`;
         } else {
+          objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_message_translateY_out, currentYOffset)}vw, 0)`;
         }
         break;
       case 3:
