@@ -63,7 +63,7 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-1"),
-        main_message: document.querySelector(".main-message h2"),
+        main_message: document.querySelector("#scroll-section-1 .main-message h2"),
         project_div: document.querySelector("#scroll-section-1 .project"),
         message_div_automouse: document.querySelector(".project-message.automouse"),
         message_div_nas: document.querySelector(".project-message.nas-server"),
@@ -119,16 +119,26 @@
     //2
     {
       type: "sticky",
-      heightNum: 5,
+      heightNum: 7,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-2"),
         jump_canvas: document.querySelector("#jump-canvas-2"),
         jump_context: document.querySelector("#jump-canvas-2").getContext("2d"),
         jumpImg: [],
+        main_message: document.querySelector("#scroll-section-2 .main-message"),
+        main_message_nothing: document.querySelector("#nothing"),
+        main_message_upper: document.querySelector("#possible-upper"),
+        main_message_space: document.querySelector("#possible-space"),
       },
       values: {
-        jump_out: [1, 0, { start: 0, end: 0.2 }],
+        jump_out: [1, 0.2, { start: 0, end: 0.15 }],
+        main_message_opacity: [0, 1, { start: 0.15, end: 0.2 }],
+        main_message_spacing: [-4, -1.5, { start: 0.15, end: 0.2 }],
+        main_message_nothing_opacity: [1, 0, { start: 0.25, end: 0.3 }],
+        main_message_translateY: [0, -10, { start: 0.28, end: 0.33 }],
+        main_message_upper_opacity: [0, 1, { start: 0.28, end: 0.33 }],
+        main_message_space_spacing: [-0.8, 2, { start: 0.28, end: 0.33 }],
       },
     },
     // 3
@@ -461,12 +471,28 @@
           objs.this_div.style.backgroundColor = `rgba(255, 255, 255, ${calcValues(values.this_white_opacity, currentYOffset)})`;
         } else {
           objs.this_div.style.backgroundColor = `rgba(255, 255, 255, 0)`;
+          sceneInfo[2].objs.jump_context.drawImage(sceneInfo[2].objs.jumpImg[0], 0, 0);
         }
 
         break;
       case 2:
         objs.jump_context.drawImage(objs.jumpImg[0], 0, 0);
-        objs.jump_canvas.style.opacity = calcValues(values.jump_out, currentYOffset);
+        if (scrollRatio <= 0.32) {
+          objs.jump_canvas.style.opacity = calcValues(values.jump_out, currentYOffset);
+        } else {
+        }
+        if (scrollRatio <= 0.22) {
+          objs.main_message.style.opacity = calcValues(values.main_message_opacity, currentYOffset);
+          objs.main_message.style.letterSpacing = `${calcValues(values.main_message_spacing, currentYOffset)}vw`;
+        } else {
+          objs.main_message_nothing.style.opacity = calcValues(values.main_message_nothing_opacity, currentYOffset);
+          objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_message_translateY, currentYOffset)}vw, 0)`;
+          objs.main_message_upper.style.opacity = calcValues(values.main_message_upper_opacity, currentYOffset);
+          objs.main_message_space.style.letterSpacing = `${calcValues(values.main_message_space_spacing, currentYOffset)}vw`;
+        }
+        if (scrollRatio <= 0.22) {
+        } else {
+        }
         break;
       case 3:
         // console.log('2 play');
@@ -715,6 +741,9 @@
           let sequence2 = Math.round((section2_ratio * 100 - 85) * 2.5);
           console.log(sequence2);
           let scale_section2_ratio = 1 + Math.pow((section2_ratio - 0.81) * 20, 5);
+          if (scale_section2_ratio >= 150) {
+            scale_section2_ratio = 150;
+          }
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
           if (objs.videoImages[sequence2]) {
             objs.jump_context.drawImage(objs.videoImages[sequence2], 0, 0);

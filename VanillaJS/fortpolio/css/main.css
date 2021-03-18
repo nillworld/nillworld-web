@@ -329,20 +329,33 @@ label {
   float: left;
   scale: 0.5;
 }
-#this-div svg {s
+#this-div svg {
   margin-bottom: -5px;
   margin-right: -5px;
 }
 #scroll-section-1 .main-message.a {
   top: 40vh;
   font-size: 3vw;
+  opacity: 0;
 }
 #scroll-section-1 .main-message.b {
   top: 43vh;
+  opacity: 0;
 }
 #jump-canvas {
   opacity: 0;
 }
+
+/* #######  section-2  ####### */
+#scroll-section-2 .main-message {
+  font-size: 9.5vw;
+  opacity: 0;
+}
+#scroll-section-2 .possible-upper {
+  opacity: 0;
+}
+
+/* ########################### */
 
 /* #scroll-section-1 .possible-message {
   width: 100%;
