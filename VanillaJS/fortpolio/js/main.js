@@ -465,6 +465,20 @@
         } else {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
         }
+        ///////////////////////////////////////////////////////
+
+        let scale_section2_ratio = 1 + Math.pow((scrollRatio - 0.81) * 20, 5);
+        if (scrollRatio <= 0.83) {
+          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(1)`;
+        } else {
+          if (scale_section2_ratio >= 150) {
+            scale_section2_ratio = 150;
+          }
+          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
+        }
+
+        ///////////////////////////////////////////////////////
+
         if (scrollRatio <= 0.85) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
           objs.jump_canvas.style.opacity = 0;
@@ -747,12 +761,6 @@
         } else {
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
           let sequence2 = Math.round((section2_ratio * 100 - 85) * 2.5);
-          console.log(sequence2);
-          let scale_section2_ratio = 1 + Math.pow((section2_ratio - 0.81) * 20, 5);
-          if (scale_section2_ratio >= 150) {
-            scale_section2_ratio = 150;
-          }
-          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
           if (objs.videoImages[sequence2]) {
             objs.jump_context.drawImage(objs.videoImages[sequence2], 0, 0);
           }
