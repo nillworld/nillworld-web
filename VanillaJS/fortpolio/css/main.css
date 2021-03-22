@@ -359,10 +359,12 @@ label {
   flex-direction: column;
 }
 #scroll-section-2 .possible-activity {
-  width: 500px;
+  width: 100%;
+  max-width: 1200px;
   height: 500px;
   border: #2983dd solid 1px;
 }
+#scroll-section-2  .activityImg
 /* ########################### */
 
 /* #scroll-section-1 .possible-message {
