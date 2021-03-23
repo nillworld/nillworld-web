@@ -112,7 +112,7 @@
         messageB_opacity_out: [1, 0, { start: 0.78, end: 0.79 }],
         this_in: [0, 1, { start: 0.79, end: 0.81 }],
         this_out: [1, 0, { start: 0.97, end: 0.98 }],
-        this_white_opacity: [1, 0, { start: 0.85, end: 0.92 }],
+        this_white_opacity: [1, 0, { start: 0.87, end: 0.92 }],
         jump_in: [0, 1, { start: 0.93, end: 0.97 }],
       },
     },
@@ -148,7 +148,7 @@
     // 3
     {
       type: "sticky",
-      heightNum: 5,
+      heightNum: 7,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-3"),
@@ -162,8 +162,8 @@
         videoImages: [],
       },
       values: {
-        videoImageCount: 960,
-        imageSequence: [0, 959],
+        videoImageCount: 526,
+        imageSequence: [0, 525],
         canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
         canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
         messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
@@ -230,18 +230,18 @@
     let imgElem4;
     for (let i = 0; i < sceneInfo[1].values.videoImageCount; i++) {
       imgElem4 = new Image();
-      imgElem4.src = `./video/03/jump-${i}.jpg`;
+      imgElem4.src = `./video/02/jump-${i}.jpg`;
       sceneInfo[1].objs.videoImages.push(imgElem4);
     }
     let imgElem4_1;
     imgElem4_1 = new Image();
-    imgElem4_1.src = `./video/03/jump-25.jpg`;
+    imgElem4_1.src = `./video/02/jump-25.jpg`;
     sceneInfo[2].objs.jumpImg.push(imgElem4_1);
 
     let imgElem5;
     for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `./video/02/IMG_${7027 + i}.JPG`;
+      imgElem5.src = `./video/03/sunset-${600 + i}.JPG`;
       sceneInfo[3].objs.videoImages.push(imgElem5);
     }
 
@@ -467,9 +467,9 @@
         }
         ///////////////////////////////////////////////////////
 
-        let scale_section2_ratio = 1 + Math.pow((scrollRatio - 0.81) * 20, 5);
+        let scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.81) * 20, 5);
         if (scrollRatio <= 0.83) {
-          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(1)`;
+          objs.this_div.style.transform = `translate3d(0, 0, 0) scale(0.3)`;
         } else {
           if (scale_section2_ratio >= 150) {
             scale_section2_ratio = 150;
@@ -756,11 +756,14 @@
         const values = sceneInfo[currentScene].values;
         let currentYOffset = delayedYOffset - prevScrollHeight;
         let section2_ratio = currentYOffset / (window.innerHeight * 13);
-        if (section2_ratio < 0.83) {
+        if (section2_ratio < 0.87) {
           objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
           let sequence2 = Math.round((section2_ratio * 100 - 85) * 2.5);
+          if (sequence2 >= 25) {
+            sequence2 = 25;
+          }
           if (objs.videoImages[sequence2]) {
             objs.jump_context.drawImage(objs.videoImages[sequence2], 0, 0);
           }
@@ -801,10 +804,8 @@
     if (window.innerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
       slideArea.style.maxWidth = `${(window.innerHeight / 540) * 1000 * 0.7}px`;
       imgWidth = (window.innerHeight / 540) * 1000 * 0.7;
-      slideArea.style.top = `55%`;
     } else {
       slideArea.style.maxWidth = `1200px`;
-      slideArea.style.top = `50%`;
     }
     slideImgs.style.transition = 0.2 + "s";
     slideImgs.addEventListener("touchstart", touchStart, false);

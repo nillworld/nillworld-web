@@ -359,12 +359,48 @@ label {
   flex-direction: column;
 }
 #scroll-section-2 .possible-activity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
   width: 100%;
   max-width: 1200px;
-  height: 500px;
-  border: #2983dd solid 1px;
+  margin-bottom: 200px;
 }
-#scroll-section-2  .activityImg
+#scroll-section-2 .activityImg {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+}
+#scroll-section-2 .activityText {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 20px 20px 40px;
+  font-size: 2rem;
+}
+
+.activityImg figure {
+  border: thin #c0c0c0 solid;
+  display: flex;
+  flex-flow: column;
+  padding: 5px;
+  margin: auto;
+  background-color: rgb(180, 180, 180);
+}
+.activityImg figcaption {
+  color: #fff;
+  background-color: rgb(180, 180, 180);
+  font: italic 1.5rem sans-serif;
+  padding: 3px;
+  text-align: center;
+}
+/* ########################### */
+
+/* #######  section-3  ####### */
+#scroll-section-3 .sticky-elem-canvas {
+  top: 50%;
+  left: 50%;
+}
 /* ########################### */
 
 /* #scroll-section-1 .possible-message {
@@ -580,5 +616,10 @@ label {
   }
   .next {
     display: none;
+  }
+}
+@media (max-width: 1219px) {
+  .activityText.order-second {
+    order: 2;
   }
 }
