@@ -162,8 +162,8 @@
         videoImages: [],
       },
       values: {
-        videoImageCount: 526,
-        imageSequence: [0, 525],
+        videoImageCount: 487,
+        imageSequence: [0, 486],
         canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
         canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
         messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
@@ -241,7 +241,7 @@
     let imgElem5;
     for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `./video/03/sunset-${600 + i}.JPG`;
+      imgElem5.src = `./video/03/sunset-${i}.JPG`;
       sceneInfo[3].objs.videoImages.push(imgElem5);
     }
 
