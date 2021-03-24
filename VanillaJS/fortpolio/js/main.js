@@ -119,10 +119,11 @@
     //2
     {
       type: "sticky",
-      heightNum: 7,
+      heightNum: 6,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-2"),
+        jump_div: document.querySelector("#scroll-section-2 .canvas-div"),
         jump_canvas: document.querySelector("#jump-canvas-2"),
         jump_context: document.querySelector("#jump-canvas-2").getContext("2d"),
         jumpImg: [],
@@ -131,6 +132,10 @@
         main_message_upper: document.querySelector("#possible-upper"),
         main_message_space: document.querySelector("#possible-space"),
         possible_activities: document.querySelector("#possible-activities"),
+        figureImgs: document.querySelectorAll("#scroll-section-2 .figureImg"),
+        modal: document.querySelector("#scroll-section-2 .modal"),
+        modalImg: document.querySelector("#scroll-section-2 .modalImg"),
+        modalText: document.querySelector("#scroll-section-2 .modalText"),
       },
       values: {
         jump_opacity_down: [1, 0.2, { start: 0, end: 0.15 }],
@@ -148,7 +153,7 @@
     // 3
     {
       type: "sticky",
-      heightNum: 7,
+      heightNum: 9,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-3"),
@@ -159,13 +164,16 @@
         pinC: document.querySelector("#scroll-section-3 .c .pin"),
         canvas: document.querySelector("#video-canvas-1"),
         context: document.querySelector("#video-canvas-1").getContext("2d"),
+        rowDiv: document.querySelector("#scroll-section-3 .rowDiv"),
+        rowDivCover: document.querySelector("#scroll-section-3 .cover-rowDiv"),
+        mind_Message: document.querySelector("#scroll-section-3 .mind-message"),
         videoImages: [],
       },
       values: {
         videoImageCount: 487,
-        imageSequence: [0, 486],
+        imageSequence: [0, 600],
         canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
-        canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
+        canvas_opacity_out: [1, 0, { start: 0.85, end: 1 }],
         messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
         messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
         messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
@@ -180,6 +188,7 @@
         messageC_opacity_out: [1, 0, { start: 0.95, end: 1 }],
         pinB_scaleY: [0.5, 1, { start: 0.6, end: 0.65 }],
         pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }],
+        rowDiv_translateX: [100, -200, { start: 0.5, end: 0.9 }],
       },
     },
     // 4
@@ -266,6 +275,9 @@
     for (let i = 0; i < sceneInfo.length; i++) {
       if (sceneInfo[i].type === "sticky") {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+        if (window.innerWidth < 1217) {
+          sceneInfo[2].scrollHeight = 8 * window.innerHeight;
+        }
       } else if (sceneInfo[i].type === "normal") {
         sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight;
       }
@@ -322,6 +334,9 @@
     sceneInfo[2].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${jump_canvas_Ratio})`;
     sceneInfo[2].objs.possible_activities.style.marginTop = `${window.innerHeight * sceneInfo[2].heightNum * 0.45}px`;
     sceneInfo[3].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+    sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
+    sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
+    sceneInfo[3].objs.rowDiv.style.width = `300vh`;
   }
 
   function calcValues(values, currentYOffset) {
@@ -498,8 +513,10 @@
         objs.jump_context.drawImage(objs.jumpImg[0], 0, 0);
         if (scrollRatio <= 0.32) {
           objs.jump_canvas.style.opacity = calcValues(values.jump_opacity_down, currentYOffset);
+          objs.jump_div.style.zIndex = 0;
         } else {
           objs.jump_canvas.style.opacity = calcValues(values.jump_opacity_out, currentYOffset);
+          objs.jump_div.style.zIndex = -1;
         }
         if (scrollRatio <= 0.22) {
           objs.main_message.style.opacity = calcValues(values.main_message_opacity_in, currentYOffset);
@@ -515,10 +532,28 @@
         } else {
           objs.main_message.style.transform = `translate3d(0, ${calcValues(values.main_message_translateY_out, currentYOffset)}vw, 0)`;
         }
+
+        for (let figureImg of objs.figureImgs) {
+          figureImg.addEventListener("click", () => {
+            objs.modal.style.display = "block";
+            objs.modalImg.src = figureImg.src;
+            objs.modalText.innerHTML = figureImg.alt;
+          });
+        }
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+          objs.modal.style.display = "none";
+        };
+
         break;
       case 3:
         // console.log('2 play');
+        objs.rowDiv.style.transform = `translate3d(${calcValues(values.rowDiv_translateX, currentYOffset)}vw, 0, 0)`;
         if (scrollRatio <= 0.32) {
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset);
+
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
           objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
@@ -526,6 +561,7 @@
           // out
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
           objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset);
         }
 
         if (scrollRatio <= 0.67) {
@@ -732,6 +768,9 @@
           currentYOffset = delayedYOffset - prevScrollHeight;
         }
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+        if (currentScene === 3 && sequence >= 486) {
+          sequence = 486;
+        }
         if (objs.videoImages[sequence]) {
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         }
@@ -780,165 +819,189 @@
 
   ///////////////////////////////////////////////////
   function slideElement(slideImgs) {
-    var objs = sceneInfo[currentScene].objs;
-    var values = sceneInfo[currentScene].values;
-    var slideArea = objs.slideArea;
-    var slideInputs = objs.slideInputs;
-    var slideLabels = objs.slideLabels;
-    var prevBtn = objs.slidePrevBtn;
-    var nextBtn = objs.slideNextBtn;
-    var emojiLength = values.emojiCouint;
-    var imgWidth = Math.round(document.body.offsetWidth * 0.95);
-    var pos1,
-      pos2,
-      pos3 = 0;
-    var touchStartX;
-    var touchEndX;
-    var touchMovedStartX;
-    var touchMovedEndX;
+    if (currentScene === 1) {
+      var objs = sceneInfo[currentScene].objs;
+      var values = sceneInfo[currentScene].values;
+      var slideArea = objs.slideArea;
+      var slideInputs = objs.slideInputs;
+      var slideLabels = objs.slideLabels;
+      var prevBtn = objs.slidePrevBtn;
+      var nextBtn = objs.slideNextBtn;
+      var emojiLength = values.emojiCouint;
+      var imgWidth = Math.round(document.body.offsetWidth * 0.95);
+      var pos1,
+        pos2,
+        pos3 = 0;
+      var touchStartX;
+      var touchEndX;
+      var touchMovedStartX;
+      var touchMovedEndX;
 
-    if (imgWidth > 1200) {
-      imgWidth = 1200;
-    }
-    //  화면 높이 < Img 높이 + 상단바 + 프로젝트 타이틀 + 라벨버튼
-    if (window.innerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
-      slideArea.style.maxWidth = `${(window.innerHeight / 540) * 1000 * 0.7}px`;
-      imgWidth = (window.innerHeight / 540) * 1000 * 0.7;
-    } else {
-      slideArea.style.maxWidth = `1200px`;
-    }
-    slideImgs.style.transition = 0.2 + "s";
-    slideImgs.addEventListener("touchstart", touchStart, false);
-    slideImgs.onmousedown = dragMouseDown;
-    prevBtn.onclick = prevImg;
-    nextBtn.onclick = nextImg;
-
-    function touchStart(e) {
-      e = e || window.event;
-      e.preventDefault();
-      if (slideState) {
-        touchStartX = e.changedTouches[0].clientX;
-        slideImgs.addEventListener("touchmove", touchMove, false);
+      if (imgWidth > 1200) {
+        imgWidth = 1200;
       }
-      slideState = false;
-      //slideImgs.addEventListener('touchend', touchEnd, false);
-    }
-    function touchMove(e) {
-      e = e || window.event;
-      e.preventDefault();
-      touchMovedEndX = touchStartX - e.changedTouches[0].clientX;
-      touchStartX = e.changedTouches[0].clientX;
-      slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
-      slideImgs.style.transition = 0 + "s";
-      touchMovedEndX = 0;
-      slideImgs.addEventListener("touchend", touchEnd, false);
-    }
-    function touchEnd(e) {
-      slideState = true;
-      e = e || window.event;
-      e.preventDefault();
-      touchEndX = e.changedTouches[0].clientX;
-      if (touchEndX - touchStartX > 0) {
-        if (touchEndX - touchStartX > imgWidth / 3) {
-          prevImg();
-        } else {
-          stayImg();
-        }
+      //  화면 높이 < Img 높이 + 상단바 + 프로젝트 타이틀 + 라벨버튼
+      if (window.innerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
+        slideArea.style.maxWidth = `${(window.innerHeight / 540) * 1000 * 0.7}px`;
+        imgWidth = (window.innerHeight / 540) * 1000 * 0.7;
       } else {
-        if (touchStartX - touchEndX > imgWidth / 3) {
-          nextImg();
-        } else {
-          stayImg();
+        slideArea.style.maxWidth = `1200px`;
+      }
+      slideImgs.style.transition = 0.2 + "s";
+      slideImgs.addEventListener("touchstart", touchStart, {
+        capture: false,
+        once: false,
+        passive: true,
+      });
+      slideImgs.onmousedown = dragMouseDown;
+      prevBtn.onclick = prevImg;
+      nextBtn.onclick = nextImg;
+      for (let i = 0; i < slideInputs.length; i++) {
+        slideInputs[i].onclick = changeBox;
+      }
+
+      function changeBox() {
+        var slideRdio = document.getElementsByName("slideRdio");
+        var slideImgs = document.querySelector(".slideImgs");
+        var imgWidth = document.body.offsetWidth * 0.95;
+        if (imgWidth > 1200) {
+          imgWidth = 1200;
+        }
+        for (var i = 0; i < slideRdio.length; i++) {
+          if (slideRdio[i].checked) {
+            slideImgs.style.left = -imgWidth * i + "px";
+            slideImgs.style.transition = 0.3 + "s";
+          }
         }
       }
-    }
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
-      pos2 = e.clientX;
-      pos3 = e.clientX;
-      beforeSlideLeft = slideImgs.offsetLeft;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
-    }
-    function elementDrag(e) {
-      var movedPosition = slideImgs.style.left;
-      e = e || window.event;
-      e.preventDefault();
-      pos1 = pos3 - e.clientX;
-      pos3 = e.clientX;
-      slideImgs.style.left = slideImgs.offsetLeft - pos1 + "px";
-      slideImgs.style.transition = 0 + "s";
-    }
-    function closeDragElement(e) {
-      document.onmouseup = null;
-      document.onmousemove = null;
-      pos1 = pos2 - e.clientX;
-      var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
-      slideSection = Math.round(aroundSection);
-      if (pos1 > imgWidth / 4) {
-        slideSection += 1;
-      }
-      if (pos1 < -imgWidth / 4) {
-        console.log(pos1);
-        slideSection -= 1;
-      }
-      if (slideImgs.offsetLeft > 0) {
-        slideSection = 0;
-      }
-      if (slideImgs.offsetLeft < -(emojiLength - 1) * imgWidth) {
-        slideSection = emojiLength - 1;
-      }
-      slideInputs[slideSection].checked = true;
-      slideImgs.style.left = -slideSection * imgWidth + "px";
-      slideImgs.style.transition = 0.2 + "s";
-    }
 
-    function prevImg() {
-      if (slideImgs.offsetLeft < 0) {
-        var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+      function touchStart(e) {
+        e = e || window.event;
+        e.preventDefault();
+        if (slideState) {
+          touchStartX = e.changedTouches[0].clientX;
+          slideImgs.addEventListener("touchmove", touchMove, false);
+        }
+        slideState = false;
+        //slideImgs.addEventListener('touchend', touchEnd, false);
+      }
+      function touchMove(e) {
+        e = e || window.event;
+        e.preventDefault();
+        touchMovedEndX = touchStartX - e.changedTouches[0].clientX;
+        touchStartX = e.changedTouches[0].clientX;
+        slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
+        slideImgs.style.transition = 0 + "s";
+        touchMovedEndX = 0;
+        slideImgs.addEventListener("touchend", touchEnd, false);
+      }
+      function touchEnd(e) {
+        slideState = true;
+        e = e || window.event;
+        e.preventDefault();
+        touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX - touchStartX > 0) {
+          if (touchEndX - touchStartX > imgWidth / 3) {
+            prevImg();
+          } else {
+            stayImg();
+          }
+        } else {
+          if (touchStartX - touchEndX > imgWidth / 3) {
+            nextImg();
+          } else {
+            stayImg();
+          }
+        }
+      }
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos2 = e.clientX;
+        pos3 = e.clientX;
+        beforeSlideLeft = slideImgs.offsetLeft;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+      function elementDrag(e) {
+        var movedPosition = slideImgs.style.left;
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos3 = e.clientX;
+        slideImgs.style.left = slideImgs.offsetLeft - pos1 + "px";
+        slideImgs.style.transition = 0 + "s";
+      }
+      function closeDragElement(e) {
+        document.onmouseup = null;
+        document.onmousemove = null;
+        pos1 = pos2 - e.clientX;
+        var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
         slideSection = Math.round(aroundSection);
-        if (slideSection > emojiLength - 1) {
+        if (pos1 > imgWidth / 4) {
+          slideSection += 1;
+        }
+        if (pos1 < -imgWidth / 4) {
+          console.log(pos1);
+          slideSection -= 1;
+        }
+        if (slideImgs.offsetLeft > 0) {
+          slideSection = 0;
+        }
+        if (slideImgs.offsetLeft < -(emojiLength - 1) * imgWidth) {
           slideSection = emojiLength - 1;
         }
-        slideInputs[slideSection - 1].checked = true;
-        slideImgs.style.left = -(slideSection - 1) * imgWidth + "px";
+        slideInputs[slideSection].checked = true;
+        slideImgs.style.left = -slideSection * imgWidth + "px";
         slideImgs.style.transition = 0.2 + "s";
-      } else {
-        slideInputs[emojiLength - 1].checked = true;
-        slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
-        slideImgs.style.transition = 0 + "s";
       }
-    }
-    function nextImg() {
-      if (slideImgs.offsetLeft > -Math.round(imgWidth) * (emojiLength - 1)) {
+
+      function prevImg() {
+        if (slideImgs.offsetLeft < 0) {
+          var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+          slideSection = Math.round(aroundSection);
+          if (slideSection > emojiLength - 1) {
+            slideSection = emojiLength - 1;
+          }
+          slideInputs[slideSection - 1].checked = true;
+          slideImgs.style.left = -(slideSection - 1) * imgWidth + "px";
+          slideImgs.style.transition = 0.2 + "s";
+        } else {
+          slideInputs[emojiLength - 1].checked = true;
+          slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
+          slideImgs.style.transition = 0 + "s";
+        }
+      }
+      function nextImg() {
+        if (slideImgs.offsetLeft > -Math.round(imgWidth) * (emojiLength - 1)) {
+          var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+          slideSection = Math.round(aroundSection);
+          slideInputs[slideSection + 1].checked = true;
+          slideImgs.style.left = -(slideSection + 1) * imgWidth + "px";
+          slideImgs.style.transition = 0.2 + "s";
+        } else {
+          slideInputs[0].checked = true;
+          slideImgs.style.left = 0 + "px";
+          slideImgs.style.transition = 0 + "s";
+        }
+      }
+      function stayImg() {
         var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
+        if (slideImgs.offsetLeft > 0) {
+          slideInputs[emojiLength - 1].checked = true;
+          slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
+          return;
+        }
+        if (aroundSection > emojiLength - 1) {
+          slideImgs.style.left = 0 + "px";
+          slideInputs[0].checked = true;
+          return;
+        }
         slideSection = Math.round(aroundSection);
-        slideInputs[slideSection + 1].checked = true;
-        slideImgs.style.left = -(slideSection + 1) * imgWidth + "px";
+        slideInputs[slideSection].checked = true;
+        slideImgs.style.left = -slideSection * imgWidth + "px";
         slideImgs.style.transition = 0.2 + "s";
-      } else {
-        slideInputs[0].checked = true;
-        slideImgs.style.left = 0 + "px";
-        slideImgs.style.transition = 0 + "s";
       }
-    }
-    function stayImg() {
-      var aroundSection = Math.abs(slideImgs.offsetLeft) / imgWidth;
-      if (slideImgs.offsetLeft > 0) {
-        slideInputs[emojiLength - 1].checked = true;
-        slideImgs.style.left = -(emojiLength - 1) * imgWidth + "px";
-        return;
-      }
-      if (aroundSection > emojiLength - 1) {
-        slideImgs.style.left = 0 + "px";
-        slideInputs[0].checked = true;
-        return;
-      }
-      slideSection = Math.round(aroundSection);
-      slideInputs[slideSection].checked = true;
-      slideImgs.style.left = -slideSection * imgWidth + "px";
-      slideImgs.style.transition = 0.2 + "s";
     }
   }
 
@@ -1030,20 +1093,3 @@
 // function init() {
 //   videoElem.currentTime = videoElem.duration;
 // }
-
-/////////////////////////////////////////////
-function changeBox() {
-  var slideRdio = document.getElementsByName("slideRdio");
-  var slideImgs = document.querySelector(".slideImgs");
-  var imgWidth = document.body.offsetWidth * 0.95;
-  if (imgWidth > 1200) {
-    imgWidth = 1200;
-  }
-  for (var i = 0; i < slideRdio.length; i++) {
-    if (slideRdio[i].checked) {
-      slideImgs.style.left = -imgWidth * i + "px";
-      slideImgs.style.transition = 0.3 + "s";
-    }
-  }
-}
-/////////////////////////////////////////////

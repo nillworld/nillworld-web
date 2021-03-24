@@ -100,14 +100,14 @@
           <div class="slideArea">
             <p class="sub-mention">It's the development process what I did team-project in academy (my part was member management)</p>
             <div class="slideImgBox">
-              <input type="radio" name="slideRdio" id="pos1" onclick="changeBox()" checked />
-              <input type="radio" name="slideRdio" id="pos2" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos3" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos4" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos5" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos6" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos7" onclick="changeBox()" />
-              <input type="radio" name="slideRdio" id="pos8" onclick="changeBox()" />
+              <input type="radio" name="slideRdio" id="pos1" checked />
+              <input type="radio" name="slideRdio" id="pos2" />
+              <input type="radio" name="slideRdio" id="pos3" />
+              <input type="radio" name="slideRdio" id="pos4" />
+              <input type="radio" name="slideRdio" id="pos5" />
+              <input type="radio" name="slideRdio" id="pos6" />
+              <input type="radio" name="slideRdio" id="pos7" />
+              <input type="radio" name="slideRdio" id="pos8" />
               <div class="slideImgs">
                 <ul>
                   <li class="emoji"><img src="" alt="" /></li>
@@ -150,17 +150,12 @@
             <svg
               xmlns="http://www.w3.org/2000/svg"
               version="1.0"
-              width="1920.000000pt"
-              height="1080.000000pt"
-              viewBox="0 0 1920.000000 1080.000000"
+              width="1920pt"
+              height="1080pt"
+              viewBox="0 0 1920 1080"
               preserveAspectRatio="xMidYMid meet"
             >
-              <g
-                xmlns="http://www.w3.org/2000/svg"
-                transform="translate(0.000000,1080.000000) scale(0.100000,-0.100000)"
-                fill="#000000"
-                stroke="none"
-              >
+              <g xmlns="http://www.w3.org/2000/svg" transform="translate(0,1080) scale(0.1,-0.1)" fill="#000000" stroke="none">
                 <path
                   d="M0 5400 l0 -5400 9600 0 9600 0 0 5400 0 5400 -9600 0 -9600 0 0 -5400z m10629 1594 c62 -18 127 -73 152 -129 29 -64 25 -160 -9 -226 -45 -87 -126 -129 -245 -129 -156 0 -257 98 -257 248 0 84 17 129 68 180 65 65 185 88 291 56z m-1615 -90 c18 -46 2 -635 -20 -733 -5 -24 -5 -24 18 -8 173 125 265 165 401 173 260 17 418 -95 493 -351 16 -54 18 -122 21 -637 l4 -578 -240 0 -240 0 -3 513 -3 512 -24 49 c-57 116 -218 112 -358 -9 l-43 -36 -2 -512 -3 -512 -238 0 -237 0 0 1063 c0 584 0 1067 0 1072 0 6 85 10 234 10 204 0 235 -2 240 -16z m-746 -326 l-3 -203 -267 -3 -268 -2 0 -800 0 -800 -242 2 -243 3 -3 798 -2 797 -254 0 c-140 0 -261 3 -270 6 -14 5 -16 32 -16 198 0 106 3 196 7 199 3 4 357 7 785 7 l778 0 -2 -202z m3637 -267 c39 -10 95 -29 125 -41 75 -33 204 -114 208 -131 2 -11 -169 -254 -201 -286 -2 -2 -34 15 -70 37 -78 47 -199 90 -255 90 -50 0 -101 -17 -130 -44 -19 -16 -22 -29 -20 -65 3 -39 8 -49 44 -76 22 -17 90 -48 150 -70 354 -125 478 -240 491 -458 10 -153 -29 -261 -131 -363 -169 -168 -500 -222 -784 -127 -130 43 -312 144 -312 173 0 9 85 130 187 267 l24 33 57 -39 c115 -78 196 -110 302 -118 132 -10 201 26 204 106 1 67 -40 96 -269 186 -275 108 -402 235 -422 425 -19 187 86 371 260 454 107 52 171 64 332 65 105 0 157 -4 210 -18z m-1130 -776 l0 -760 -237 -3 -238 -2 0 765 0 765 238 -2 237 -3 0 -760z"
                 />
@@ -184,9 +179,16 @@
         </div>
         <div id="possible-activities">
           <div class="possible-activity">
+            <div class="modal">
+              <span class="close">&times;</span>
+              <img class="modalImg" />
+              <div class="modalText"></div>
+            </div>
             <div class="activityImg">
               <figure>
-                <img src="./images/commit2.png" alt="github contributions" />
+                <a href="https://github.com/nillworld" target="_blank">
+                  <img src="./images/commit2.png" alt="github contributions" />
+                </a>
                 <figcaption>Nill's contributions graph</figcaption>
               </figure>
             </div>
@@ -205,7 +207,7 @@
             </div>
             <div class="activityImg">
               <figure>
-                <img src="./images/active3.jpg" alt="Friends's message to me on canada flag" />
+                <img class="figureImg" src="./images/active3.jpg" alt="Friends's message to me on canada flag" />
                 <figcaption>Friends's message to me</figcaption>
               </figure>
             </div>
@@ -213,7 +215,7 @@
           <div class="possible-activity">
             <div class="activityImg">
               <figure>
-                <img src="./images/prize.jpg" alt="Prize in recognition of my effort." />
+                <img class="figureImg" src="./images/prize.jpg" alt="Prize in recognition of my effort." />
                 <figcaption>Prize in recognition of my effort.</figcaption>
               </figure>
             </div>
@@ -232,7 +234,7 @@
             </div>
             <div class="activityImg">
               <figure>
-                <img src="./images/diary.jpg" alt="Diary in military service" />
+                <img class="figureImg" src="./images/diary.jpg" alt="Diary in military service" />
                 <figcaption>Diary in military service</figcaption>
               </figure>
             </div>
@@ -243,18 +245,22 @@
         <!-- 내 가치관과 인생 이야기 -->
         <!-- 편안하게 해드리겠습니다 (처음에 사진으로 시작)- 초등학교 4학년의 꿈을 계속 지켜 나가고 있는, 방법은 다르지만 목적은 같은 -->
         <!-- 신소재공학과, 창업, 그리고 프로그래머 -->
-        <div class="main-message">
-          <h2>My Dream,</h2>
-          <h3>Let me make your comfortable life</h3>
-        </div>
         <div class="sticky-elem sticky-elem-canvas">
           <canvas id="video-canvas-1" width="1920" height="1080"></canvas>
         </div>
         <div class="sticky-elem main-message a">
           <p>
-            <small>편안한 촉감</small>
-            입과 하나 되다
+            <h2>My Dream,</h2>
+          <h3>Let me make your comfortable life</h3>
           </p>
+        </div>
+        <div class="sticky-elem cover-rowDiv">
+          <div class="rowDiv">
+            <div class="mind-message"></div>
+            <div class="mind-message"></div>
+            <div class="mind-message"></div>
+            <div class="mind-message"></div>
+          </div>
         </div>
         <div class="sticky-elem desc-message b">
           <p>
@@ -271,8 +277,7 @@
       <section class="scroll-section" id="scroll-section-4">
         <!-- 소심한 성격->활발한 성격(mbti), 외국문화와 친구들에 대한 열망(캐나다 연수 및 지금까지 연락), 친구들과 서비스 개발중, 1일1커밋 -->
         <p class="mid-message">
-          <strong>Retina 머그</strong><br />
-          아이디어를 광활하게 펼칠<br />
+          <strong>아이디어를 광활하게 펼칠</strong><br />
         </p>
         <canvas class="image-blend-canvas" width="1920" height="1080"></canvas>
         <p class="canvas-caption">
@@ -284,7 +289,7 @@
           explicabo animi eos ratione obcaecati.
         </p>
       </section>
-      <footer class="footer">2020, 1분코딩</footer>
+      <footer class="footer">2021, Nill World</footer>
     </div>
     <!-- 
 	스토리텔링
@@ -299,7 +304,6 @@
 	왜 회사를 들어가고 싶은지
 	개발자에 임하는 자세 등
  -->
-
     <script src="js/main.js"></script>
   </body>
 </html>
