@@ -750,7 +750,7 @@
         }
 
         const canvas_Ratio = 704 / window.innerHeight;
-        const canvas_transY = 10 - sequence * canvas_Ratio * 0.17;
+        const canvas_transY = 10 - sequence * Math.sqrt(canvas_Ratio) * 0.15;
         // section-0 canvas codeVideo last img ZoomIn
         if (currentScene === 0 && sequence >= 370) {
           objs.context.drawImage(objs.videoImages[370], 0, 0);

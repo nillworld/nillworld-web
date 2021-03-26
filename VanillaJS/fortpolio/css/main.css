@@ -157,13 +157,10 @@ body.before-load {
 }
 .right-text-align {
   text-align: right;
+  font-size: 0.7em;
 }
 .right-text-align a {
   color: #2983dd;
-  font-size: 1.2rem;
-}
-.right-text-align p {
-  font-size: 1.2rem;
 }
 .sticky-elem-canvas .project-canvas {
   position: absolute;
@@ -192,7 +189,7 @@ body.before-load {
 }
 .sub-mention {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 0.8em;
   margin-bottom: 20px;
   z-index: 3;
 }
@@ -205,6 +202,7 @@ body.before-load {
   top: 50%;
   left: 50%;
   width: 95%;
+  z-index: 5;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -701,6 +699,13 @@ label {
   #scroll-section-3 .mind-message {
     width: 270px;
     font-size: 1.1rem;
+  }
+  #scroll-section-1 .main-message.a {
+    top: 40vh;
+    font-size: 10vw;
+  }
+  #scroll-section-1 .projects {
+    font-size: 0.6em;
   }
 }
 @media (max-width: 1219px) {
