@@ -134,7 +134,7 @@
         main_message_space: document.querySelector("#possible-space"),
         possible_activities: document.querySelector("#possible-activities"),
         figureImgs: document.querySelectorAll("#scroll-section-2 .figureImg"),
-        modal: document.querySelector("#scroll-section-2 .modal"),
+        modal: document.querySelector("#scroll-section-2 .possible-modal"),
         modalImg: document.querySelector("#scroll-section-2 .modalImg"),
         modalText: document.querySelector("#scroll-section-2 .modalText"),
       },
@@ -183,28 +183,28 @@
       },
     },
     // 4
-    {
-      type: "sticky",
-      heightNum: 5,
-      scrollHeight: 0,
-      objs: {
-        container: document.querySelector("#scroll-section-4"),
-        canvasCaption: document.querySelector(".canvas-caption"),
-        canvas: document.querySelector(".image-blend-canvas"),
-        context: document.querySelector(".image-blend-canvas").getContext("2d"),
-        imagesPath: ["./images/blend-image-1.jpg", "./images/blend-image-2.jpg"],
-        images: [],
-      },
-      values: {
-        rect1X: [0, 0, { start: 0, end: 0 }],
-        rect2X: [0, 0, { start: 0, end: 0 }],
-        blendHeight: [0, 0, { start: 0, end: 0 }],
-        canvas_scale: [0, 0, { start: 0, end: 0 }],
-        canvasCaption_opacity: [0, 1, { start: 0, end: 0 }],
-        canvasCaption_translateY: [20, 0, { start: 0, end: 0 }],
-        rectStartY: 0,
-      },
-    },
+    // {
+    //   type: "sticky",
+    //   heightNum: 5,
+    //   scrollHeight: 0,
+    //   objs: {
+    //     container: document.querySelector("#scroll-section-4"),
+    //     canvasCaption: document.querySelector(".canvas-caption"),
+    //     canvas: document.querySelector(".image-blend-canvas"),
+    //     context: document.querySelector(".image-blend-canvas").getContext("2d"),
+    //     imagesPath: ["./images/blend-image-1.jpg", "./images/blend-image-2.jpg"],
+    //     images: [],
+    //   },
+    //   values: {
+    //     rect1X: [0, 0, { start: 0, end: 0 }],
+    //     rect2X: [0, 0, { start: 0, end: 0 }],
+    //     blendHeight: [0, 0, { start: 0, end: 0 }],
+    //     canvas_scale: [0, 0, { start: 0, end: 0 }],
+    //     canvasCaption_opacity: [0, 1, { start: 0, end: 0 }],
+    //     canvasCaption_translateY: [20, 0, { start: 0, end: 0 }],
+    //     rectStartY: 0,
+    //   },
+    // },
   ];
 
   function setCanvasImages() {
@@ -245,20 +245,12 @@
       sceneInfo[3].objs.videoImages.push(imgElem5);
     }
 
-    let imgElem6;
-    for (let i = 0; i < sceneInfo[4].objs.imagesPath.length; i++) {
-      imgElem6 = new Image();
-      imgElem6.src = sceneInfo[4].objs.imagesPath[i];
-      sceneInfo[4].objs.images.push(imgElem6);
-    }
-  }
-
-  function checkMenu() {
-    if (yOffset > 44) {
-      document.body.classList.add("local-nav-sticky");
-    } else {
-      document.body.classList.remove("local-nav-sticky");
-    }
+    // let imgElem6;
+    // for (let i = 0; i < sceneInfo[4].objs.imagesPath.length; i++) {
+    //   imgElem6 = new Image();
+    //   imgElem6.src = sceneInfo[4].objs.imagesPath[i];
+    //   sceneInfo[4].objs.images.push(imgElem6);
+    // }
   }
 
   function setLayout() {
@@ -534,16 +526,18 @@
 
         for (let figureImg of objs.figureImgs) {
           figureImg.addEventListener("click", () => {
+            document.body.style.overflowY = "hidden";
             objs.modal.style.display = "block";
             objs.modalImg.src = figureImg.src;
             objs.modalText.innerHTML = figureImg.alt;
           });
         }
-        var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("close")[1];
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        span.onclick = () => {
           objs.modal.style.display = "none";
+          document.body.style.overflowY = "scroll";
         };
 
         break;
@@ -562,7 +556,7 @@
           objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset);
         }
 
-        // currentScene 4에서 쓰는 캔버스를 미리 그려주기 시작
+        /* // currentScene 4에서 쓰는 캔버스를 미리 그려주기 시작
         if (scrollRatio > 0.9) {
           const objs = sceneInfo[4].objs;
           const values = sceneInfo[4].values;
@@ -595,7 +589,7 @@
           // 좌우 흰색 박스 그리기
           objs.context.fillRect(parseInt(values.rect1X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height);
           objs.context.fillRect(parseInt(values.rect2X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height);
-        }
+        } */
 
         break;
 
@@ -984,8 +978,8 @@
   window.addEventListener("load", () => {
     document.body.classList.remove("before-load");
     setLayout();
-    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
 
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     let tempYOffset = yOffset;
     let tempScrollCount = 0;
     if (tempYOffset > 0) {
@@ -1003,7 +997,6 @@
     window.addEventListener("scroll", () => {
       yOffset = window.pageYOffset;
       scrollLoop();
-      checkMenu();
 
       if (!rafState) {
         rafId = requestAnimationFrame(loop);
@@ -1051,7 +1044,18 @@
     window.addEventListener("orientationchange", () => {
       setTimeout(setLayout, 500);
     });
+    document.querySelector(".contact").addEventListener("click", () => {
+      let contactModa = document.querySelector(".contact-modal");
+      contactModa.style.display = "flex";
+      document.body.style.overflowY = "hidden";
+      var span = document.getElementsByClassName("close")[0];
 
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = () => {
+        contactModa.style.display = "none";
+        document.body.style.overflowY = "scroll";
+      };
+    });
     document.querySelector(".loading").addEventListener("transitionend", (e) => {
       document.body.removeChild(e.currentTarget);
     });
