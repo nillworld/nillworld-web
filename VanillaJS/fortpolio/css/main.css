@@ -644,15 +644,21 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 100;
+  color: white;
   background: rgb(29, 29, 31);
   opacity: 0;
   transition: 0.5s;
+}
+.loading p {
+  margin-top: 30px;
+  text-align: center;
 }
 .before-load .container {
   display: none;
