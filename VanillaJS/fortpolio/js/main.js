@@ -1,3 +1,6 @@
+var today = new Date();
+var test = today.getMilliseconds();
+console.log(test);
 (() => {
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
@@ -214,7 +217,10 @@
       imgElem.src = `./video/01/Nill-code-${100 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem);
     }
-
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("5");
     let imgElem2;
     imgElem2 = new Image();
     imgElem2.src = `./images/profileImg.jpg`;
@@ -241,10 +247,13 @@
     let imgElem5;
     for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `./video/03/sunset-${i}.JPG`;
+      imgElem5.src = `./video/03/sunset-${i}.jpg`;
       sceneInfo[3].objs.videoImages.push(imgElem5);
     }
-
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("6");
     // let imgElem6;
     // for (let i = 0; i < sceneInfo[4].objs.imagesPath.length; i++) {
     //   imgElem6 = new Image();
@@ -255,6 +264,10 @@
 
   function setLayout() {
     // 각 스크롤 섹션의 높이 세팅
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("1");
     for (let i = 0; i < sceneInfo.length; i++) {
       if (sceneInfo[i].type === "sticky") {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
@@ -268,7 +281,10 @@
     }
 
     yOffset = window.pageYOffset;
-
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("2");
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
       totalScrollHeight += sceneInfo[i].scrollHeight;
@@ -328,8 +344,15 @@
     sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("3");
   }
-
+  var today = new Date();
+  var test = today.getMilliseconds();
+  console.log(test);
+  console.log("4");
   function calcValues(values, currentYOffset) {
     let rv;
     // 현재 씬(스크롤섹션)에서 스크롤된 범위를 비율로 구하기

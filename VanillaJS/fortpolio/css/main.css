@@ -211,6 +211,9 @@ body.before-load {
   text-align: center;
   top: 50px;
 }
+#scroll-section-1 .projects {
+  z-index: 3;
+}
 .right-text-align {
   text-align: right;
   font-size: 0.7em;
@@ -443,7 +446,7 @@ label {
 .activityImg figcaption {
   color: #fff;
   background-color: rgb(180, 180, 180);
-  font: italic 1.5rem sans-serif;
+  font: italic 1rem sans-serif;
   padding: 3px;
   text-align: center;
 }
@@ -543,6 +546,9 @@ label {
   top: 10vh;
   left: 5vw;
   opacity: 0;
+}
+#scroll-section-3 .myDream {
+  font-weight: 1200;
 }
 #scroll-section-3 .cover-rowDiv {
   position: fixed;
