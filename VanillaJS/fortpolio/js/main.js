@@ -724,10 +724,13 @@ console.log(test);
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
 
-    if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
-      enterNewScene = true;
-      currentScene++;
-      document.body.setAttribute("id", `show-scene-${currentScene}`);
+    if (currentScene < 4) {
+      if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+        enterNewScene = true;
+        currentScene++;
+        console.log(currentScene);
+        document.body.setAttribute("id", `show-scene-${currentScene}`);
+      }
     }
 
     if (delayedYOffset < prevScrollHeight) {
