@@ -335,6 +335,11 @@ console.log(test);
     sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.24}px`;
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
+    ///////////////////////////////////////////
+    sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
+    sceneInfo[1].objs.slideInputs[0].checked = true;
+    slideElement(sceneInfo[1].objs.slideImgs);
+    ///////////////////////////////////////////
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
@@ -344,6 +349,7 @@ console.log(test);
     sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
+
     var today = new Date();
     var test = today.getMilliseconds();
     console.log(test);
@@ -1030,40 +1036,22 @@ console.log(test);
       }
     });
 
-    window.addEventListener("resize", () => {
-      ///////////////////////////////////////////
-      sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
-      sceneInfo[1].objs.slideInputs[0].checked = true;
-      slideElement(sceneInfo[1].objs.slideImgs);
-      ///////////////////////////////////////////
-
-      setLayout();
-      if (window.innerWidth > 900) {
-        sceneInfo[3].values.rectStartY = 0;
+    let mobilePlatform = false;
+    let filter = "win16|win32|win64|mac|macintel";
+    if (navigator.platform) {
+      if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+        mobilePlatform = true;
       }
-      if (currentScene === 3) {
-        // 추가 코드
-        // Scene 3의 요소들은 위치나 크기가 미리 정해지지 않고
-        // 현재 창 사이즈나 스크롤 위치에 따라 가변적으로 변하기 때문에
-        // 리사이즈에 일일이 대응시키기가 까다롭습니다.
-        // Scene 3에 진입 시점에 요소들의 위치와 크기가 결정이 되는 특징을 이용해서
-        // 현재 Scene이 3일 경우에는 좀 위로 스크롤이 되도록 해서
-        // Scene 3의 시작 지점 이전으로 돌리는 식으로 요소들의 레이아웃이 깨지는 현상을 방지해 줍니다.
-        // 시작 지점 이전으로 스크롤을 이동 시키는 동작은
-        // 바로 위 518 라인의 자동 스크롤 코드를 그대로 활용했습니다.
-        let tempYOffset = yOffset;
-        let tempScrollCount = 0;
-        if (tempYOffset > 0) {
-          let siId = setInterval(() => {
-            scrollTo(0, tempYOffset);
-            tempYOffset -= 50;
-
-            if (tempScrollCount > 20) {
-              clearInterval(siId);
-            }
-            tempScrollCount++;
-          }, 20);
+    }
+    let beforeInnerHeight = window.innerHeight;
+    window.addEventListener("resize", () => {
+      if (mobilePlatform) {
+        let afterInnerHeight = window.innerHeight;
+        if (beforeInnerHeight < afterInnerHeight) {
+          setLayout();
         }
+      } else {
+        setLayout();
       }
     });
 
