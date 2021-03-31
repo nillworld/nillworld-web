@@ -12,10 +12,6 @@ console.log(test);
   let rafId;
   let rafState;
   let canvasRatio;
-  var lang = navigator.language || navigator.userLanguage;
-  if (lang == "ko-KR" || lang == "ko") {
-    //한국어 일때?
-  }
 
   const sceneInfo = [
     // 0
@@ -100,7 +96,7 @@ console.log(test);
         videoImages: [],
       },
       values: {
-        emojiCount: 8,
+        emojiCouint: 8,
         videoImageCount: 26,
         imageSequence: [0, 25],
         main_opacity_in: [0, 1, { start: 0.0, end: 0.04 }],
@@ -216,25 +212,15 @@ console.log(test);
 
   function setCanvasImages() {
     let imgElem;
-    let imgElemLoadedCount = 0;
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
       imgElem.src = `./video/01/Nill-code-${100 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem);
-      imgElem.addEventListener("load", () => {
-        imgElemLoadedCount++;
-        console.log(imgElemLoadedCount);
-        if (imgElemLoadedCount == 371) {
-          sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
-          console.log("here");
-          document.body.classList.remove("before-load");
-          document.querySelector(".loading").addEventListener("transitionend", (e) => {
-            document.body.removeChild(e.currentTarget);
-          });
-        }
-      });
     }
-
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("5");
     let imgElem2;
     imgElem2 = new Image();
     imgElem2.src = `./images/profileImg.jpg`;
@@ -253,7 +239,6 @@ console.log(test);
       imgElem4.src = `./video/02/jump-${i}.jpg`;
       sceneInfo[1].objs.videoImages.push(imgElem4);
     }
-
     let imgElem4_1;
     imgElem4_1 = new Image();
     imgElem4_1.src = `./video/02/jump-25.jpg`;
@@ -265,6 +250,16 @@ console.log(test);
       imgElem5.src = `./video/03/sunset-${i}.jpg`;
       sceneInfo[3].objs.videoImages.push(imgElem5);
     }
+    var today = new Date();
+    var test = today.getMilliseconds();
+    console.log(test);
+    console.log("6");
+    // let imgElem6;
+    // for (let i = 0; i < sceneInfo[4].objs.imagesPath.length; i++) {
+    //   imgElem6 = new Image();
+    //   imgElem6.src = sceneInfo[4].objs.imagesPath[i];
+    //   sceneInfo[4].objs.images.push(imgElem6);
+    // }
   }
 
   function setLayout() {
@@ -340,11 +335,6 @@ console.log(test);
     sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.24}px`;
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
-    ///////////////////////////////////////////
-    sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
-    sceneInfo[1].objs.slideInputs[0].checked = true;
-    slideElement(sceneInfo[1].objs.slideImgs);
-    ///////////////////////////////////////////
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
@@ -354,7 +344,6 @@ console.log(test);
     sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
-
     var today = new Date();
     var test = today.getMilliseconds();
     console.log(test);
@@ -468,7 +457,7 @@ console.log(test);
           values.backColor_black,
           currentYOffset
         )}, ${calcValues(values.backColor_black, currentYOffset)}, 1)`;
-        imgChange(values.emojiCount, objs.emojiImg, "emoji");
+        imgChange(values.emojiCouint, objs.emojiImg, "emoji");
         slideElement(objs.slideImgs);
         if (scrollRatio <= 0.08) {
           objs.main_message.style.opacity = calcValues(values.main_opacity_in, currentYOffset);
@@ -597,7 +586,6 @@ console.log(test);
           const widthRatio = window.innerWidth / objs.canvas.width;
           const heightRatio = window.innerHeight / objs.canvas.height;
           let canvasScaleRatio;
-
           if (widthRatio <= heightRatio) {
             // 캔버스보다 브라우저 창이 홀쭉한 경우
             canvasScaleRatio = heightRatio;
@@ -605,21 +593,17 @@ console.log(test);
             // 캔버스보다 브라우저 창이 납작한 경우
             canvasScaleRatio = widthRatio;
           }
-
           objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
           objs.context.fillStyle = "white";
           objs.context.drawImage(objs.images[0], 0, 0);
-
           // 캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
           const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
           const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
-
           const whiteRectWidth = recalculatedInnerWidth * 0.15;
           values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
           values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
           values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
           values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
-
           // 좌우 흰색 박스 그리기
           objs.context.fillRect(parseInt(values.rect1X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height);
           objs.context.fillRect(parseInt(values.rect2X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height);
@@ -766,6 +750,7 @@ console.log(test);
         let currentYOffset = delayedYOffset - prevScrollHeight;
         //모바일 바운스로인한 clcValues 함수 typeError 방지
         if (currentYOffset < 0) {
+          objs.canvas.style.top = `300%`;
           currentYOffset = 0;
         } else {
           sceneInfo[3].objs.canvas.style.top = `50%`;
@@ -831,7 +816,7 @@ console.log(test);
       var slideLabels = objs.slideLabels;
       var prevBtn = objs.slidePrevBtn;
       var nextBtn = objs.slideNextBtn;
-      var emojiLength = values.emojiCount;
+      var emojiLength = values.emojiCouint;
       var imgWidth = Math.round(document.body.offsetWidth * 0.95);
       var pos1,
         pos2,
@@ -905,13 +890,13 @@ console.log(test);
         e.preventDefault();
         touchEndX = e.changedTouches[0].clientX;
         if (touchEndX - touchStartX > 0) {
-          if (touchEndX - touchStartX > imgWidth / 5) {
+          if (touchEndX - touchStartX > imgWidth / 3) {
             prevImg();
           } else {
             stayImg();
           }
         } else {
-          if (touchStartX - touchEndX > imgWidth / 5) {
+          if (touchStartX - touchEndX > imgWidth / 3) {
             nextImg();
           } else {
             stayImg();
@@ -1011,11 +996,11 @@ console.log(test);
 
   ///////////////////////////////////////////////////
 
-  window.addEventListener("DOMContentLoaded", () => {
-    // document.body.classList.remove("before-load");
+  window.addEventListener("load", () => {
+    document.body.classList.remove("before-load");
     setLayout();
 
-    // sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     let tempYOffset = yOffset;
     let tempScrollCount = 0;
     if (tempYOffset > 0) {
@@ -1040,22 +1025,40 @@ console.log(test);
       }
     });
 
-    let mobilePlatform = false;
-    let filter = "win16|win32|win64|mac|macintel";
-    if (navigator.platform) {
-      if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
-        mobilePlatform = true;
-      }
-    }
-    let beforeInnerHeight = window.innerHeight;
     window.addEventListener("resize", () => {
-      if (mobilePlatform) {
-        let afterInnerHeight = window.innerHeight;
-        if (beforeInnerHeight < afterInnerHeight) {
-          setLayout();
+      ///////////////////////////////////////////
+      sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
+      sceneInfo[1].objs.slideInputs[0].checked = true;
+      slideElement(sceneInfo[1].objs.slideImgs);
+      ///////////////////////////////////////////
+
+      setLayout();
+      if (window.innerWidth > 900) {
+        sceneInfo[3].values.rectStartY = 0;
+      }
+      if (currentScene === 3) {
+        // 추가 코드
+        // Scene 3의 요소들은 위치나 크기가 미리 정해지지 않고
+        // 현재 창 사이즈나 스크롤 위치에 따라 가변적으로 변하기 때문에
+        // 리사이즈에 일일이 대응시키기가 까다롭습니다.
+        // Scene 3에 진입 시점에 요소들의 위치와 크기가 결정이 되는 특징을 이용해서
+        // 현재 Scene이 3일 경우에는 좀 위로 스크롤이 되도록 해서
+        // Scene 3의 시작 지점 이전으로 돌리는 식으로 요소들의 레이아웃이 깨지는 현상을 방지해 줍니다.
+        // 시작 지점 이전으로 스크롤을 이동 시키는 동작은
+        // 바로 위 518 라인의 자동 스크롤 코드를 그대로 활용했습니다.
+        let tempYOffset = yOffset;
+        let tempScrollCount = 0;
+        if (tempYOffset > 0) {
+          let siId = setInterval(() => {
+            scrollTo(0, tempYOffset);
+            tempYOffset -= 50;
+
+            if (tempScrollCount > 20) {
+              clearInterval(siId);
+            }
+            tempScrollCount++;
+          }, 20);
         }
-      } else {
-        setLayout();
       }
     });
 
@@ -1074,9 +1077,9 @@ console.log(test);
         document.body.style.overflowY = "scroll";
       };
     });
-    // document.querySelector(".loading").addEventListener("transitionend", (e) => {
-    //   document.body.removeChild(e.currentTarget);
-    // });
+    document.querySelector(".loading").addEventListener("transitionend", (e) => {
+      document.body.removeChild(e.currentTarget);
+    });
   });
 
   setCanvasImages();
