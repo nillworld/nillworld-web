@@ -620,9 +620,8 @@ label {
   max-width: 1200px;
 }
 .sticky-elem-canvas .profile-img-canvas {
-  height: 100%;
   position: absolute;
-  top: 50%;
+  top: 0px;
   left: 50%;
 }
 .canvas-div {
