@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="css/default.css" />
     <!-- <link rel="stylesheet" href="css/nillMain.css">  -->
     <link rel="stylesheet" href="css/main.css" />
+    <script>
+      if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
+        // IE!!
+        alert('익스플로러는 호환성이 떨어져 문제가 발생할수있으므로 엣지나 크롬에서 실행을 권장합니다.');
+        window.location = "microsoft-edge:" + "https://nillworld.com/";
+      }
+    </script>
   </head>
   <body class="before-load">
     <div class="loading">
