@@ -12,7 +12,9 @@
   var lang = navigator.language || navigator.userLanguage;
   if (lang == "ko-KR" || lang == "ko") {
     //한국어 일때?
-    document.querySelector(".product-name").innerText = "test";
+    document.querySelector(".language-check").classList.remove("kor");
+  } else {
+    document.querySelector(".language-check2").classList.remove("eng");
   }
 
   const sceneInfo = [
@@ -24,6 +26,7 @@
       //DOM Object
       objs: {
         container: document.querySelector("#scroll-section-0"),
+        message_div: document.querySelector("#section0-message-div"),
         messageA: document.querySelector("#scroll-section-0 .main-message.a"),
         messageB: document.querySelector("#scroll-section-0 .main-message.b"),
         messageC: document.querySelector("#scroll-section-0 .main-message.c"),
@@ -331,6 +334,7 @@
       sunset_translateX = -60;
     }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
+    sceneInfo[0].objs.message_div.style.display = "none";
     sceneInfo[0].objs.profile_canvas.style.height = `${window.innerHeight}px`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, 0px, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
@@ -414,7 +418,7 @@
         // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         // objs.container.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         objs.canvasDiv.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
-
+        objs.message_div.style.display = "block";
         if (scrollRatio <= 0.125) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
