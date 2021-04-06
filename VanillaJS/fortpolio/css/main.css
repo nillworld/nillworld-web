@@ -77,6 +77,12 @@ body.before-load {
 .local-nav-links a {
   font-size: 1rem;
 }
+#select-laguage {
+  color: white;
+  background-color: rgb(30, 30, 30);
+  margin-right: 10px;
+  border: rgb(30, 30, 30);
+}
 .contact {
   background-color: rgb(19, 102, 255);
   align-items: center;
