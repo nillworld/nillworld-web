@@ -627,6 +627,10 @@
   }
 
   function loop() {
+    let selectLanguage = document.querySelector("#select-laguage");
+    let selectedLanguage = selectLanguage.options[selectLanguage.selectedIndex].value;
+    console.log(selectedLanguage);
+
     delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
 
     if (!enterNewScene) {
