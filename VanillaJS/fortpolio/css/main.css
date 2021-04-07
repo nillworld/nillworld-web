@@ -723,6 +723,21 @@ label {
   animation: loading-circle-ani 1s infinite;
   /* transition: 1s; */
 }
+#totalLoadingBar {
+  width: 60%;
+  max-width: 900px;
+  margin-top: 50px;
+  background-color: #ddd;
+}
+
+#loadingBar {
+  width: 10%;
+  height: 30px;
+  background-color: rgba(30, 30, 30, 0.5);
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
 /* .loading-circle:hover circle {
 	stroke-dashoffset: -157;
 } */

@@ -207,11 +207,11 @@
         console.log(imgElemLoadedTotalCount);
         if (imgElemLoadedCount == 371) {
           sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
-          document.body.classList.remove("before-load");
+          // document.body.classList.remove("before-load");
           setLayout();
-          document.querySelector(".loading").addEventListener("transitionend", (e) => {
-            document.body.removeChild(e.currentTarget);
-          });
+          // document.querySelector(".loading").addEventListener("transitionend", (e) => {
+          //   document.body.removeChild(e.currentTarget);
+          // });
         }
       });
     }
@@ -265,6 +265,27 @@
         imgElemLoadedTotalCount++;
         console.log(imgElemLoadedTotalCount);
       });
+    }
+
+    var i = 0;
+    if (i == 0) {
+      i = 1;
+      var loadingBar = document.getElementById("loadingBar");
+      var width = 10;
+      if (Math.round((imgElemLoadedTotalCount / 888) * 100) > 10) {
+        width = Math.round((imgElemLoadedTotalCount / 888) * 100);
+      }
+      var id = setInterval(frame, 10);
+      function frame() {
+        if (width == 100) {
+          clearInterval(id);
+          i = 0;
+        } else {
+          width++;
+          loadingBar.style.width = width + "%";
+          loadingBar.innerHTML = width + "%";
+        }
+      }
     }
   }
 
@@ -881,8 +902,8 @@
 
   ///////////////////////////////////////////////////
 
-  window.addEventListener("DOMContentLoaded", () => {
-    // document.body.classList.remove("before-load");
+  window.addEventListener("load", () => {
+    document.body.classList.remove("before-load");
     setLayout();
 
     // sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
@@ -944,9 +965,9 @@
         document.body.style.overflowY = "scroll";
       };
     });
-    // document.querySelector(".loading").addEventListener("transitionend", (e) => {
-    //   document.body.removeChild(e.currentTarget);
-    // });
+    document.querySelector(".loading").addEventListener("transitionend", (e) => {
+      document.body.removeChild(e.currentTarget);
+    });
   });
 
   setCanvasImages();
