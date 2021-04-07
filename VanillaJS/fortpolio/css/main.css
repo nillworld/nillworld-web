@@ -79,9 +79,16 @@ body.before-load {
 }
 #select-laguage {
   color: white;
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0);
   margin-right: 10px;
+  padding: 5px;
   border: rgb(30, 30, 30);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+#select-laguage option {
+  color: black;
 }
 .contact {
   background-color: rgb(19, 102, 255);

@@ -10,7 +10,7 @@
   let rafState;
   let canvasRatio;
   var lang = navigator.language || navigator.userLanguage;
-  if (lang == "ko-KR" || lang == "ko") {
+  if (lang == "ko-KR" || lang == "ko" || lang == "ko-kr") {
     //한국어 일때?
     document.querySelector(".language-check").classList.remove("kor");
   } else {
