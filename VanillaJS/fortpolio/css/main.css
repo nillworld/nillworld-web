@@ -454,6 +454,7 @@ label {
   max-width: 600px;
   padding: 20px 20px 20px 40px;
   font-size: 2rem;
+  line-height: 150%;
 }
 
 .activityImg figure {
@@ -588,6 +589,7 @@ label {
   height: 400px;
   margin: 0px 20px 30px 10px;
   font-size: 1.5rem;
+  line-height: 150%;
 }
 
 .mid-message {
@@ -727,11 +729,12 @@ label {
   width: 60%;
   max-width: 900px;
   margin-top: 50px;
+  border-radius: 10px;
   background-color: #ddd;
 }
 
 #loadingBar {
-  width: 10%;
+  width: 7%;
   height: 30px;
   background-color: rgba(30, 30, 30, 0.5);
   text-align: center;
@@ -796,7 +799,7 @@ label {
   }
   #scroll-section-3 .mind-message {
     width: 270px;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   #scroll-section-1 .main-message.a {
     top: 40vh;

@@ -9,12 +9,35 @@
   let rafId;
   let rafState;
   let canvasRatio;
-  var lang = navigator.language || navigator.userLanguage;
+  let imgElemLoadedTotalCount = 0;
+
+  let lang = navigator.language || navigator.userLanguage;
   if (lang == "ko-KR" || lang == "ko" || lang == "ko-kr") {
     //한국어 일때?
     document.querySelector(".language-check").classList.remove("kor");
   } else {
     document.querySelector(".language-check2").classList.remove("eng");
+  }
+
+  let loadingCheck = 0;
+  if (loadingCheck == 0) {
+    loadingCheck = 1;
+    var loadingBar = document.getElementById("loadingBar");
+    var width = 7;
+    if (Math.round((imgElemLoadedTotalCount / 1088) * 100) > 7) {
+      width = Math.round((imgElemLoadedTotalCount / 1088) * 100);
+    }
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width == 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        loadingBar.style.width = width + "%";
+        loadingBar.innerHTML = width + "%";
+      }
+    }
   }
 
   const sceneInfo = [
@@ -194,25 +217,13 @@
 
   function setCanvasImages() {
     let imgElem;
-    let imgElemLoadedCount = 0;
-    let imgElemLoadedTotalCount = 0;
 
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
       imgElem.src = `./video/01/Nill-code-${100 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem);
       imgElem.addEventListener("load", () => {
-        imgElemLoadedCount++;
         imgElemLoadedTotalCount++;
-        console.log(imgElemLoadedTotalCount);
-        if (imgElemLoadedCount == 371) {
-          sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
-          // document.body.classList.remove("before-load");
-          setLayout();
-          // document.querySelector(".loading").addEventListener("transitionend", (e) => {
-          //   document.body.removeChild(e.currentTarget);
-          // });
-        }
       });
     }
 
@@ -222,7 +233,6 @@
     sceneInfo[0].objs.profileImg.push(imgElem2);
     imgElem2.addEventListener("load", () => {
       imgElemLoadedTotalCount++;
-      console.log(imgElemLoadedTotalCount);
     });
 
     let imgElem3;
@@ -232,7 +242,6 @@
       sceneInfo[1].objs.projectImg.push(imgElem3);
       imgElem3.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
-        console.log(imgElemLoadedTotalCount);
       });
     }
 
@@ -243,7 +252,6 @@
       sceneInfo[1].objs.videoImages.push(imgElem4);
       imgElem4.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
-        console.log(imgElemLoadedTotalCount);
       });
     }
 
@@ -253,7 +261,6 @@
     sceneInfo[2].objs.jumpImg.push(imgElem4_1);
     imgElem4_1.addEventListener("load", () => {
       imgElemLoadedTotalCount++;
-      console.log(imgElemLoadedTotalCount);
     });
 
     let imgElem5;
@@ -266,35 +273,11 @@
         console.log(imgElemLoadedTotalCount);
       });
     }
-
-    var i = 0;
-    if (i == 0) {
-      i = 1;
-      var loadingBar = document.getElementById("loadingBar");
-      var width = 10;
-      if (Math.round((imgElemLoadedTotalCount / 888) * 100) > 10) {
-        width = Math.round((imgElemLoadedTotalCount / 888) * 100);
-      }
-      var id = setInterval(frame, 10);
-      function frame() {
-        if (width == 100) {
-          clearInterval(id);
-          i = 0;
-        } else {
-          width++;
-          loadingBar.style.width = width + "%";
-          loadingBar.innerHTML = width + "%";
-        }
-      }
-    }
   }
 
   function setLayout() {
     // 각 스크롤 섹션의 높이 세팅
-    var today = new Date();
-    var test = today.getMilliseconds();
-    console.log(test);
-    console.log("1");
+    imgElemLoadedTotalCount += 10;
     for (let i = 0; i < sceneInfo.length; i++) {
       if (sceneInfo[i].type === "sticky") {
         sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
@@ -306,12 +289,8 @@
       }
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
-
+    imgElemLoadedTotalCount += 20;
     yOffset = window.pageYOffset;
-    var today = new Date();
-    var test = today.getMilliseconds();
-    console.log(test);
-    console.log("2");
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
       totalScrollHeight += sceneInfo[i].scrollHeight;
@@ -320,6 +299,7 @@
         break;
       }
     }
+    imgElemLoadedTotalCount += 20;
     document.body.setAttribute("id", `show-scene-${currentScene}`);
     const heightRatio = window.innerHeight / 900;
     let section1_canvas_scale;
@@ -354,21 +334,22 @@
     if (window.innerWidth < 1000) {
       sunset_translateX = -60;
     }
+    imgElemLoadedTotalCount += 30;
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.message_div.style.display = "none";
     sceneInfo[0].objs.profile_canvas.style.height = `${window.innerHeight}px`;
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, 0px, 0) scale(1)`;
+    imgElemLoadedTotalCount += 40;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.24}px`;
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
-    ///////////////////////////////////////////
     sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
     sceneInfo[1].objs.slideInputs[0].checked = true;
     slideElement(sceneInfo[1].objs.slideImgs);
-    ///////////////////////////////////////////
+    imgElemLoadedTotalCount += 40;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
@@ -379,15 +360,9 @@
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
 
-    var today = new Date();
-    var test = today.getMilliseconds();
-    console.log(test);
-    console.log("3");
+    imgElemLoadedTotalCount += 40;
+    
   }
-  var today = new Date();
-  var test = today.getMilliseconds();
-  console.log(test);
-  console.log("4");
   function calcValues(values, currentYOffset) {
     let rv;
     // 현재 씬(스크롤섹션)에서 스크롤된 범위를 비율로 구하기
@@ -459,7 +434,6 @@
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
           objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
         }
-
         if (scrollRatio <= 0.425) {
           // in
           objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
@@ -488,10 +462,6 @@
         }
         break;
       case 1:
-        objs.container.style.backgroundColor = `rgba(${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(
-          values.backColor_black,
-          currentYOffset
-        )}, ${calcValues(values.backColor_black, currentYOffset)}, 1)`;
         imgChange(values.emojiCount, objs.emojiImg, "emoji");
         slideElement(objs.slideImgs);
         if (scrollRatio <= 0.08) {
@@ -529,8 +499,6 @@
         } else {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
         }
-        ///////////////////////////////////////////////////////
-
         let scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.81) * 20, 5);
         if (scrollRatio <= 0.83) {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(0.3)`;
@@ -540,9 +508,6 @@
           }
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
-
-        ///////////////////////////////////////////////////////
-
         if (scrollRatio <= 0.85) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
           objs.jump_canvas.style.opacity = 0;
@@ -552,9 +517,14 @@
         }
         if (scrollRatio <= 0.93) {
           objs.this_div.style.backgroundColor = `rgba(255, 255, 255, ${calcValues(values.this_white_opacity, currentYOffset)})`;
+          objs.container.style.backgroundColor = `rgba(${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(
+            values.backColor_black,
+            currentYOffset
+          )}, ${calcValues(values.backColor_black, currentYOffset)}, 1)`;
         } else {
           objs.this_div.style.backgroundColor = `rgba(255, 255, 255, 0)`;
           sceneInfo[2].objs.jump_context.drawImage(sceneInfo[2].objs.jumpImg[0], 0, 0);
+          objs.container.style.backgroundColor = "white";
         }
 
         break;
