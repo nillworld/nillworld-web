@@ -361,7 +361,6 @@
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
 
     imgElemLoadedTotalCount += 40;
-    
   }
   function calcValues(values, currentYOffset) {
     let rv;
@@ -499,13 +498,13 @@
         } else {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
         }
-        let scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.81) * 20, 5);
+        let scale_section2_ratio = 0;
+        if (scrollRatio <= 0.94) {
+          scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.81) * 20, 5);
+        }
         if (scrollRatio <= 0.83) {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(0.3)`;
         } else {
-          if (scale_section2_ratio >= 150) {
-            scale_section2_ratio = 150;
-          }
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
         if (scrollRatio <= 0.85) {
