@@ -24,16 +24,18 @@
     loadingCheck = 1;
     var loadingBar = document.getElementById("loadingBar");
     var width = 7;
-    if (Math.round((imgElemLoadedTotalCount / 1088) * 100) > 7) {
-      width = Math.round((imgElemLoadedTotalCount / 1088) * 100);
-    }
+
     var id = setInterval(frame, 10);
     function frame() {
       if (width == 100) {
+        document.body.classList.remove("before-load");
+
         clearInterval(id);
         i = 0;
       } else {
-        width++;
+        if (Math.round((imgElemLoadedTotalCount / 1118) * 100) > 7) {
+          width = Math.round((imgElemLoadedTotalCount / 1118) * 100);
+        }
         loadingBar.style.width = width + "%";
         loadingBar.innerHTML = width + "%";
       }
@@ -124,7 +126,7 @@
         videoImages: [],
       },
       values: {
-        emojiCount: 8,
+        emojiCount: 7,
         videoImageCount: 26,
         imageSequence: [0, 25],
         main_opacity_in: [0, 1, { start: 0.0, end: 0.04 }],
@@ -270,7 +272,6 @@
       sceneInfo[3].objs.videoImages.push(imgElem5);
       imgElem5.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
-        console.log(imgElemLoadedTotalCount);
       });
     }
   }
@@ -391,7 +392,7 @@
   ///////////////////////////////////////////////
   function imgChange(length, direction, projectName) {
     for (let i = 0; i < length; i++) {
-      direction[i].src = `./images/projects/${projectName}/${projectName}-${i}.jpg`;
+      direction[i].src = `./images/projects/${projectName}/${projectName}-${i + 1}.jpg`;
     }
   }
 
@@ -408,7 +409,6 @@
     //
     switch (currentScene) {
       case 0:
-        // console.log('0 play');
         // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
         // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         // objs.container.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
@@ -559,7 +559,7 @@
             objs.modalText.innerHTML = figureImg.alt;
           });
         }
-        var span = document.getElementsByClassName("close")[1];
+        var span = document.getElementsByClassName("close")[2];
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
@@ -569,7 +569,6 @@
 
         break;
       case 3:
-        // console.log('3 play');
         objs.rowDiv.style.transform = `translate3d(${calcValues(values.rowDiv_translateX, currentYOffset)}%, 0, 0)`;
         if (scrollRatio <= 0.22) {
           // in
@@ -599,7 +598,6 @@
       if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
         enterNewScene = true;
         currentScene++;
-        console.log(currentScene);
         document.body.setAttribute("id", `show-scene-${currentScene}`);
       }
     }
@@ -697,8 +695,8 @@
         pos2,
         pos3 = 0;
       var touchStartX;
-      var touchEndX;
       var touchMovedStartX;
+      var touchEndX;
       var touchMovedEndX;
 
       if (imgWidth > 1200) {
@@ -744,7 +742,9 @@
         e.preventDefault();
         if (slideState) {
           touchStartX = e.changedTouches[0].clientX;
+          touchMovedStartX = e.changedTouches[0].clientX;
           slideImgs.addEventListener("touchmove", touchMove, false);
+          slideImgs.addEventListener("touchend", touchEnd, false);
         }
         slideState = false;
         //slideImgs.addEventListener('touchend', touchEnd, false);
@@ -752,12 +752,11 @@
       function touchMove(e) {
         e = e || window.event;
         e.preventDefault();
-        touchMovedEndX = touchStartX - e.changedTouches[0].clientX;
-        touchStartX = e.changedTouches[0].clientX;
+        touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX;
+        touchMovedStartX = e.changedTouches[0].clientX;
         slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
         slideImgs.style.transition = 0 + "s";
         touchMovedEndX = 0;
-        slideImgs.addEventListener("touchend", touchEnd, false);
       }
       function touchEnd(e) {
         slideState = true;
@@ -765,13 +764,13 @@
         e.preventDefault();
         touchEndX = e.changedTouches[0].clientX;
         if (touchEndX - touchStartX > 0) {
-          if (touchEndX - touchStartX > imgWidth / 5) {
+          if (touchEndX - touchStartX > imgWidth / 8) {
             prevImg();
           } else {
             stayImg();
           }
         } else {
-          if (touchStartX - touchEndX > imgWidth / 5) {
+          if (touchStartX - touchEndX > imgWidth / 8) {
             nextImg();
           } else {
             stayImg();
@@ -802,11 +801,29 @@
         pos1 = pos2 - e.clientX;
         var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
         slideSection = Math.round(aroundSection);
+        if (pos1 > -3 && pos1 < 3) {
+          console.log(pos1);
+          let contactModa = document.querySelector(".slide-modal");
+          let slide_modalImg = document.querySelector(".slide-modal .modalImg");
+          for (let figureImg of objs.emojiImg) {
+            figureImg.addEventListener("click", () => {
+              document.body.style.overflowY = "hidden";
+              contactModa.style.display = "flex";
+              console.log(figureImg.src);
+              slide_modalImg.src = figureImg.src;
+            });
+          }
+          var span = document.getElementsByClassName("close")[1];
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = () => {
+            contactModa.style.display = "none";
+            document.body.style.overflowY = "scroll";
+          };
+        }
         if (pos1 > imgWidth / 4) {
           slideSection += 1;
         }
         if (pos1 < -imgWidth / 4) {
-          console.log(pos1);
           slideSection -= 1;
         }
         if (slideImgs.offsetLeft > 0) {
@@ -872,10 +889,10 @@
   ///////////////////////////////////////////////////
 
   window.addEventListener("load", () => {
-    document.body.classList.remove("before-load");
+    imgElemLoadedTotalCount += 30;
     setLayout();
 
-    // sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     let tempYOffset = yOffset;
     let tempScrollCount = 0;
     if (tempYOffset > 0) {
@@ -923,14 +940,14 @@
       setTimeout(setLayout, 500);
     });
     document.querySelector(".contact").addEventListener("click", () => {
-      let contactModa = document.querySelector(".contact-modal");
-      contactModa.style.display = "flex";
+      let contactModal = document.querySelector(".contact-modal");
+      contactModal.style.display = "flex";
       document.body.style.overflowY = "hidden";
       var span = document.getElementsByClassName("close")[0];
 
       // When the user clicks on <span> (x), close the modal
       span.onclick = () => {
-        contactModa.style.display = "none";
+        contactModal.style.display = "none";
         document.body.style.overflowY = "scroll";
       };
     });
@@ -941,11 +958,3 @@
 
   setCanvasImages();
 })();
-
-// const videoElem = document.querySelector(".videotest");
-// videoElem.addEventListener("loadeddata", function () {
-//   init();
-// });
-// function init() {
-//   videoElem.currentTime = videoElem.duration;
-// }
