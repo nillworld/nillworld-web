@@ -289,6 +289,19 @@ body.before-load {
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+.slide-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  justify-content: center;
+  z-index: 15; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  color: white;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(30, 30, 30, 0.9); /* Black w/ opacity */
+}
 .projectName {
   font-size: 3rem;
 }
@@ -741,6 +754,7 @@ label {
   text-align: center;
   line-height: 30px;
   color: white;
+  transition: 0.3s;
 }
 /* .loading-circle:hover circle {
 	stroke-dashoffset: -157;
