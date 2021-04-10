@@ -295,12 +295,19 @@ body.before-load {
   justify-content: center;
   z-index: 15; /* Sit on top */
   left: 0;
-  top: 0;
+  top: 52px;
+  padding-bottom: 52px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   color: white;
-  overflow: auto; /* Enable scroll if needed */
+  overflow: scroll; /* Enable scroll if needed */
   background-color: rgba(30, 30, 30, 0.9); /* Black w/ opacity */
+}
+.slide-modal .modalImg {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: none;
 }
 .projectName {
   font-size: 3rem;

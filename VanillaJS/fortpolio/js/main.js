@@ -801,25 +801,26 @@
         pos1 = pos2 - e.clientX;
         var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
         slideSection = Math.round(aroundSection);
-        if (pos1 > -3 && pos1 < 3) {
-          console.log(pos1);
-          let contactModa = document.querySelector(".slide-modal");
-          let slide_modalImg = document.querySelector(".slide-modal .modalImg");
-          for (let figureImg of objs.emojiImg) {
-            figureImg.addEventListener("click", () => {
+        console.log(pos1);
+        let contactModa = document.querySelector(".slide-modal");
+        let slide_modalImg = document.querySelector(".slide-modal .modalImg");
+        for (let figureImg of objs.emojiImg) {
+          figureImg.addEventListener("click", () => {
+            if (pos1 > -3 && pos1 < 3) {
               document.body.style.overflowY = "hidden";
               contactModa.style.display = "flex";
               console.log(figureImg.src);
               slide_modalImg.src = figureImg.src;
-            });
-          }
-          var span = document.getElementsByClassName("close")[1];
-          // When the user clicks on <span> (x), close the modal
-          span.onclick = () => {
-            contactModa.style.display = "none";
-            document.body.style.overflowY = "scroll";
-          };
+            }
+          });
         }
+        var span = document.getElementsByClassName("close")[1];
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = () => {
+          contactModa.style.display = "none";
+          document.body.style.overflowY = "scroll";
+        };
+
         if (pos1 > imgWidth / 4) {
           slideSection += 1;
         }
