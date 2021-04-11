@@ -19,7 +19,7 @@ a {
 .language-check.kor {
   display: none;
 }
-.language-check2.eng {
+.language-check.eng {
   display: none;
 }
 body.before-load {
@@ -166,8 +166,8 @@ body.before-load {
 }
 #scroll-section-0 h1 {
   position: relative;
-  top: -30vh;
   z-index: 5;
+  top: -10vh;
   font-size: 6rem;
   text-align: center;
 }
@@ -688,7 +688,7 @@ label {
   position: fixed;
   top: 0;
 }
-.before-load .loading {
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
