@@ -16,7 +16,7 @@
     //한국어 일때?
     document.querySelector(".language-check").classList.remove("kor");
   } else {
-    document.querySelector(".language-check2").classList.remove("eng");
+    document.querySelector(".language-check").classList.remove("eng");
   }
 
   let loadingCheck = 0;
@@ -29,7 +29,10 @@
     function frame() {
       if (width == 100) {
         document.body.classList.remove("before-load");
-
+        document.querySelector(".loading").addEventListener("transitionend", (e) => {
+          console.log("test");
+          document.querySelector(".language-check").removeChild(e.currentTarget);
+        });
         clearInterval(id);
         i = 0;
       } else {
@@ -116,6 +119,8 @@
         emojiImgs: document.querySelectorAll(".slideImgs .emoji"),
         slidePrevBtn: document.querySelector("#scroll-section-1 .prev"),
         slideNextBtn: document.querySelector("#scroll-section-1 .next"),
+        contactModa: document.querySelector(".slide-modal"),
+        slide_modalImg: document.querySelector(".slide-modal .modalImg"),
         emojiImg: document.querySelectorAll(".emoji img"),
         messageA: document.querySelector("#scroll-section-1 .main-message.a"),
         messageB: document.querySelector("#scroll-section-1 .main-message.b"),
@@ -338,7 +343,7 @@
     imgElemLoadedTotalCount += 30;
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.message_div.style.display = "none";
-    sceneInfo[0].objs.profile_canvas.style.height = `${window.innerHeight}px`;
+    sceneInfo[0].objs.profile_canvas.style.height = "100%";
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, 0px, 0) scale(1)`;
     imgElemLoadedTotalCount += 40;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
@@ -713,7 +718,7 @@
       slideImgs.addEventListener("touchstart", touchStart, {
         capture: false,
         once: false,
-        passive: true,
+        passive: false,
       });
       slideImgs.onmousedown = dragMouseDown;
       prevBtn.onclick = prevImg;
@@ -763,6 +768,7 @@
         e = e || window.event;
         e.preventDefault();
         touchEndX = e.changedTouches[0].clientX;
+
         if (touchEndX - touchStartX > 0) {
           if (touchEndX - touchStartX > imgWidth / 8) {
             prevImg();
@@ -801,23 +807,21 @@
         pos1 = pos2 - e.clientX;
         var aroundSection = Math.abs(beforeSlideLeft) / imgWidth;
         slideSection = Math.round(aroundSection);
-        console.log(pos1);
-        let contactModa = document.querySelector(".slide-modal");
-        let slide_modalImg = document.querySelector(".slide-modal .modalImg");
         for (let figureImg of objs.emojiImg) {
           figureImg.addEventListener("click", () => {
             if (pos1 > -3 && pos1 < 3) {
               document.body.style.overflowY = "hidden";
-              contactModa.style.display = "flex";
+              objs.contactModa.style.display = "flex";
               console.log(figureImg.src);
-              slide_modalImg.src = figureImg.src;
+              objs.slide_modalImg.src = figureImg.src;
+              pos1 = 5;
             }
           });
         }
         var span = document.getElementsByClassName("close")[1];
         // When the user clicks on <span> (x), close the modal
         span.onclick = () => {
-          contactModa.style.display = "none";
+          objs.contactModa.style.display = "none";
           document.body.style.overflowY = "scroll";
         };
 
@@ -844,6 +848,7 @@
           slideSection = Math.round(aroundSection);
           if (slideSection > emojiLength - 1) {
             slideSection = emojiLength - 1;
+            console.log(slideSection);
           }
           slideInputs[slideSection - 1].checked = true;
           slideImgs.style.left = -(slideSection - 1) * imgWidth + "px";
@@ -951,9 +956,6 @@
         contactModal.style.display = "none";
         document.body.style.overflowY = "scroll";
       };
-    });
-    document.querySelector(".loading").addEventListener("transitionend", (e) => {
-      document.body.removeChild(e.currentTarget);
     });
   });
 
