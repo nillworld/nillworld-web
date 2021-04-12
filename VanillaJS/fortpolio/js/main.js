@@ -150,7 +150,7 @@
         this_in: [0, 1, { start: 0.85, end: 0.87 }],
         this_out: [1, 0, { start: 0.98, end: 0.99 }],
         this_white_opacity: [1, 0, { start: 0.92, end: 0.96 }],
-        jump_in: [0, 1, { start: 0.93, end: 0.97 }],
+        jump_scale: [2, 1, { start: 0.9, end: 0.96 }],
       },
     },
     //2
@@ -498,6 +498,8 @@
         } else {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
+        objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${calcValues(values.jump_scale, currentYOffset)})`;
+
         if (scrollRatio <= 0.92) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
           objs.jump_canvas.style.opacity = 0;
