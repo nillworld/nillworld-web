@@ -143,13 +143,13 @@
         nas_img_opacity_down: [1, 0.1, { start: 0.46, end: 0.48 }],
         nas_img_opacity_out: [0.1, 0, { start: 0.58, end: 0.61 }],
         backColor_black: [30, 0, { start: 0.63, end: 0.68 }],
-        messageA_opacity_in: [0, 1, { start: 0.68, end: 0.7 }],
-        messageA_opacity_out: [1, 0, { start: 0.73, end: 0.74 }],
-        messageB_opacity_in: [0, 1, { start: 0.74, end: 0.76 }],
-        messageB_opacity_out: [1, 0, { start: 0.78, end: 0.79 }],
-        this_in: [0, 1, { start: 0.79, end: 0.81 }],
-        this_out: [1, 0, { start: 0.97, end: 0.98 }],
-        this_white_opacity: [1, 0, { start: 0.87, end: 0.92 }],
+        messageA_opacity_in: [0, 1, { start: 0.68, end: 0.71 }],
+        messageA_opacity_out: [1, 0, { start: 0.74, end: 0.76 }],
+        messageB_opacity_in: [0, 1, { start: 0.77, end: 0.79 }],
+        messageB_opacity_out: [1, 0, { start: 0.83, end: 0.84 }],
+        this_in: [0, 1, { start: 0.85, end: 0.87 }],
+        this_out: [1, 0, { start: 0.98, end: 0.99 }],
+        this_white_opacity: [1, 0, { start: 0.92, end: 0.96 }],
         jump_in: [0, 1, { start: 0.93, end: 0.97 }],
       },
     },
@@ -479,33 +479,33 @@
         } else {
           objs.project_canvas.style.opacity = calcValues(values.nas_img_opacity_out, currentYOffset);
         }
-        if (scrollRatio <= 0.71) {
+        if (scrollRatio <= 0.72) {
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
         } else {
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
         }
-        if (scrollRatio <= 0.77) {
+        if (scrollRatio <= 0.8) {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
         } else {
           objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
         }
         let scale_section2_ratio = 0;
-        if (scrollRatio <= 0.94) {
-          scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.81) * 20, 5);
+        if (scrollRatio <= 0.97) {
+          scale_section2_ratio = 0.3 + Math.pow((scrollRatio - 0.86) * 20, 5);
         }
-        if (scrollRatio <= 0.83) {
+        if (scrollRatio <= 0.88) {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(0.3)`;
         } else {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
-        if (scrollRatio <= 0.85) {
+        if (scrollRatio <= 0.92) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
           objs.jump_canvas.style.opacity = 0;
         } else {
           objs.this_div.style.opacity = calcValues(values.this_out, currentYOffset);
           objs.jump_canvas.style.opacity = 1;
         }
-        if (scrollRatio <= 0.93) {
+        if (scrollRatio <= 0.97) {
           objs.this_div.style.backgroundColor = `rgba(255, 255, 255, ${calcValues(values.this_white_opacity, currentYOffset)})`;
           objs.container.style.backgroundColor = `rgba(${calcValues(values.backColor_black, currentYOffset)}, ${calcValues(
             values.backColor_black,
@@ -652,7 +652,7 @@
           objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
           // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-          let sequence2 = Math.round((section2_ratio * 100 - 85) * 2.5);
+          let sequence2 = Math.round((section2_ratio * 100 - 92) * 4);
           if (sequence2 >= 25) {
             sequence2 = 25;
           }
