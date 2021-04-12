@@ -35,8 +35,8 @@
         clearInterval(id);
         i = 0;
       } else {
-        if (Math.round((imgElemLoadedTotalCount / 888) * 100) > 10) {
-          width = Math.round((imgElemLoadedTotalCount / 888) * 100);
+        if (Math.round((imgElemLoadedTotalCount / 938) * 100) > 10) {
+          width = Math.round((imgElemLoadedTotalCount / 938) * 100);
         }
         loadingBar.style.width = width + "%";
         loadingBar.innerHTML = width + "%";
@@ -878,6 +878,7 @@
   ///////////////////////////////////////////////////
 
   window.addEventListener("load", () => {
+    imgElemLoadedTotalCount += 50;
     setLayout();
 
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
