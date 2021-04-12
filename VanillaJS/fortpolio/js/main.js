@@ -23,21 +23,20 @@
   if (loadingCheck == 0) {
     loadingCheck = 1;
     var loadingBar = document.getElementById("loadingBar");
-    var width = 7;
+    var width = 10;
 
     var id = setInterval(frame, 10);
     function frame() {
       if (width == 100) {
         document.body.classList.remove("before-load");
         document.querySelector(".loading").addEventListener("transitionend", (e) => {
-          console.log("test");
           document.querySelector(".language-check").removeChild(e.currentTarget);
         });
         clearInterval(id);
         i = 0;
       } else {
-        if (Math.round((imgElemLoadedTotalCount / 1118) * 100) > 7) {
-          width = Math.round((imgElemLoadedTotalCount / 1118) * 100);
+        if (Math.round((imgElemLoadedTotalCount / 888) * 100) > 10) {
+          width = Math.round((imgElemLoadedTotalCount / 888) * 100);
         }
         loadingBar.style.width = width + "%";
         loadingBar.innerHTML = width + "%";
@@ -113,7 +112,6 @@
         projectImg: [],
         slideArea: document.querySelector(".slideArea"),
         slideInputs: document.querySelectorAll(".slideImgBox input"),
-        slideLabels: document.querySelector(".slideImgBox .labels"),
         slideImgs: document.querySelector(".slideImgs"),
         slideImgUl: document.querySelector(".slideImgs ul"),
         emojiImgs: document.querySelectorAll(".slideImgs .emoji"),
@@ -283,19 +281,13 @@
 
   function setLayout() {
     // 각 스크롤 섹션의 높이 세팅
-    imgElemLoadedTotalCount += 10;
     for (let i = 0; i < sceneInfo.length; i++) {
-      if (sceneInfo[i].type === "sticky") {
-        sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
-        if (window.innerWidth < 1217) {
-          sceneInfo[2].scrollHeight = 7 * window.innerHeight;
-        }
-      } else if (sceneInfo[i].type === "normal") {
-        sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight;
+      sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      if (window.innerWidth < 1217) {
+        sceneInfo[2].scrollHeight = 7 * window.innerHeight;
       }
-      sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
+      sceneInfo[i].objs.container.style.height = `${sceneInfo[i].heightNum * 100}vh`;
     }
-    imgElemLoadedTotalCount += 20;
     yOffset = window.pageYOffset;
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
@@ -305,7 +297,6 @@
         break;
       }
     }
-    imgElemLoadedTotalCount += 20;
     document.body.setAttribute("id", `show-scene-${currentScene}`);
     const heightRatio = window.innerHeight / 900;
     let section1_canvas_scale;
@@ -337,15 +328,13 @@
       activities_marginTop = 0.6;
     }
     let sunset_translateX = -50;
-    if (window.innerWidth < 1000) {
-      sunset_translateX = -60;
+    if (window.innerWidth / window.innerHeight < 1920 / 1080) {
+      sunset_translateX = -(1920 / 1080 - window.innerWidth / window.innerHeight) * 10 - 50;
     }
-    imgElemLoadedTotalCount += 30;
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.message_div.style.display = "none";
-    sceneInfo[0].objs.profile_canvas.style.height = "100%";
+    sceneInfo[0].objs.profile_canvas.style.height = "100vh";
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, 0px, 0) scale(1)`;
-    imgElemLoadedTotalCount += 40;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
@@ -355,7 +344,6 @@
     sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
     sceneInfo[1].objs.slideInputs[0].checked = true;
     slideElement(sceneInfo[1].objs.slideImgs);
-    imgElemLoadedTotalCount += 40;
     sceneInfo[1].objs.loop_video.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
@@ -365,8 +353,6 @@
     sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
     sceneInfo[3].objs.rowDiv.style.width = `350vw`;
-
-    imgElemLoadedTotalCount += 40;
   }
   function calcValues(values, currentYOffset) {
     let rv;
@@ -691,7 +677,6 @@
       var values = sceneInfo[currentScene].values;
       var slideArea = objs.slideArea;
       var slideInputs = objs.slideInputs;
-      var slideLabels = objs.slideLabels;
       var prevBtn = objs.slidePrevBtn;
       var nextBtn = objs.slideNextBtn;
       var emojiLength = values.emojiCount;
@@ -812,7 +797,6 @@
             if (pos1 > -3 && pos1 < 3) {
               document.body.style.overflowY = "hidden";
               objs.contactModa.style.display = "flex";
-              console.log(figureImg.src);
               objs.slide_modalImg.src = figureImg.src;
               pos1 = 5;
             }
@@ -848,7 +832,6 @@
           slideSection = Math.round(aroundSection);
           if (slideSection > emojiLength - 1) {
             slideSection = emojiLength - 1;
-            console.log(slideSection);
           }
           slideInputs[slideSection - 1].checked = true;
           slideImgs.style.left = -(slideSection - 1) * imgWidth + "px";
@@ -895,7 +878,6 @@
   ///////////////////////////////////////////////////
 
   window.addEventListener("load", () => {
-    imgElemLoadedTotalCount += 30;
     setLayout();
 
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
