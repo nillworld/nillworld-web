@@ -8,15 +8,25 @@
   let delayedYOffset = 0;
   let rafId;
   let rafState;
-  let canvasRatio;
+  let beforeInnerHeight = 0;
   let imgElemLoadedTotalCount = 0;
 
+  //language check
   let lang = navigator.language || navigator.userLanguage;
   if (lang == "ko-KR" || lang == "ko" || lang == "ko-kr") {
     //한국어 일때?
     document.querySelector(".language-check").classList.remove("kor");
   } else {
     document.querySelector(".language-check").classList.remove("eng");
+  }
+
+  //mobile check
+  let mobilePlatform = false;
+  let filter = "win16|win32|win64|mac|macintel";
+  if (navigator.platform) {
+    if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+      mobilePlatform = true;
+    }
   }
 
   let loadingCheck = 0;
@@ -280,15 +290,26 @@
   }
 
   function setLayout() {
+    if (mobilePlatform) {
+      let afterInnerHeight = window.innerHeight;
+      if (beforeInnerHeight <= afterInnerHeight) {
+        beforeInnerHeight = afterInnerHeight;
+        yOffset = window.pageYOffset;
+      }
+    } else {
+      beforeInnerHeight = window.innerHeight;
+      yOffset = window.pageYOffset;
+    }
+
     // 각 스크롤 섹션의 높이 세팅
     for (let i = 0; i < sceneInfo.length; i++) {
-      sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * beforeInnerHeight;
       if (window.innerWidth < 1217) {
-        sceneInfo[2].scrollHeight = 7 * window.innerHeight;
+        sceneInfo[2].scrollHeight = 7 * beforeInnerHeight;
       }
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].heightNum * 100}vh`;
     }
-    yOffset = window.pageYOffset;
+
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
       totalScrollHeight += sceneInfo[i].scrollHeight;
@@ -298,16 +319,16 @@
       }
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
-    const heightRatio = window.innerHeight / 900;
+    const heightRatio = beforeInnerHeight / 900;
     let section1_canvas_scale;
     //when long height, top rate up (cuz of local bar -> 50px)
     let projectYtrans = 0;
     let project_message_width_Ratio = 0.9;
-    if (window.innerWidth >= 1200 && window.innerHeight >= 900) {
+    if (window.innerWidth >= 1200 && beforeInnerHeight >= 900) {
       section1_canvas_scale = 1;
     } else {
-      if (window.innerWidth / 1200 >= window.innerHeight / 900) {
-        section1_canvas_scale = window.innerHeight / 900;
+      if (window.innerWidth / 1200 >= beforeInnerHeight / 900) {
+        section1_canvas_scale = beforeInnerHeight / 900;
       } else {
         projectYtrans = -5;
         //minus scrollbar width -> 20
@@ -318,18 +339,18 @@
       project_message_width_Ratio = 0.7;
     }
     let canvas_Ratio = 1;
-    if (window.innerWidth / 1920 >= window.innerHeight / 1080) {
+    if (window.innerWidth / 1920 >= beforeInnerHeight / 1080) {
       canvas_Ratio = window.innerWidth / 1920;
     } else {
-      canvas_Ratio = window.innerHeight / 1080;
+      canvas_Ratio = beforeInnerHeight / 1080;
     }
     let activities_marginTop = 0.45;
     if (window.innerWidth <= 1220) {
       activities_marginTop = 0.6;
     }
     let sunset_translateX = -50;
-    if (window.innerWidth / window.innerHeight < 1920 / 1080) {
-      sunset_translateX = -(1920 / 1080 - window.innerWidth / window.innerHeight) * 10 - 50;
+    if (window.innerWidth / beforeInnerHeight < 1920 / 1080) {
+      sunset_translateX = -(1920 / 1080 - window.innerWidth / beforeInnerHeight) * 10 - 50;
     }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
     sceneInfo[0].objs.message_div.style.display = "none";
@@ -338,9 +359,9 @@
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
-    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.24}px`;
-    sceneInfo[1].objs.project_nas_title.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
-    sceneInfo[1].objs.slideArea.style.marginTop = `${window.innerHeight * sceneInfo[1].heightNum * 0.14}px`;
+    sceneInfo[1].objs.project_automouse_title.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.24}px`;
+    sceneInfo[1].objs.project_nas_title.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.14}px`;
+    sceneInfo[1].objs.slideArea.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.14}px`;
     sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
     sceneInfo[1].objs.slideInputs[0].checked = true;
     slideElement(sceneInfo[1].objs.slideImgs);
@@ -348,7 +369,7 @@
     sceneInfo[1].objs.this_back_div.style.transform = `translate3d(-50%, -50%, 0) scale(1)`;
     sceneInfo[1].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
     sceneInfo[2].objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${canvas_Ratio})`;
-    sceneInfo[2].objs.possible_activities.style.marginTop = `${window.innerHeight * sceneInfo[2].heightNum * activities_marginTop}px`;
+    sceneInfo[2].objs.possible_activities.style.marginTop = `${beforeInnerHeight * sceneInfo[2].heightNum * activities_marginTop}px`;
     sceneInfo[3].objs.canvas.style.transform = `translate3d(${sunset_translateX}%, -50%, 0) scale(${canvas_Ratio})`;
     sceneInfo[3].objs.rowDivCover.style.width = `${window.innerWidth}px`;
     sceneInfo[3].objs.rowDiv.style.transform = `translate3d(100vw, 0%, 0)`;
@@ -498,7 +519,7 @@
         } else {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
-        objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${calcValues(values.jump_scale, currentYOffset)})`;
+        // objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${calcValues(values.jump_scale, currentYOffset)})`;
 
         if (scrollRatio <= 0.92) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
@@ -630,7 +651,7 @@
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         }
 
-        const canvas_Ratio = 704 / window.innerHeight;
+        const canvas_Ratio = 704 / beforeInnerHeight;
         const canvas_transY = 10 - sequence * Math.sqrt(canvas_Ratio) * 0.15;
         // section-0 canvas codeVideo last img ZoomIn
         if (currentScene === 0 && sequence >= 370) {
@@ -649,7 +670,7 @@
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
         let currentYOffset = delayedYOffset - prevScrollHeight;
-        let section2_ratio = currentYOffset / (window.innerHeight * 13);
+        let section2_ratio = currentYOffset / (beforeInnerHeight * 13);
         if (section2_ratio < 0.87) {
           objs.jump_context.clearRect(0, 0, objs.jump_canvas.width, objs.jump_canvas.height);
         } else {
@@ -695,9 +716,9 @@
         imgWidth = 1200;
       }
       //  화면 높이 < Img 높이 + 상단바 + 프로젝트 타이틀 + 라벨버튼
-      if (window.innerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
-        slideArea.style.maxWidth = `${(window.innerHeight / 540) * 1000 * 0.7}px`;
-        imgWidth = (window.innerHeight / 540) * 1000 * 0.7;
+      if (beforeInnerHeight < (imgWidth / 1000) * 540 + 50 + 50 + 30) {
+        slideArea.style.maxWidth = `${(beforeInnerHeight / 540) * 1000 * 0.7}px`;
+        imgWidth = (beforeInnerHeight / 540) * 1000 * 0.7;
       } else {
         slideArea.style.maxWidth = `1200px`;
       }
@@ -908,21 +929,15 @@
       }
     });
 
-    let mobilePlatform = false;
-    let filter = "win16|win32|win64|mac|macintel";
-    if (navigator.platform) {
-      if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
-        mobilePlatform = true;
-      }
-    }
-    let beforeInnerHeight = window.innerHeight;
     window.addEventListener("resize", () => {
       if (mobilePlatform) {
         let afterInnerHeight = window.innerHeight;
         if (beforeInnerHeight < afterInnerHeight) {
+          beforeInnerHeight = afterInnerHeight;
           setLayout();
         }
       } else {
+        beforeInnerHeight = window.innerHeight;
         setLayout();
       }
     });
