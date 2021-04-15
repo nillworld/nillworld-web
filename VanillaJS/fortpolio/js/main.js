@@ -27,6 +27,9 @@
     if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
       mobilePlatform = true;
     }
+    if (navigator.maxTouchPoints > 1) {
+      mobilePlatform = true;
+    }
   }
 
   let loadingCheck = 0;
@@ -751,8 +754,6 @@
       }
 
       function touchStart(e) {
-        e = e || window.event;
-        e.preventDefault();
         if (slideState) {
           touchStartX = e.changedTouches[0].clientX;
           touchMovedStartX = e.changedTouches[0].clientX;
@@ -778,13 +779,13 @@
         touchEndX = e.changedTouches[0].clientX;
 
         if (touchEndX - touchStartX > 0) {
-          if (touchEndX - touchStartX > imgWidth / 8) {
+          if (touchEndX - touchStartX > imgWidth / 4) {
             prevImg();
           } else {
             stayImg();
           }
         } else {
-          if (touchStartX - touchEndX > imgWidth / 8) {
+          if (touchStartX - touchEndX > imgWidth / 4) {
             nextImg();
           } else {
             stayImg();
