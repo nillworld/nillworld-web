@@ -27,10 +27,17 @@
     if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
       mobilePlatform = true;
     }
-    if (navigator.maxTouchPoints > 1) {
+    if (navigator.platform.toLowerCase() === "macintel" && navigator.maxTouchPoints > 1) {
       mobilePlatform = true;
     }
   }
+  // if (navigator.userAgent.match(/KAKAOTALK/i) !== null) {
+  //   if (navigator.userAgent.match(/Android/i) !== null) {
+  //     location.href = "intent://nillworld.com#Intent;scheme=http;package=com.android.chrome;end";
+  //   } else {
+  //     location.href = "ftp://";
+  //   }
+  // }
 
   let loadingCheck = 0;
   if (loadingCheck == 0) {
@@ -933,7 +940,7 @@
     window.addEventListener("resize", () => {
       if (mobilePlatform) {
         let afterInnerHeight = window.innerHeight;
-        if (beforeInnerHeight < afterInnerHeight) {
+        if (beforeInnerHeight <= afterInnerHeight) {
           beforeInnerHeight = afterInnerHeight;
           setLayout();
         }
