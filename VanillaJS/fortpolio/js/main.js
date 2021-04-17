@@ -719,6 +719,7 @@
         pos3 = 0;
       var touchStartX;
       var touchMovedStartX;
+      var touchMovedX;
       var touchEndX;
       var touchMovedEndX;
 
@@ -764,6 +765,7 @@
         if (slideState) {
           touchStartX = e.changedTouches[0].clientX;
           touchMovedStartX = e.changedTouches[0].clientX;
+          touchMovedStartY = e.changedTouches[0].clientY;
           slideImgs.addEventListener("touchmove", touchMove, false);
           slideImgs.addEventListener("touchend", touchEnd, false);
         }
@@ -771,13 +773,16 @@
         //slideImgs.addEventListener('touchend', touchEnd, false);
       }
       function touchMove(e) {
-        e = e || window.event;
-        e.preventDefault();
-        touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX;
-        touchMovedStartX = e.changedTouches[0].clientX;
-        slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
-        slideImgs.style.transition = 0 + "s";
-        touchMovedEndX = 0;
+        touchMovedX = touchMovedStartX - e.changedTouches[0].clientX;
+        if (touchMovedX > 10 || touchMovedX < -10) {
+          e = e || window.event;
+          e.preventDefault();
+          touchMovedEndX = touchMovedStartX - e.changedTouches[0].clientX;
+          touchMovedStartX = e.changedTouches[0].clientX;
+          slideImgs.style.left = slideImgs.offsetLeft - touchMovedEndX + "px";
+          slideImgs.style.transition = 0 + "s";
+          touchMovedEndX = 0;
+        }
       }
       function touchEnd(e) {
         slideState = true;
@@ -940,7 +945,7 @@
     window.addEventListener("resize", () => {
       if (mobilePlatform) {
         let afterInnerHeight = window.innerHeight;
-        if (beforeInnerHeight <= afterInnerHeight) {
+        if (beforeInnerHeight < afterInnerHeight) {
           beforeInnerHeight = afterInnerHeight;
           setLayout();
         }
