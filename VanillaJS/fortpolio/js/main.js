@@ -31,13 +31,9 @@
       mobilePlatform = true;
     }
   }
-  // if (navigator.userAgent.match(/KAKAOTALK/i) !== null) {
-  //   if (navigator.userAgent.match(/Android/i) !== null) {
-  //     location.href = "intent://nillworld.com#Intent;scheme=http;package=com.android.chrome;end";
-  //   } else {
-  //     location.href = "ftp://";
-  //   }
-  // }
+  if (navigator.userAgent.match(/KAKAOTALK/i) !== null) {
+    alert("인앱 브라우저의 경우 호환성이 떨어지므로 크롬이나 사파리와 같은 기본 브라우저 사용을 권장합니다.");
+  }
 
   let loadingCheck = 0;
   if (loadingCheck == 0) {
