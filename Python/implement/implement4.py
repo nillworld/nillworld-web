@@ -1,30 +1,16 @@
-mapSize = list(map(int,input().split()))
-startPoint = list(map(int,input().split()));
-# for i in mapSize[0]:
-#    = list(map(int,input().split()))
-
-# list Comprehension
-mapView = [list(map(int,input().split())) for _ in range(mapSize[0])]
-
-
-
-
-
-#### ------------ ####
-
-n, m = map(int, input().split)
+n, m = map(int, input().split())
 d = [ [0] * m for _ in range(n) ]
 
-x, y, direction = map(int, input().split)
+x, y, direction = map(int, input().split())
 d[x][y] = 1
 
+# array = [[0] * m] * n으로 초기화 하면 n개가 동일한 레퍼런스를 가짐
 array = []
 for i in range(n):
-  array.append(list(map(int, input().split)))
+  array.append(list(map(int, input().split())))
 
 dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
-
 def turnLeft():
   global direction
   direction -= 1
