@@ -367,7 +367,7 @@
     sceneInfo[1].objs.message_div_nas.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
     sceneInfo[1].objs.project_automouse_title.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.24}px`;
     sceneInfo[1].objs.project_nas_title.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.14}px`;
-    sceneInfo[1].objs.slideArea.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.14}px`;
+    sceneInfo[1].objs.slideArea.style.marginTop = `${beforeInnerHeight * sceneInfo[1].heightNum * 0.18}px`;
     sceneInfo[1].objs.slideImgs.style.left = 0 + "px";
     sceneInfo[1].objs.slideInputs[0].checked = true;
     slideElement(sceneInfo[1].objs.slideImgs);
