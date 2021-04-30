@@ -180,6 +180,9 @@ body.before-load {
 #scroll-section-0 h1 .h1-english-name {
   font-size: 0.7em;
 }
+#section0-message-div {
+  display: none;
+}
 .main-message {
   display: flex;
   align-items: center;

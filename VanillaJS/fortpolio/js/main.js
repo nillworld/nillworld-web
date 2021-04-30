@@ -69,7 +69,6 @@
       //DOM Object
       objs: {
         container: document.querySelector("#scroll-section-0"),
-        message_div: document.querySelector("#section0-message-div"),
         messageA: document.querySelector("#scroll-section-0 .main-message.a"),
         messageB: document.querySelector("#scroll-section-0 .main-message.b"),
         messageC: document.querySelector("#scroll-section-0 .main-message.c"),
@@ -359,7 +358,6 @@
       sunset_translateX = -(1920 / 1080 - window.innerWidth / beforeInnerHeight) * 10 - 50;
     }
     sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, 10%, 0) scale(1)`;
-    sceneInfo[0].objs.message_div.style.display = "none";
     sceneInfo[0].objs.profile_canvas.style.transform = `translate3d(-50%, 0px, 0) scale(1)`;
     sceneInfo[1].objs.project_canvas.style.transform = `translate3d(-50%, ${projectYtrans - 50}%, 0) scale(${section1_canvas_scale})`;
     sceneInfo[1].objs.message_div_automouse.style.width = `${1200 * section1_canvas_scale * project_message_width_Ratio}px`;
