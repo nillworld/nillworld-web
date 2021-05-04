@@ -31,9 +31,6 @@
       mobilePlatform = true;
     }
   }
-  if (navigator.userAgent.match(/KAKAOTALK/i) !== null) {
-    alert("인앱 브라우저의 경우 호환성이 떨어지므로 크롬이나 사파리와 같은 기본 브라우저 사용을 권장합니다.");
-  }
 
   let loadingCheck = 0;
   if (loadingCheck == 0) {
@@ -428,7 +425,6 @@
         // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
         // objs.container.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         objs.canvasDiv.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
-        objs.message_div.style.display = "block";
         if (scrollRatio <= 0.125) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);

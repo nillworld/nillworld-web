@@ -10,16 +10,32 @@
     <!-- <link rel="stylesheet" href="css/nillMain.css">  -->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-nill.png">
-    <script>
-      if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
-        // IE!!
-        alert('익스플로러는 호환성이 떨어져 문제가 발생할수있으므로 엣지나 크롬에서 실행을 권장합니다.');
-        window.location = "microsoft-edge:" + "https://nillworld.com/";
-      }
-    </script>
   </head>
   <body class="before-load">
     <div class="language-check kor">
+      <!-- location.href='intent://www.test.com#Intent;scheme=http;package=com.android.chrome;end' -->
+      <script>
+        let lang = navigator.language || navigator.userLanguage;
+        if (lang == "ko-KR" || lang == "ko" || lang == "ko-kr") {
+          if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
+            // IE!!
+            alert('익스플로러는 호환성이 떨어져 문제가 발생할수있으므로 엣지로 실행 합니다.');
+            window.location = "microsoft-edge:" + "https://nillworld.com/";
+          }
+          if (navigator.userAgent.match(/KAKAOTALK|instagram|Line|FB_IAB\/FB4A|FBAN\/FBIOS|DaumDevice/i) !== null) {
+            alert("인앱 브라우저의 경우 호환성이 떨어지므로 크롬이나 사파리와 같은 기본 브라우저 사용을 권장합니다.");
+          }
+        }else{
+          if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
+            // IE!!
+            alert('Internet Explorer might not display this page correctly. That is why the site will load within Edge.');
+            window.location = "microsoft-edge:" + "https://nillworld.com/";
+          }
+          if (navigator.userAgent.match(/KAKAOTALK|instagram|Line|FB_IAB\/FB4A|FBAN\/FBIOS|DaumDevice/i) !== null) {
+            alert("In-app browser might not display this page correctly. That is why we recommend open this site within default browser(like chrome or safari)");
+          }
+        }
+      </script>
       <div class="loading">
         <svg class="loading-circle">
           <circle cx="50%" cy="50%" r="25"></circle>
@@ -364,335 +380,335 @@
       -->
     </div>
     <div class="language-check eng">
-    <div class="loading">
-      <svg class="loading-circle">
-        <circle cx="50%" cy="50%" r="25"></circle>
-      </svg>
-      <p>
-        This page base on Nill's personal server.<br/>
-        and ut tajes some time to load.<br/>
-        <br/>
-        This page never use any library. ( pure VanillaJS )
-      </p>
-      <div id="totalLoadingBar">
-        <div id="loadingBar">10%</div>
+      <div class="loading">
+        <svg class="loading-circle">
+          <circle cx="50%" cy="50%" r="25"></circle>
+        </svg>
+        <p>
+          This page base on Nill's personal server.<br/>
+          and ut tajes some time to load.<br/>
+          <br/>
+          This page never use any library. ( pure VanillaJS )
+        </p>
+        <div id="totalLoadingBar">
+          <div id="loadingBar">10%</div>
+        </div>
       </div>
-    </div>
-    <div class="container">
-      <div class="contact-modal">
-        <div class="modal-content">
-          
-          <div class="modal-mainText">
-            Contact <span class="close">&times;</span></div>
-          <div class="profile">
-            <div class="contact-img">
-              <img src="./images/contact.JPG" alt="profile image">
-            </div>
-            <div class="modal-subText">
-              Contact with <strong>Nill</strong> who<br/>
-              love learning,<br/>
-              love challenge,<br/>
-              try to be awesome
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                version="1.1" id="phone-svg" x="0px" y="0px" viewBox="0 0 53.942 53.942" width="30px" 
-                fill="white" style="enable-background:new 0 0 53.942 53.942;" xml:space="preserve">
-                  <path d="M53.364,40.908c-2.008-3.796-8.981-7.912-9.288-8.092c-0.896-0.51-1.831-0.78-2.706-0.78c-1.301,0-2.366,0.596-3.011,1.68  
-                  c-1.02,1.22-2.285,2.646-2.592,2.867c-2.376,1.612-4.236,1.429-6.294-0.629L17.987,24.467c-2.045-2.045-2.233-3.928-0.632-6.291  
-                  c0.224-0.309,1.65-1.575,2.87-2.596c0.778-0.463,1.312-1.151,1.546-1.995c0.311-1.123,0.082-2.444-0.652-3.731  
-                  c-0.173-0.296-4.291-7.27-8.085-9.277c-0.708-0.375-1.506-0.573-2.306-0.573c-1.318,0-2.558,0.514-3.49,1.445L4.7,3.986  
-                  c-4.014,4.013-5.467,8.562-4.321,13.52c0.956,4.132,3.742,8.529,8.282,13.068l14.705,14.705c5.746,5.746,11.224,8.66,16.282,8.66  
-                  c0,0,0,0,0.001,0c3.72,0,7.188-1.581,10.305-4.698l2.537-2.537C54.033,45.163,54.383,42.833,53.364,40.908z"/>
-                </svg> +82 10-8976-8116<br/>
-                <svg version="1.1" id="email-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 
-                viewBox="0 0 75.294 75.294" width="35px" fill="white"  style="enable-background:new 0 0 75.294 75.294;" xml:space="preserve">
-                  <g>
-                    <path d="M66.097,12.089h-56.9C4.126,12.089,0,16.215,0,21.286v32.722c0,5.071,4.126,9.197,9.197,9.197h56.9
-                      c5.071,0,9.197-4.126,9.197-9.197V21.287C75.295,16.215,71.169,12.089,66.097,12.089z M61.603,18.089L37.647,33.523L13.691,18.089
-                      H61.603z M66.097,57.206h-56.9C7.434,57.206,6,55.771,6,54.009V21.457l29.796,19.16c0.04,0.025,0.083,0.042,0.124,0.065
-                      c0.043,0.024,0.087,0.047,0.131,0.069c0.231,0.119,0.469,0.215,0.712,0.278c0.025,0.007,0.05,0.01,0.075,0.016
-                      c0.267,0.063,0.537,0.102,0.807,0.102c0.001,0,0.002,0,0.002,0c0.002,0,0.003,0,0.004,0c0.27,0,0.54-0.038,0.807-0.102
-                      c0.025-0.006,0.05-0.009,0.075-0.016c0.243-0.063,0.48-0.159,0.712-0.278c0.044-0.022,0.088-0.045,0.131-0.069
-                      c0.041-0.023,0.084-0.04,0.124-0.065l29.796-19.16v32.551C69.295,55.771,67.86,57.206,66.097,57.206z"/>
-                  </g>
-                </svg> wwaosldk@gmail.com<br/>
+      <div class="container">
+        <div class="contact-modal">
+          <div class="modal-content">
+            
+            <div class="modal-mainText">
+              Contact <span class="close">&times;</span></div>
+            <div class="profile">
+              <div class="contact-img">
+                <img src="./images/contact.JPG" alt="profile image">
               </div>
-              Skills: VanilaJS, React, Java, Python <br/>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="local-nav">
-        <div class="local-nav-links">
-          <a href="#" class="product-name">정원일(Nill)</a>
-          <div class="language" style="color: white;">
-            <select name="language">
-              <option value="">language</option>
-              <option value="한국어">한국어</option>
-              <option value="English">English</option>
-          </select>
-          </div>
-          <div class="contact">
-            Contact
-          </div>
-        </div>
-      </nav>
-
-      <!-- 도전적인 defiant / 적극적인 active /  -->
-      <section class="scroll-section" id="scroll-section-0">
-        <h1>정원일<br /><span class="h1-english-name">(Nill)</span></h1>
-        <div class="sticky-elem sticky-elem-canvas code-video">
-          <canvas id="video-canvas-0" width="720" height="704"></canvas>
-        </div>
-        <div class="sticky-elem main-message a">
-          <!-- <p>Careful Passionate</p> -->
-        </div>
-        <div class="sticky-elem main-message b">
-          <!-- <p>Witty Diligence</p> -->
-        </div>
-        <div class="sticky-elem main-message c">
-          <!-- <p>Harmonious Creativity</p> -->
-        </div>
-        <div class="sticky-elem main-message d">
-          <!-- <p>Person who want to work with</p> -->
-        </div>
-        <div class="sticky-elem sticky-elem-canvas profile-img">
-          <canvas class="profile-img-canvas" width="1920" height="1080"></canvas>
-        </div>
-      </section>
-      <section class="scroll-section" id="scroll-section-1">
-        <div class="sticky-elem main-message">
-          <!-- prettier-ignore -->
-          <h2>I've made<br/> what I wanted</h2>
-          <!-- 사진과 설명 이 순서대로-- 오토마우스, V4 매크로, 아두이노, nas 서버-docker,web hosting(emoji), 그리고 애플 상품페이지 같은 지금 이 페이지(Apple page like this) 
-          nas서버 사진은 아이패드 code.nillworld.com, 추가 사진은 emoji 슬라이드/ 다음으로 애플 줌인 다음 section (아두이노는 다른 페이지나 다음 버젼으로,,)-->
-        </div>
-        <div class="sticky-elem sticky-elem-canvas project">
-          <canvas class="project-canvas" width="1200" height="900"></canvas>
-        </div>
-        <div class="projects">
-          <div class="project-message automouse">
-            <p class="project-message-title automouse">Auto Click</p>
-            <p class="project-message-description automouse">
-              I used to use auto click(auto mouse) software, but it included a malware. So, I made it myself using python. It has been customized for
-              me more useful, more convenient.
-            </p>
-            <div class="right-text-align">
-              <a href="https://github.com/nillworld/nillworld-before/tree/master/project/autoMouse" target="_blank">
-                github.com/nillworld/project/autoMouse
-              </a>
-            </div>
-          </div>
-          <div class="project-message loop-video">
-            <p class="sub-mention">And I made macro bot for mobile Game, just to see if I could make this or not.</p>
-            <video id="v4-video" muted loop autoplay playsinline src="./video/macro.mp4"></video>
-            <div class="right-text-align">
-              <a href="https://github.com/nillworld/nillworld-before/tree/master/project/v4" target="_blank"> github.com/nillworld/project/v4 </a>
-            </div>
-          </div>
-          <div class="project-message nas-server">
-            <p class="project-message-title nas-server">NAS Server</p>
-            <p class="project-message-description nas-server">
-              Using my own NAS, I made my web IDE(Theia) on Docker container that would work any environment(IOS, Android .. ), and also some of my own web pages
-              work base on NAS like this page.
-            </p>
-            <div class="right-text-align">
-              <p class="">*My web IDE only work in local networks <br/>for security purposes (using VPN)</p>
-            </div>
-            <div class="slideArea">
-              <p class="sub-mention">This is a developing process what I did team-project at academy (my part was member management)</p>
-              <div class="slideImgBox">
-                <input type="radio" name="slideRdio" id="pos1" checked />
-                <input type="radio" name="slideRdio" id="pos2" />
-                <input type="radio" name="slideRdio" id="pos3" />
-                <input type="radio" name="slideRdio" id="pos4" />
-                <input type="radio" name="slideRdio" id="pos5" />
-                <input type="radio" name="slideRdio" id="pos6" />
-                <input type="radio" name="slideRdio" id="pos7" />
-                <input type="radio" name="slideRdio" id="pos8" />
-                <div class="slideImgs">
-                  <ul>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                    <li class="emoji"><img src="" alt="" /></li>
-                  </ul>
+              <div class="modal-subText">
+                Contact with <strong>Nill</strong> who<br/>
+                love learning,<br/>
+                love challenge,<br/>
+                try to be awesome
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                  version="1.1" id="phone-svg" x="0px" y="0px" viewBox="0 0 53.942 53.942" width="30px" 
+                  fill="white" style="enable-background:new 0 0 53.942 53.942;" xml:space="preserve">
+                    <path d="M53.364,40.908c-2.008-3.796-8.981-7.912-9.288-8.092c-0.896-0.51-1.831-0.78-2.706-0.78c-1.301,0-2.366,0.596-3.011,1.68  
+                    c-1.02,1.22-2.285,2.646-2.592,2.867c-2.376,1.612-4.236,1.429-6.294-0.629L17.987,24.467c-2.045-2.045-2.233-3.928-0.632-6.291  
+                    c0.224-0.309,1.65-1.575,2.87-2.596c0.778-0.463,1.312-1.151,1.546-1.995c0.311-1.123,0.082-2.444-0.652-3.731  
+                    c-0.173-0.296-4.291-7.27-8.085-9.277c-0.708-0.375-1.506-0.573-2.306-0.573c-1.318,0-2.558,0.514-3.49,1.445L4.7,3.986  
+                    c-4.014,4.013-5.467,8.562-4.321,13.52c0.956,4.132,3.742,8.529,8.282,13.068l14.705,14.705c5.746,5.746,11.224,8.66,16.282,8.66  
+                    c0,0,0,0,0.001,0c3.72,0,7.188-1.581,10.305-4.698l2.537-2.537C54.033,45.163,54.383,42.833,53.364,40.908z"/>
+                  </svg> +82 10-8976-8116<br/>
+                  <svg version="1.1" id="email-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 
+                  viewBox="0 0 75.294 75.294" width="35px" fill="white"  style="enable-background:new 0 0 75.294 75.294;" xml:space="preserve">
+                    <g>
+                      <path d="M66.097,12.089h-56.9C4.126,12.089,0,16.215,0,21.286v32.722c0,5.071,4.126,9.197,9.197,9.197h56.9
+                        c5.071,0,9.197-4.126,9.197-9.197V21.287C75.295,16.215,71.169,12.089,66.097,12.089z M61.603,18.089L37.647,33.523L13.691,18.089
+                        H61.603z M66.097,57.206h-56.9C7.434,57.206,6,55.771,6,54.009V21.457l29.796,19.16c0.04,0.025,0.083,0.042,0.124,0.065
+                        c0.043,0.024,0.087,0.047,0.131,0.069c0.231,0.119,0.469,0.215,0.712,0.278c0.025,0.007,0.05,0.01,0.075,0.016
+                        c0.267,0.063,0.537,0.102,0.807,0.102c0.001,0,0.002,0,0.002,0c0.002,0,0.003,0,0.004,0c0.27,0,0.54-0.038,0.807-0.102
+                        c0.025-0.006,0.05-0.009,0.075-0.016c0.243-0.063,0.48-0.159,0.712-0.278c0.044-0.022,0.088-0.045,0.131-0.069
+                        c0.041-0.023,0.084-0.04,0.124-0.065l29.796-19.16v32.551C69.295,55.771,67.86,57.206,66.097,57.206z"/>
+                    </g>
+                  </svg> wwaosldk@gmail.com<br/>
                 </div>
-                <p class="labels">
-                  <label for="pos1" name="inputLabel"></label>
-                  <label for="pos2" name="inputLabel"></label>
-                  <label for="pos3" name="inputLabel"></label>
-                  <label for="pos4" name="inputLabel"></label>
-                  <label for="pos5" name="inputLabel"></label>
-                  <label for="pos6" name="inputLabel"></label>
-                  <label for="pos7" name="inputLabel"></label>
-                  <label for="pos8" name="inputLabel"></label>
-                </p>
-                <a class="prev">&lt;</a>
-                <a class="next">&gt;</a>
+                Skills: VanilaJS, React, Java, Python <br/>
               </div>
+            </div>
+          </div>
+        </div>
+        <nav class="local-nav">
+          <div class="local-nav-links">
+            <a href="#" class="product-name">정원일(Nill)</a>
+            <div class="language" style="color: white;">
+              <select name="language">
+                <option value="">language</option>
+                <option value="한국어">한국어</option>
+                <option value="English">English</option>
+            </select>
+            </div>
+            <div class="contact">
+              Contact
+            </div>
+          </div>
+        </nav>
+
+        <!-- 도전적인 defiant / 적극적인 active /  -->
+        <section class="scroll-section" id="scroll-section-0">
+          <h1>정원일<br /><span class="h1-english-name">(Nill)</span></h1>
+          <div class="sticky-elem sticky-elem-canvas code-video">
+            <canvas id="video-canvas-0" width="720" height="704"></canvas>
+          </div>
+          <div class="sticky-elem main-message a">
+            <!-- <p>Careful Passionate</p> -->
+          </div>
+          <div class="sticky-elem main-message b">
+            <!-- <p>Witty Diligence</p> -->
+          </div>
+          <div class="sticky-elem main-message c">
+            <!-- <p>Harmonious Creativity</p> -->
+          </div>
+          <div class="sticky-elem main-message d">
+            <!-- <p>Person who want to work with</p> -->
+          </div>
+          <div class="sticky-elem sticky-elem-canvas profile-img">
+            <canvas class="profile-img-canvas" width="1920" height="1080"></canvas>
+          </div>
+        </section>
+        <section class="scroll-section" id="scroll-section-1">
+          <div class="sticky-elem main-message">
+            <!-- prettier-ignore -->
+            <h2>I've made<br/> what I wanted</h2>
+            <!-- 사진과 설명 이 순서대로-- 오토마우스, V4 매크로, 아두이노, nas 서버-docker,web hosting(emoji), 그리고 애플 상품페이지 같은 지금 이 페이지(Apple page like this) 
+            nas서버 사진은 아이패드 code.nillworld.com, 추가 사진은 emoji 슬라이드/ 다음으로 애플 줌인 다음 section (아두이노는 다른 페이지나 다음 버젼으로,,)-->
+          </div>
+          <div class="sticky-elem sticky-elem-canvas project">
+            <canvas class="project-canvas" width="1200" height="900"></canvas>
+          </div>
+          <div class="projects">
+            <div class="project-message automouse">
+              <p class="project-message-title automouse">Auto Click</p>
+              <p class="project-message-description automouse">
+                I used to use auto click(auto mouse) software, but it included a malware. So, I made it myself using python. It has been customized for
+                me more useful, more convenient.
+              </p>
               <div class="right-text-align">
-                <a href="http://project.nillworld.com/emoji/" target="_blank"> project.nillworld.com/emoji &nbsp;</a>
+                <a href="https://github.com/nillworld/nillworld-before/tree/master/project/autoMouse" target="_blank">
+                  github.com/nillworld/project/autoMouse
+                </a>
               </div>
             </div>
-            <div class="slide-modal">
-              <span class="close">&times;</span>
-              <img class="modalImg" width="100px"/>
-              <div class="modalText"></div>
+            <div class="project-message loop-video">
+              <p class="sub-mention">And I made macro bot for mobile Game, just to see if I could make this or not.</p>
+              <video id="v4-video" muted loop autoplay playsinline src="./video/macro.mp4"></video>
+              <div class="right-text-align">
+                <a href="https://github.com/nillworld/nillworld-before/tree/master/project/v4" target="_blank"> github.com/nillworld/project/v4 </a>
+              </div>
+            </div>
+            <div class="project-message nas-server">
+              <p class="project-message-title nas-server">NAS Server</p>
+              <p class="project-message-description nas-server">
+                Using my own NAS, I made my web IDE(Theia) on Docker container that would work any environment(IOS, Android .. ), and also some of my own web pages
+                work base on NAS like this page.
+              </p>
+              <div class="right-text-align">
+                <p class="">*My web IDE only work in local networks <br/>for security purposes (using VPN)</p>
+              </div>
+              <div class="slideArea">
+                <p class="sub-mention">This is a developing process what I did team-project at academy (my part was member management)</p>
+                <div class="slideImgBox">
+                  <input type="radio" name="slideRdio" id="pos1" checked />
+                  <input type="radio" name="slideRdio" id="pos2" />
+                  <input type="radio" name="slideRdio" id="pos3" />
+                  <input type="radio" name="slideRdio" id="pos4" />
+                  <input type="radio" name="slideRdio" id="pos5" />
+                  <input type="radio" name="slideRdio" id="pos6" />
+                  <input type="radio" name="slideRdio" id="pos7" />
+                  <input type="radio" name="slideRdio" id="pos8" />
+                  <div class="slideImgs">
+                    <ul>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                      <li class="emoji"><img src="" alt="" /></li>
+                    </ul>
+                  </div>
+                  <p class="labels">
+                    <label for="pos1" name="inputLabel"></label>
+                    <label for="pos2" name="inputLabel"></label>
+                    <label for="pos3" name="inputLabel"></label>
+                    <label for="pos4" name="inputLabel"></label>
+                    <label for="pos5" name="inputLabel"></label>
+                    <label for="pos6" name="inputLabel"></label>
+                    <label for="pos7" name="inputLabel"></label>
+                    <label for="pos8" name="inputLabel"></label>
+                  </p>
+                  <a class="prev">&lt;</a>
+                  <a class="next">&gt;</a>
+                </div>
+                <div class="right-text-align">
+                  <a href="http://project.nillworld.com/emoji/" target="_blank"> project.nillworld.com/emoji &nbsp;</a>
+                </div>
+              </div>
+              <div class="slide-modal">
+                <span class="close">&times;</span>
+                <img class="modalImg" width="100px"/>
+                <div class="modalText"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="sticky-elem main-message a">
-          <p>And parallax scrolling<br />web page</p>
-        </div>
-        <div class="sticky-elem main-message b">
-          <p>like</p>
-        </div>
-        <div id="this-back-div" class="sticky-elem sticky-elem-canvas canvas-div">
-          <div id="this-div">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              version="1.0"
-              width="1920pt"
-              height="1080pt"
-              viewBox="0 0 1920 1080"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <g xmlns="http://www.w3.org/2000/svg" transform="translate(0,1080) scale(0.1,-0.1)" fill="#000000" stroke="none">
-                <path
-                  d="M0 5400 l0 -5400 9600 0 9600 0 0 5400 0 5400 -9600 0 -9600 0 0 -5400z m10629 1594 c62 -18 127 -73 152 -129 29 -64 25 -160 -9 -226 -45 -87 -126 -129 -245 -129 -156 0 -257 98 -257 248 0 84 17 129 68 180 65 65 185 88 291 56z m-1615 -90 c18 -46 2 -635 -20 -733 -5 -24 -5 -24 18 -8 173 125 265 165 401 173 260 17 418 -95 493 -351 16 -54 18 -122 21 -637 l4 -578 -240 0 -240 0 -3 513 -3 512 -24 49 c-57 116 -218 112 -358 -9 l-43 -36 -2 -512 -3 -512 -238 0 -237 0 0 1063 c0 584 0 1067 0 1072 0 6 85 10 234 10 204 0 235 -2 240 -16z m-746 -326 l-3 -203 -267 -3 -268 -2 0 -800 0 -800 -242 2 -243 3 -3 798 -2 797 -254 0 c-140 0 -261 3 -270 6 -14 5 -16 32 -16 198 0 106 3 196 7 199 3 4 357 7 785 7 l778 0 -2 -202z m3637 -267 c39 -10 95 -29 125 -41 75 -33 204 -114 208 -131 2 -11 -169 -254 -201 -286 -2 -2 -34 15 -70 37 -78 47 -199 90 -255 90 -50 0 -101 -17 -130 -44 -19 -16 -22 -29 -20 -65 3 -39 8 -49 44 -76 22 -17 90 -48 150 -70 354 -125 478 -240 491 -458 10 -153 -29 -261 -131 -363 -169 -168 -500 -222 -784 -127 -130 43 -312 144 -312 173 0 9 85 130 187 267 l24 33 57 -39 c115 -78 196 -110 302 -118 132 -10 201 26 204 106 1 67 -40 96 -269 186 -275 108 -402 235 -422 425 -19 187 86 371 260 454 107 52 171 64 332 65 105 0 157 -4 210 -18z m-1130 -776 l0 -760 -237 -3 -238 -2 0 765 0 765 238 -2 237 -3 0 -760z"
-                />
-              </g>
-            </svg>
+          <div class="sticky-elem main-message a">
+            <p>And parallax scrolling<br />web page</p>
           </div>
-        </div>
-        <div class="sticky-elem sticky-elem-canvas canvas-div">
-          <canvas id="jump-canvas" width="1920" height="1080"></canvas>
-        </div>
-      </section>
-      <section class="scroll-section" id="scroll-section-2">
-        <div class="sticky-elem sticky-elem-canvas canvas-div">
-          <canvas id="jump-canvas-2" width="1920" height="1080"></canvas>
-        </div>
-        <div class="sticky-elem main-message">
-          <h2>
-            <p id="nothing">N o t h i n g &nbsp;&nbsp;&nbsp;I s</p>
-            <p id="change-space">I<span id="possible-upper">'</span>m<span id="possible-space"> </span>p o s s i b l e</p>
-          </h2>
-        </div>
-        <div id="possible-activities">
-          <div class="possible-activity">
-            <div class="possible-modal">
-              <span class="close">&times;</span>
-              <img class="modalImg" />
-              <div class="modalText"></div>
-            </div>
-            <div class="activityImg">
-              <figure>
-                <a href="https://github.com/nillworld" target="_blank">
-                  <img src="./images/commit2.png" alt="github contributions" />
-                </a>
-                <figcaption>Nill's contributions graph</figcaption>
-              </figure>
-            </div>
-            <div class="activityText">
-              I love programming.<br />
-              I love learning and improving.<br />
-              I can make what I need.<br />
-              <br />
-              I am lucky that it is my work.
+          <div class="sticky-elem main-message b">
+            <p>like</p>
+          </div>
+          <div id="this-back-div" class="sticky-elem sticky-elem-canvas canvas-div">
+            <div id="this-div">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.0"
+                width="1920pt"
+                height="1080pt"
+                viewBox="0 0 1920 1080"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g xmlns="http://www.w3.org/2000/svg" transform="translate(0,1080) scale(0.1,-0.1)" fill="#000000" stroke="none">
+                  <path
+                    d="M0 5400 l0 -5400 9600 0 9600 0 0 5400 0 5400 -9600 0 -9600 0 0 -5400z m10629 1594 c62 -18 127 -73 152 -129 29 -64 25 -160 -9 -226 -45 -87 -126 -129 -245 -129 -156 0 -257 98 -257 248 0 84 17 129 68 180 65 65 185 88 291 56z m-1615 -90 c18 -46 2 -635 -20 -733 -5 -24 -5 -24 18 -8 173 125 265 165 401 173 260 17 418 -95 493 -351 16 -54 18 -122 21 -637 l4 -578 -240 0 -240 0 -3 513 -3 512 -24 49 c-57 116 -218 112 -358 -9 l-43 -36 -2 -512 -3 -512 -238 0 -237 0 0 1063 c0 584 0 1067 0 1072 0 6 85 10 234 10 204 0 235 -2 240 -16z m-746 -326 l-3 -203 -267 -3 -268 -2 0 -800 0 -800 -242 2 -243 3 -3 798 -2 797 -254 0 c-140 0 -261 3 -270 6 -14 5 -16 32 -16 198 0 106 3 196 7 199 3 4 357 7 785 7 l778 0 -2 -202z m3637 -267 c39 -10 95 -29 125 -41 75 -33 204 -114 208 -131 2 -11 -169 -254 -201 -286 -2 -2 -34 15 -70 37 -78 47 -199 90 -255 90 -50 0 -101 -17 -130 -44 -19 -16 -22 -29 -20 -65 3 -39 8 -49 44 -76 22 -17 90 -48 150 -70 354 -125 478 -240 491 -458 10 -153 -29 -261 -131 -363 -169 -168 -500 -222 -784 -127 -130 43 -312 144 -312 173 0 9 85 130 187 267 l24 33 57 -39 c115 -78 196 -110 302 -118 132 -10 201 26 204 106 1 67 -40 96 -269 186 -275 108 -402 235 -422 425 -19 187 86 371 260 454 107 52 171 64 332 65 105 0 157 -4 210 -18z m-1130 -776 l0 -760 -237 -3 -238 -2 0 765 0 765 238 -2 237 -3 0 -760z"
+                  />
+                </g>
+              </svg>
             </div>
           </div>
-          <div class="possible-activity">
-            <div class="activityText order-second">
-              In my childhood, I was very timid and didn't like the way I was.<br />
-              &nbsp;After self-development, I'm now called an active and Passionate person.
+          <div class="sticky-elem sticky-elem-canvas canvas-div">
+            <canvas id="jump-canvas" width="1920" height="1080"></canvas>
+          </div>
+        </section>
+        <section class="scroll-section" id="scroll-section-2">
+          <div class="sticky-elem sticky-elem-canvas canvas-div">
+            <canvas id="jump-canvas-2" width="1920" height="1080"></canvas>
+          </div>
+          <div class="sticky-elem main-message">
+            <h2>
+              <p id="nothing">N o t h i n g &nbsp;&nbsp;&nbsp;I s</p>
+              <p id="change-space">I<span id="possible-upper">'</span>m<span id="possible-space"> </span>p o s s i b l e</p>
+            </h2>
+          </div>
+          <div id="possible-activities">
+            <div class="possible-activity">
+              <div class="possible-modal">
+                <span class="close">&times;</span>
+                <img class="modalImg" />
+                <div class="modalText"></div>
+              </div>
+              <div class="activityImg">
+                <figure>
+                  <a href="https://github.com/nillworld" target="_blank">
+                    <img src="./images/commit2.png" alt="github contributions" />
+                  </a>
+                  <figcaption>Nill's contributions graph</figcaption>
+                </figure>
+              </div>
+              <div class="activityText">
+                I love programming.<br />
+                I love learning and improving.<br />
+                I can make what I need.<br />
+                <br />
+                I am lucky that it is my work.
+              </div>
             </div>
-            <div class="activityImg">
-              <figure>
-                <img class="figureImg" src="./images/active3.jpg" alt="Friends's message to me on canada flag" />
-                <figcaption>Friends's message to me</figcaption>
-              </figure>
+            <div class="possible-activity">
+              <div class="activityText order-second">
+                In my childhood, I was very timid and didn't like the way I was.<br />
+                &nbsp;After self-development, I'm now called an active and Passionate person.
+              </div>
+              <div class="activityImg">
+                <figure>
+                  <img class="figureImg" src="./images/active3.jpg" alt="Friends's message to me on canada flag" />
+                  <figcaption>Friends's message to me</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="possible-activity">
+              <div class="activityImg">
+                <figure>
+                  <img class="figureImg" src="./images/prize.jpg" alt="Prize in recognition of my effort." />
+                  <figcaption>Prize in recognition of my effort.</figcaption>
+                </figure>
+              </div>
+              <div class="activityText">
+                When I was learning programming at an academy, I studied from 9am to 9pm regularly.
+                I was passionate in what I was learning.<br />
+                &nbsp;At the end of the course, I was awarded with recognition of my efforts.
+              </div>
+            </div>
+            <div class="possible-activity">
+              <div class="activityText order-second">
+                I love journaling about my life with diary and photos, because I can learn from my past experience.<br />
+                &nbsp;When I was serving in the military, I wrote diary day by day, even during the guerrilla training, realizing that this exoerience wouldn't come again.<br />
+                I learn from it, from my past.
+              </div>
+              <div class="activityImg">
+                <figure>
+                  <img class="figureImg" src="./images/diary.jpg" alt="Diary in military service" />
+                  <figcaption>Diary in military service</figcaption>
+                </figure>
+              </div>
             </div>
           </div>
-          <div class="possible-activity">
-            <div class="activityImg">
-              <figure>
-                <img class="figureImg" src="./images/prize.jpg" alt="Prize in recognition of my effort." />
-                <figcaption>Prize in recognition of my effort.</figcaption>
-              </figure>
-            </div>
-            <div class="activityText">
-              When I was learning programming at an academy, I studied from 9am to 9pm regularly.
-              I was passionate in what I was learning.<br />
-              &nbsp;At the end of the course, I was awarded with recognition of my efforts.
+        </section>
+        <section class="scroll-section" id="scroll-section-3">
+          <!-- 내 가치관과 인생 이야기 -->
+          <!-- 편안하게 해드리겠습니다 (처음에 사진으로 시작)- 초등학교 4학년의 꿈을 계속 지켜 나가고 있는, 방법은 다르지만 목적은 같은 -->
+          <!-- 신소재공학과, 창업, 그리고 프로그래머 -->
+          <div class="sticky-elem sticky-elem-canvas">
+            <canvas id="video-canvas-1" width="1920" height="1080"></canvas>
+          </div>
+          <div class="sticky-elem main-message a">
+            <p>
+              <h2 class="myDream">My Dream,</h2>
+              <h2>to make your life comfortable</h2>
+            </p>
+          </div>
+          <div class="sticky-elem cover-rowDiv">
+            <div class="rowDiv">
+              <div class="mind-message">Ever since I was 9 years old, I dreamed to become an inventor, who makes people's life more comfortable. 
+                I used to think "inventing" as create some items.<br/> However, my thoughts have changed. after realizing that programming is also considered as "inventing".
+                So, I dropped out of a college even I received straight A's(4.25/ 4.5).<br/><br/> I have no regrets, I love my work.
+              </div>
+              <div class="mind-message">
+                I learned these to start a business:<br/>
+                &nbsp;- intellectual properties(Korea Invention / 84hours)<br/>
+                &nbsp;- digital marketing(Yonsei Univ / 24hours)<br/>
+                &nbsp;- business model.(Hanyang Univ / 24hours)<br/>
+                Although I discontinued, I learned a lot and those became one of my priceless assets. <br/><br/>I'm sure it helped me to become an awesome person that I am now.
+              </div>
+              <div class="mind-message">
+                I wanted to explore the world and view from a broader perspective, which led me to live in Canada for 10 months.
+                From there, I learned:<br/>
+                &nbsp;- People are all different. Respect them all.<br/>
+                &nbsp;- We can be friend regardless of age and nationality.<br/>
+                &nbsp;- There is more than one way to fulfill my dream.<br/><br/>Therefore, I am here.
+              </div>
+              <div class="mind-message">
+                The person who I respect is myself.<br/>
+                I'm not perfect, that is why I:<br/>
+                Learn from every moment,<br/>
+                Keep challenge,<br/>
+                Think deeply,<br/><br/>
+                and I love it.
+              </div>
             </div>
           </div>
-          <div class="possible-activity">
-            <div class="activityText order-second">
-              I love journaling about my life with diary and photos, because I can learn from my past experience.<br />
-              &nbsp;When I was serving in the military, I wrote diary day by day, even during the guerrilla training, realizing that this exoerience wouldn't come again.<br />
-              I learn from it, from my past.
-            </div>
-            <div class="activityImg">
-              <figure>
-                <img class="figureImg" src="./images/diary.jpg" alt="Diary in military service" />
-                <figcaption>Diary in military service</figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="scroll-section" id="scroll-section-3">
-        <!-- 내 가치관과 인생 이야기 -->
-        <!-- 편안하게 해드리겠습니다 (처음에 사진으로 시작)- 초등학교 4학년의 꿈을 계속 지켜 나가고 있는, 방법은 다르지만 목적은 같은 -->
-        <!-- 신소재공학과, 창업, 그리고 프로그래머 -->
-        <div class="sticky-elem sticky-elem-canvas">
-          <canvas id="video-canvas-1" width="1920" height="1080"></canvas>
-        </div>
-        <div class="sticky-elem main-message a">
-          <p>
-            <h2 class="myDream">My Dream,</h2>
-            <h2>to make your life comfortable</h2>
-          </p>
-        </div>
-        <div class="sticky-elem cover-rowDiv">
-          <div class="rowDiv">
-            <div class="mind-message">Ever since I was 9 years old, I dreamed to become an inventor, who makes people's life more comfortable. 
-              I used to think "inventing" as create some items.<br/> However, my thoughts have changed. after realizing that programming is also considered as "inventing".
-              So, I dropped out of a college even I received straight A's(4.25/ 4.5).<br/><br/> I have no regrets, I love my work.
-            </div>
-            <div class="mind-message">
-              I learned these to start a business:<br/>
-              &nbsp;- intellectual properties(Korea Invention / 84hours)<br/>
-              &nbsp;- digital marketing(Yonsei Univ / 24hours)<br/>
-              &nbsp;- business model.(Hanyang Univ / 24hours)<br/>
-              Although I discontinued, I learned a lot and those became one of my priceless assets. <br/><br/>I'm sure it helped me to become an awesome person that I am now.
-            </div>
-            <div class="mind-message">
-              I wanted to explore the world and view from a broader perspective, which led me to live in Canada for 10 months.
-              From there, I learned:<br/>
-              &nbsp;- People are all different. Respect them all.<br/>
-              &nbsp;- We can be friend regardless of age and nationality.<br/>
-              &nbsp;- There is more than one way to fulfill my dream.<br/><br/>Therefore, I am here.
-            </div>
-            <div class="mind-message">
-              The person who I respect is myself.<br/>
-              I'm not perfect, that is why I:<br/>
-              Learn from every moment,<br/>
-              Keep challenge,<br/>
-              Think deeply,<br/><br/>
-              and I love it.
-            </div>
-          </div>
-        </div>
-      </section>
-      <footer class="footer">2021, Nill World</footer>
-    </div>
+        </section>
+        <footer class="footer">2021, Nill World</footer>
+      </div>
     <!-- 
 	스토리텔링
 	프로젝트 진행한것 보다

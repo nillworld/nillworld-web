@@ -10,16 +10,19 @@
     <!-- <link rel="stylesheet" href="css/nillMain.css">  -->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-nill.png">
-    <script>
-      if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
-        // IE!!
-        alert('익스플로러는 호환성이 떨어져 문제가 발생할수있으므로 엣지나 크롬에서 실행을 권장합니다.');
-        window.location = "microsoft-edge:" + "https://nillworld.com/";
-      }
-    </script>
   </head>
   <body class="before-load">
     <div class="language-check kor">
+      <script>
+        if (window.navigator.userAgent.match(/MSIE|Internet Explorer|Trident/i)) {
+          // IE!!
+          alert('익스플로러는 호환성이 떨어져 문제가 발생할수있으므로 엣지로 실행 합니다.');
+          window.location = "microsoft-edge:" + "https://nillworld.com/";
+        }
+        if (navigator.userAgent.match(/KAKAOTALK|instagram|Line|FB_IAB\/FB4A|FBAN\/FBIOS|DaumDevice/i) !== null) {
+          alert("인앱 브라우저의 경우 호환성이 떨어지므로 크롬이나 사파리와 같은 기본 브라우저 사용을 권장합니다.");
+        }
+      </script>
       <div class="loading">
         <svg class="loading-circle">
           <circle cx="50%" cy="50%" r="25"></circle>
