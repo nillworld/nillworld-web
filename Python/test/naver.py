@@ -6,7 +6,7 @@ keyword_1 = 'mark'
 keyword_2 = 'love'
 keyword_3 = 'nillisawsome'
 
-sentence_1 = 'live simple life'
+sentence_1 = 'eeeeeeeeeeeeee'
 sentence_2 = 'I will be what I want to be'
 sentence_3 = 'you got me thinking about when you were mine'
 
@@ -20,10 +20,11 @@ def answer(keyword, sentence, rule):
   insertIdx = 0
   for i in range(len(rule)):
     keywordIdx = i
-    insertIdx += i + rule[i]
-    if(len(keyword) < insertIdx):
-      keywordIdx = insertIdx % len(keyword)
+    insertIdx += rule[i]
+    if(len(keyword) - 1 < i):
+      keywordIdx = (i + 1) % len(keyword)
     result.insert(insertIdx, keyword[keywordIdx])
+    insertIdx += 1
   print(result)
   return 0
 
