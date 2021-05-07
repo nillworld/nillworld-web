@@ -3,7 +3,7 @@
 #test case
 
 keyword_1 = 'mark'
-keyword_2 = 'love'
+keyword_2 = 'wwwwwwwww'
 keyword_3 = 'nillisawsome'
 
 sentence_1 = 'eeeeeeeeeeeeee'
@@ -19,10 +19,18 @@ def answer(keyword, sentence, rule):
   result = list(sentence)
   insertIdx = 0
   for i in range(len(rule)):
+    break_check = False
     keywordIdx = i
-    insertIdx += rule[i]
     if(len(keyword) - 1 < i):
       keywordIdx = (i + 1) % len(keyword)
+    for j in range(insertIdx, insertIdx+ rule[i]):
+      if(result[j] == keyword[keywordIdx]):
+        result.insert(j, keyword[keywordIdx])
+        break_check = True
+        break
+    if break_check == True:
+      break
+    insertIdx += rule[i]
     result.insert(insertIdx, keyword[keywordIdx])
     insertIdx += 1
   print(result)
