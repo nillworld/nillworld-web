@@ -6,7 +6,7 @@ Nill
 
 >This page was inspired from Apple product page.
 
->It focus on introduce who Nill is, what Nill think.
+>It focus on introduce who I am, what I think.
 
->It can not explain enough, but you would be know what kind of person Nill is.
+>It can not explain enough, but you would feel who I am.
 
