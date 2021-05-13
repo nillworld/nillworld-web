@@ -1,19 +1,27 @@
-Nill
-===========================
+# Nill
 
 ## This page is about who Nill is
 
+> This page was inspired from Apple product page.
 
->This page was inspired from Apple product page.
+> It focus on introduce who I am, what I think.
 
->It focus on introduce who I am, what I think.
-
->It can not explain enough, but you would feel who I am.
-
+> It can not explain enough, but you would feel who I am.
 
 이 페이지를 만들면서 많은 고민이 있었습니다.
 
- - 로딩화면
-    로딩을 Lazy loading으로 디자인 하여 현재 보여지는 색션 먼저 이미지를 다운할지 Loading percentage로 구성할지 고민이였는데, 마지막 섹션의 이미지들의 용량이 생각보다 많아서 Lazy loading을 하게되면 불완전한 이미지가 보여질 수 있고 사용자로 하여금 어느정도 화면이 준비되는지 나타내 주는게 좋다고 생각하여 Loading percentage로 구성하였습니다.
- - Slider
-    parallax scrolling기반의 웹 사이트에다가 프로젝트(Emoji)를 설명할 이미지들을 넣을려 하니 스크롤링에 더욱 많은 많은 피로가 쌓이고 관심있는 사용자에게만 보여 줄 수 있도록 Slider로 구성하였습니다. VanillaJS를 추구하였기에 슬라이드를 직접 구성하였고 UX가 스크롤링에서 클릭이나 드래그로 바뀌기에 이에 대한 불편함을 최소한으로 하기위해 label, drag 그리고 butten까지 구성하여 쉽게 접근할 수 있도록 구성하였습니다.
+- Loading
+  로딩을 Lazy loading으로 디자인 하여 현재 보여지는 색션 먼저 이미지를 다운할지 Loading percentage로 구성할지 고민이였는데, 마지막 섹션의 이미지들의 용량이 생각보다 많아서 Lazy loading을 하게되면 불완전한 이미지가 보여질 수 있고 사용자로 하여금 어느정도 화면이 준비되는지 나타내 주는게 좋다고 생각하여 Loading percentage로 구성하였습니다.
+- Section
+  퍼포먼스 향상과 효과 충돌 방지를 위하여 크게 4개의 section으로 나누어 script를 구성하였습니다.
+- Object select
+  반복되는 객체 선택을 줄이고 정형화된 구조를 위해 한 객체안에 Section별로 속성을 나누고 그 속에서도 객체선택과 계산 수치를 Key 값으로 분리하였습니다.
+- Video Scrolling
+  최대한 고화질의 영상을 스크롤에 맞춰 보여주기 위하여 비디오를 프레임별로 이미지로 만들어 스크롤 비율에 맞추어 저장하고 부드럽게 보여주기 위하여 스크롤이 멈추어도 약간 더 스크롤 되도록 하였습니다.
+- Slider
+  parallax scrolling기반의 웹 사이트에다가 프로젝트(Emoji)를 설명할 이미지들을 넣을려 하니 스크롤링에 더욱 많은 많은 피로가 쌓이고 관심있는 사용자에게만 보여 줄 수 있도록 Slider로 구성하였습니다. VanillaJS를 추구하였기에 슬라이드를 직접 구성하였고 UX가 스크롤링에서 클릭이나 드래그로 바뀌기에 이에 대한 불편함을 최소한으로 하기위해 label, drag 그리고 butten까지 구성하여 쉽게 접근할 수 있도록 구성하였습니다.
+- Safari scroll
+  safari에서 스크롤 효과중 최상단과 최 하단의 바운스 되는 효과와 up scroll중에 adress bar가 나타날때 resize되어 innerHeight가 작아져 parallax 효과가 깨지는 현상이 발생하는데, MacOS가 없기에 Chrome DevTool을 이용하여 가지고 있던 아이폰으로 디버깅하였습니다. 문제 해결 방식은 모바일 플랫폼에서 innerheight가 커지면 커진 값으로 높이를 고정하여 resize가 되지 않도록 하였습니다(가로모드는 따로 설정하였습니다).
+- Language
+  사용자의 브라우저 언어에 맞춰 한국어를 제외한 언어는 영어로 표시되도록 class를 묶고 display-none으로 설정하였습니다. 다른 언어를 선택할 시, 새로운 html로 이동하도록 하였습니다. 기본 페이지를 redirect시킬까 생각했지만 간결한 URL을 보여주기 위함과 보통 언어를 선택하지 않으므로 브라우저 설정을 따르는게 좋을거 같다고 생각하여 구성하였습니다.
+  단순 번역은 전달되는 느낌이 다르므로 영어 페이지는 하고자 하는 말이 잘 전달 될 수 있도록 다른표현이지만 맥락은 같도록 하였습니다.
