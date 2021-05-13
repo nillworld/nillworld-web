@@ -2,11 +2,13 @@
 
 ## This page is about who Nill is
 
-> This page was inspired from Apple product page.
+```
+ This page was inspired from Apple product page.
 
-> It focus on introduce who I am, what I think.
+ It focus on introduce who I am, what I think.
 
-> It can not explain enough, but you would feel who I am.
+ It can not explain enough, but you would feel who I am.
+```
 
 다음은 이 페이지를 만들며 고민했던 문제들 입니다.
 
