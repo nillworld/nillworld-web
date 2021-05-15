@@ -45,21 +45,36 @@
           <div class="comment-scroll">
             <div id="comments">
               <div class="eachComment">
-                <div class="name">Nill<button class="deleteComment">삭제</button></div>
+                <div class="name">otherPerson</div>
                 <span class="inputValue">ㅇㄴㄹㅇㄹ</span>
                 <div class="time">2021-4-15 15:10:15</div>
                 <div class="voteDiv">
-                  <button class="commentLike">Like<span class="likeCountSpan">0</span></button
-                  ><button id="commentDislike">Dislike<span class="dislikeCountSpan">0</span></button>
+                  <button class="commentLike">Like<span class="likeCountSpan">10</span></button
+                  ><button class="commentDislike">Dislike<span class="dislikeCountSpan">9</span></button>
                 </div>
               </div>
             </div>
             <div id="form-commentInfo">
-              <input id="comment-input" placeholder="댓글을 입력해 주세요." />
-              <button id="submit">등록</button>
+              <textarea id="comment-input" placeholder="댓글을 입력해 주세요."></textarea>
+              <button id="submit"></button>
+              <label id="submitLabel" for="submit"><div id="submitLabelDiv">등록</div></label>
             </div>
           </div>
         </div>
+      </div>
+      <div id="login" class="modal">
+        <form class="modal-content">
+          <div class="modal-container">
+            <span class="close">&times;</span>
+            <h3>로그인</h3>
+            <hr />
+            <input id="userId" type="text" class="text_input" placeholder="Enter ID" />
+            <input id="userPassword" type="password" class="text_input" placeholder="Enter Password" />
+            <div>
+              <button type="submit" class="loginBtn">로그인</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <script src="comment.js"></script>
