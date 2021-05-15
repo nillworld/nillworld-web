@@ -13,22 +13,47 @@
       <div class="content">
         <div class="main-content">
           <div class="user">
-            <div class="user-img">img</div>
-            <div class="user-name">Nill</div>
-            <div class="user-info">( i )</div>
-            <div class="write-time">한시간 전</div>
+            <div class="flex-left">
+              <div class="user-img">img</div>
+              <div class="user-name">Nill</div>
+              <div class="user-info">( i )</div>
+            </div>
+            <div class="flex-right">
+              <div class="write-time">한시간 전</div>
+            </div>
           </div>
 
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut voluptas nam magnam. Quod, in nemo expedita eligendi blanditiis quos, nulla
-          impedit dolorum quo odit voluptates accusantium provident, hic possimus aut.
+          impedit dolorum quo odit voluptates accusantium provident, hic possimus aut. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Assumenda sunt ex, earum porro veniam deleniti! Deserunt maiores enim esse hic accusamus nobis similique, aliquid id, dolorem voluptatibus,
+          asperiores quo quisquam.
         </div>
-        <div class="comment-container">
-          <div class="comment">
-            <div id="comment-count">댓글 <span id="count">0</span></div>
-            <div id="comment-count">Like <span id="count">0</span></div>
-            <div id="comment-count">Dislike <span id="count">0</span></div>
-            <div id="comment-count">Share <span id="count">0</span></div>
-            <div id="comments"></div>
+      </div>
+      <div class="comment-container">
+        <div class="empty-box"></div>
+        <div class="comment">
+          <div class="all-count">
+            <div class="flex-left">
+              <div id="comment-count">댓글 <span class="count">0</span></div>
+            </div>
+            <div class="flex-right">
+              <div id="content-like">Like <span class="count">111</span></div>
+              <div id="content-dislike">Dislike <span class="count">1</span></div>
+              <div id="content-share">Share <span class="count">12</span></div>
+            </div>
+          </div>
+          <div class="comment-scroll">
+            <div id="comments">
+              <div class="eachComment">
+                <div class="name">Nill<button class="deleteComment">삭제</button></div>
+                <span class="inputValue">ㅇㄴㄹㅇㄹ</span>
+                <div class="time">2021-4-15 15:10:15</div>
+                <div class="voteDiv">
+                  <button class="commentLike">Like<span class="likeCountSpan">0</span></button
+                  ><button id="commentDislike">Dislike<span class="dislikeCountSpan">0</span></button>
+                </div>
+              </div>
+            </div>
             <div id="form-commentInfo">
               <input id="comment-input" placeholder="댓글을 입력해 주세요." />
               <button id="submit">등록</button>
