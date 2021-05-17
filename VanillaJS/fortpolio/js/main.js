@@ -11,15 +11,6 @@
   let beforeInnerHeight = 0;
   let imgElemLoadedTotalCount = 0;
 
-  //language check
-  let lang = navigator.language || navigator.userLanguage;
-  if (lang == "ko-KR" || lang == "ko" || lang == "ko-kr") {
-    //한국어 일때?
-    document.querySelector(".language-check").classList.remove("kor");
-  } else {
-    document.querySelector(".language-check").classList.remove("eng");
-  }
-
   //mobile check
   let mobilePlatform = false;
   let filter = "win16|win32|win64|mac|macintel";

@@ -16,12 +16,6 @@ a {
   color: rgb(29, 29, 31);
   text-decoration: none;
 }
-.language-check.kor {
-  display: none;
-}
-.language-check.eng {
-  display: none;
-}
 body.before-load {
   overflow: hidden;
 }
@@ -230,7 +224,7 @@ body.before-load {
   /* top: 38vh; */
   width: 100%;
   z-index: 5;
-  font-size: 12vw;
+  font-size: 4rem;
   text-align: center;
   justify-content: center;
   color: rgba(255, 255, 255);
@@ -449,7 +443,7 @@ label {
 /* #####################  section-2  ##################### */
 
 #scroll-section-2 .main-message {
-  font-size: 9.5vw;
+  font-size: 9vw;
   opacity: 0;
   letter-spacing: -1.5vw;
 }
