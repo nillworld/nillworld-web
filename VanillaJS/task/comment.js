@@ -3,9 +3,8 @@
   const content = document.querySelector(".content");
   const comment = document.querySelector(".comment");
   const emptyBox = document.querySelector(".empty-box");
-  const inputBar = document.querySelector("#comment-input");
   const rootDiv = document.querySelector("#comments");
-  const btn = document.querySelector("#submit");
+  const submitBtn = document.querySelector("#submit");
   const commentCount = document.querySelector("#comment-count .count");
   const contentLike = document.querySelector("#content-like");
   const contentDislike = document.querySelector("#content-dislike");
@@ -13,18 +12,33 @@
   const contentLikeCount = document.querySelector("#content-like .count");
   const contentDislikeCount = document.querySelector("#content-dislike .count");
   const contentShareCount = document.querySelector("#content-share .count");
-  const commentContainer = document.querySelector(".comment-container");
-  const commentScroll = document.querySelector(".comment-scroll");
   const commentTextarea = document.querySelector("#comment-input");
   const close = document.querySelector(".close");
-  const modalContent = document.querySelector(".modal-content");
+  const loginForm = document.querySelector(".login-form");
   const userId = document.querySelector("#userId");
   const userPassword = document.querySelector("#userPassword");
+  const snsLoginBtns = document.querySelectorAll(".sns-btn-group");
 
   let likeClickCheck = false;
   let dislikeClickCheck = false;
   let shareClickCheck = false;
   let userName = "";
+  let banWordCheck = false;
+
+  comment.style.top = `${window.innerHeight - 50}px`;
+
+  if (content.offsetHeight < window.innerHeight - 50) {
+    comment.style.position = "sticky";
+  }
+
+  window.addEventListener("resize", () => {
+    console.log("eeee");
+    comment.style.top = `${window.innerHeight - 50}px`;
+
+    if (content.offsetHeight < window.innerHeight - 50) {
+      comment.style.position = "sticky";
+    }
+  });
 
   //맨위 댓글 숫자 세는거.
   //타임스템프 만들기
@@ -41,6 +55,11 @@
   }
 
   contentLike.addEventListener("click", () => {
+    if (sessionStorage.getItem("userId") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      openLogin();
+      return;
+    }
     if (!likeClickCheck) {
       if (dislikeClickCheck) {
         contentDislike.style.color = "black";
@@ -57,6 +76,11 @@
     }
   });
   contentDislike.addEventListener("click", () => {
+    if (sessionStorage.getItem("userId") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      openLogin();
+      return;
+    }
     if (!dislikeClickCheck) {
       if (likeClickCheck) {
         contentLike.style.color = "black";
@@ -73,18 +97,33 @@
     }
   });
   contentShare.addEventListener("click", () => {
-    if (!shareClickCheck) {
-      contentShare.style.color = "blue";
-      contentShareCount.innerHTML++;
-      shareClickCheck = true;
-    } else {
-      contentShare.style.color = "black";
-      contentShareCount.innerHTML--;
-      shareClickCheck = false;
-    }
+    contentShareCount.innerHTML++;
   });
 
+  function spammingCheck() {
+    let lastCommetTime = sessionStorage.getItem("LCtime");
+    if (sessionStorage.getItem("SCount") == null) {
+      sessionStorage.setItem("SCount", 0);
+    }
+    let spammingCount = sessionStorage.getItem("SCount");
+    let nowTime = new Date().getTime();
+    if (spammingCount >= 5 && nowTime - lastCommetTime <= 600000) {
+      console.log("도배 막기");
+      alert("도배로 인해 10분간 댓글을 등록하실 수 없습니다.");
+      return true;
+    }
+    //도배 10분뒤 풀림
+    if (spammingCount >= 5 && nowTime - lastCommetTime > 600000) {
+      sessionStorage.setItem("SCount", 0);
+    }
+  }
+
   function numberCount(event) {
+    if (sessionStorage.getItem("userId") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      openLogin();
+      return;
+    }
     let targetLike = event.target.parentNode.querySelector(".commentLike");
     if (targetLike === null) {
       targetLike = event.target.parentNode.parentNode.querySelector(".commentLike");
@@ -94,7 +133,6 @@
       targetDislike = event.target.parentNode.parentNode.querySelector(".commentDislike");
     }
     console.log(targetLike);
-    // console.log(event.currentTarget);
     if (event.currentTarget.style.color === "blue") {
       event.currentTarget.querySelector("span").innerHTML--;
       event.currentTarget.style.color = "black";
@@ -119,8 +157,8 @@
     if (!deleteCheck) {
       return;
     }
-    const btn = event.target;
-    const list = btn.parentNode.parentNode.parentNode;
+    const deleteBtn = event.target;
+    const list = deleteBtn.parentNode.parentNode.parentNode;
     //commentList
     rootDiv.removeChild(list);
     //메인댓글 카운트 줄이기.
@@ -132,12 +170,12 @@
   }
 
   function editComment(event) {
-    const btn = event.target;
-    const list = btn.parentNode.parentNode.parentNode;
+    const editBtn = event.target;
+    const list = editBtn.parentNode.parentNode.parentNode;
     console.log(list);
-    btn.disabled = true;
+    editBtn.disabled = true;
     const editTarget = list.querySelector(".inputValue");
-    const targetText = editTarget.innerHTML;
+    const targetText = editTarget.innerText;
     editTarget.innerHTML = "";
     const editTextArea = document.createElement("textarea");
     const editSubmit = document.createElement("button");
@@ -148,6 +186,8 @@
     const timeDiv = list.querySelector(".time");
     timeDiv.innerHTML = "";
     editTarget.appendChild(editTextArea);
+    editTextArea.style.height = "1px";
+    editTextArea.style.height = 10 + editTextArea.scrollHeight + "px";
     editTarget.appendChild(editSubmit);
     editTarget.addEventListener("keydown", (e) => {
       e.target.style.height = "1px";
@@ -155,15 +195,26 @@
       window.scrollTo(0, container.scrollHeight - innerHeight);
     });
     editSubmit.addEventListener("click", () => {
-      editTarget.innerHTML = editTextArea.value;
+      let banWords = ["시볼", "개새", "fuck"];
+      let usedBanWords = [];
+      for (let i = 0; i < banWords.length; i++) {
+        if (editTextArea.value.indexOf(banWords[i]) > -1) {
+          usedBanWords.push('"' + banWords[i] + '"');
+        }
+      }
+      if (usedBanWords.length > 0) {
+        alert("단어" + usedBanWords.join(", ") + "은(는) 댓글로 등록하실 수 없습니다.");
+        banWordCheck = true;
+        return;
+      }
+      editTarget.innerText = editTextArea.value;
       editTextArea.remove();
       editSubmit.remove();
-      timeDiv.innerHTML = generateTime();
-      btn.disabled = false;
+      timeDiv.innerHTML = `${generateTime()} (수정)`;
+      editBtn.disabled = false;
     });
   }
 
-  //댓글보여주기
   function showComment(comment) {
     const userNameDiv = document.createElement("div");
     const inputValue = document.createElement("span");
@@ -177,6 +228,7 @@
     const rightDiv = document.createElement("div");
     const delBtn = document.createElement("button");
     const editBtn = document.createElement("button");
+    banWordCheck = false;
     delBtn.className = "deleteComment";
     delBtn.innerHTML = "삭제";
     editBtn.className = "editComment";
@@ -189,16 +241,25 @@
     voteDiv.className = "voteDiv";
     likeCountSpan.className = "likeCountSpan";
     dislikeCountSpan.className = "dislikeCountSpan";
-    //유저네임가져오기
     userNameDiv.innerHTML = userName;
     userNameDiv.appendChild(rightDiv);
     rightDiv.appendChild(editBtn);
     rightDiv.appendChild(delBtn);
-    //입력값 넘기기
-    inputValue.innerText = comment;
-    //타임스템프찍기
-    showTime.innerHTML = generateTime();
 
+    let banWords = ["시볼", "개새", "fuck"];
+    let usedBanWords = [];
+    for (let i = 0; i < banWords.length; i++) {
+      if (comment.indexOf(banWords[i]) > -1) {
+        usedBanWords.push('"' + banWords[i] + '"');
+      }
+    }
+    if (usedBanWords.length > 0) {
+      alert("단어" + usedBanWords.join(", ") + "은(는) 댓글로 등록하실 수 없습니다.");
+      banWordCheck = true;
+      return;
+    }
+    inputValue.innerText = comment;
+    showTime.innerHTML = generateTime();
     likeCountSpan.innerHTML = 0;
     dislikeCountSpan.innerHTML = 0;
     //투표창 만들기, css먼저 입혀야함.
@@ -210,7 +271,6 @@
     voteDiv.appendChild(commentDislike);
     commentLike.appendChild(likeCountSpan);
     commentDislike.appendChild(dislikeCountSpan);
-    // commentDislike.appendChild(countSpan);
     //댓글뿌려주기
     commentList.appendChild(userNameDiv);
     commentList.appendChild(inputValue);
@@ -221,7 +281,6 @@
     editBtn.addEventListener("click", editComment);
     commentLike.addEventListener("click", numberCount);
     commentDislike.addEventListener("click", numberCount);
-    console.dir(rootDiv);
   }
 
   let commentLikes = document.querySelectorAll(".commentLike");
@@ -233,27 +292,43 @@
     commentDislike.addEventListener("click", numberCount);
   }
 
-  //버튼만들기+입력값 전달
+  for (const snsLoginBtn of snsLoginBtns) {
+    snsLoginBtn.addEventListener("click", () => {
+      sessionStorage.setItem("userId", "SNS-name");
+      login.style.display = "none";
+    });
+  }
+
   function pressBtn() {
-    const currentVal = inputBar.value;
+    const currentVal = commentTextarea.value;
     if (!currentVal.length) {
       alert("댓글을 입력해주세요.");
     } else {
-      if (localStorage.getItem("userId") === null) {
+      if (sessionStorage.getItem("userId") === null) {
         alert("로그인 후 댓글을 등록하실 수 있습니다.");
         openLogin();
-        inputBar.value = "";
+        commentTextarea.value = "";
         return;
       }
-      userName = localStorage.getItem("userId");
+      if (spammingCheck()) {
+        return;
+      }
+      userName = sessionStorage.getItem("userId");
       showComment(currentVal);
-      commentCount.innerHTML++;
-      inputBar.value = "";
+      if (new Date().getTime() - sessionStorage.getItem("LCtime") < 5000) {
+        sessionStorage.setItem("SCount", Number(sessionStorage.getItem("SCount")) + 1);
+      }
+      sessionStorage.setItem("LCtime", new Date().getTime());
+      if (!banWordCheck) {
+        commentTextarea.value = "";
+        commentCount.innerHTML++;
+      }
+      banWordCheck = true;
       window.scrollTo(0, container.scrollHeight - innerHeight);
       commentTextarea.style.height = "40px";
     }
   }
-  btn.onclick = pressBtn;
+  submitBtn.onclick = pressBtn;
 
   window.addEventListener("scroll", () => {
     if (window.pageYOffset + window.innerHeight - 59 >= content.offsetHeight) {
@@ -261,18 +336,15 @@
       emptyBox.style.height = "0px";
     } else {
       comment.style.position = "fixed";
-      comment.style.maxWidth = "500px";
       emptyBox.style.height = "60px";
     }
   });
 
-  // localStorage.setItem("email", "dump@gmail.com");
-
   commentTextarea.addEventListener("keydown", (e) => {
-    if (localStorage.getItem("userId") === null) {
+    if (sessionStorage.getItem("userId") === null) {
       alert("로그인 후 댓글을 등록하실 수 있습니다.");
       openLogin();
-      inputBar.value = "";
+      commentTextarea.value = "";
       return;
     }
 
@@ -280,17 +352,18 @@
     e.target.style.height = 22 + e.target.scrollHeight + "px";
     window.scrollTo(0, container.scrollHeight - innerHeight);
   });
-  /////////////////////////////////
-  var login = document.getElementById("login");
+  let login = document.getElementById("login");
   function openLogin() {
     login.style.display = "flex";
+    document.body.style.overflowY = "hidden";
   }
 
   close.addEventListener("click", () => {
     login.style.display = "none";
+    document.body.style.overflowY = "scroll";
   });
-  modalContent.addEventListener("submit", () => {
-    localStorage.setItem("userId", userId.value);
+  loginForm.addEventListener("submit", () => {
+    sessionStorage.setItem("userId", userId.value);
     login.style.display = "none";
   });
   // 로그인 화면 바깥의 영역을 클릭할 경우 로그인 창 닫기
