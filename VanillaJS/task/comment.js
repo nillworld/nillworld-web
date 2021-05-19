@@ -19,6 +19,7 @@
   const userPassword = document.querySelector("#userPassword");
   const snsLoginBtns = document.querySelectorAll(".sns-btn-group");
 
+  let loginAlertCheck = false;
   let likeClickCheck = false;
   let dislikeClickCheck = false;
   let shareClickCheck = false;
@@ -341,11 +342,15 @@
   });
 
   commentTextarea.addEventListener("keydown", (e) => {
-    if (sessionStorage.getItem("userId") === null) {
+    if (sessionStorage.getItem("userId") === null && !loginAlertCheck) {
+      loginAlertCheck = true;
       alert("로그인 후 댓글을 등록하실 수 있습니다.");
       openLogin();
       commentTextarea.value = "";
       return;
+    }
+    if (sessionStorage.getItem("userId") !== null) {
+      commentTextarea.disabled = false;
     }
 
     e.target.style.height = "1px";
@@ -359,6 +364,7 @@
   }
 
   close.addEventListener("click", () => {
+    loginAlertCheck = false;
     login.style.display = "none";
     document.body.style.overflowY = "scroll";
   });
@@ -369,6 +375,7 @@
   // 로그인 화면 바깥의 영역을 클릭할 경우 로그인 창 닫기
   window.onclick = function (event) {
     if (event.target == login) {
+      loginAlertCheck = false;
       login.style.display = "none";
     }
   };
