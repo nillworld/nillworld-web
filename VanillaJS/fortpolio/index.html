@@ -22,6 +22,9 @@
         if (navigator.userAgent.match(/KAKAOTALK|instagram|Line|FB_IAB\/FB4A|FBAN\/FBIOS|DaumDevice/i) !== null) {
           alert("인앱 브라우저의 경우 호환성이 떨어지므로 크롬이나 사파리와 같은 기본 브라우저 사용을 권장합니다.");
         }
+        if (navigator.userAgent.match(/samsung/i)){
+          alert("삼성 브라우저의 다크모드의 경우 색 표현이 온전하지 않아, 크롬 브라우저 이용을 권장합니다.")
+        }
       }else{
         window.location.href = "https://nillworld.com/english.html";
       }

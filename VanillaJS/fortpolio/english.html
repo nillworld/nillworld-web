@@ -20,7 +20,10 @@
           window.location = "microsoft-edge:" + "https://nillworld.com/";
         }
         if (navigator.userAgent.match(/KAKAOTALK|instagram|Line|FB_IAB\/FB4A|FBAN\/FBIOS|DaumDevice/i) !== null) {
-          alert("In-app browser might not display this page correctly. That is why we recommend open this site within default browser(like chrome or safari)");
+          alert("In-app browser might not display this page correctly. That is why we recommend open this site within default browser(like Chrome or Safari)");
+        }
+        if (navigator.userAgent.match(/samsung/i)){
+          alert("Samsung browser 'Dark Mode' is not display colors correctly, That is why we recommend open this site within 'Right mode' or Chrome browser.")
         }
       </script>
       <div class="loading">
