@@ -392,14 +392,11 @@
     return rv;
   }
 
-  ///////////////////////////////////////////////
   function imgChange(length, direction, projectName) {
     for (let i = 0; i < length; i++) {
       direction[i].src = `./images/projects/${projectName}/${projectName}-${i + 1}.jpg`;
     }
   }
-
-  ////////////////////////////////////////////////
 
   // 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
   function playAnimation() {
@@ -412,9 +409,6 @@
     //
     switch (currentScene) {
       case 0:
-        // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-        // objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-        // objs.container.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         objs.canvasDiv.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
         if (scrollRatio <= 0.125) {
           // in
@@ -658,7 +652,6 @@
       }
       if (currentScene === 1) {
         const objs = sceneInfo[currentScene].objs;
-        const values = sceneInfo[currentScene].values;
         let currentYOffset = delayedYOffset - prevScrollHeight;
         let section2_ratio = currentYOffset / (beforeInnerHeight * 13);
         if (section2_ratio < 0.87) {
@@ -890,8 +883,6 @@
       }
     }
   }
-
-  ///////////////////////////////////////////////////
 
   window.addEventListener("load", () => {
     imgElemLoadedTotalCount += 50;
