@@ -1,9 +1,9 @@
 (() => {
-  let yOffset = 0; // window.pageYOffset 대신 쓸 변수
-  let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
-  let currentScene = 0; // 현재 활성화된(눈 앞에 보고있는) 씬(scroll-section)
-  let enterNewScene = false; // 새로운 scene이 시작된 순간 true
-  let slideState = true; // 슬라이드 touch이벤트 중복 방지
+  let yOffset = 0; // instead of window.pageYOffset
+  let prevScrollHeight = 0; // pre sections window.pageYOffset
+  let currentScene = 0; // activated scene section
+  let enterNewScene = false; // when other section start, true
+  let slideState = true; // slide duplication prevent
   let acc = 0.2;
   let delayedYOffset = 0;
   let rafId;
