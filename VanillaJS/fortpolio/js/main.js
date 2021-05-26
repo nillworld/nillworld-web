@@ -98,7 +98,7 @@
     // 1
     {
       type: "sticky",
-      heightNum: 13, // type normal에서는 필요 없음
+      heightNum: 13,
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-1"),
@@ -294,7 +294,7 @@
       yOffset = window.pageYOffset;
     }
 
-    // 각 스크롤 섹션의 높이 세팅
+    // set each section height
     for (let i = 0; i < sceneInfo.length; i++) {
       sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * beforeInnerHeight;
       if (window.innerWidth < 1217) {
@@ -368,12 +368,11 @@
   }
   function calcValues(values, currentYOffset) {
     let rv;
-    // 현재 씬(스크롤섹션)에서 스크롤된 범위를 비율로 구하기
+    // calculate current scene height rate
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight;
-
     if (values.length === 3) {
-      // start ~ end 사이에 애니메이션 실행
+      // start ~ end
       const partScrollStart = values[2].start * scrollHeight;
       const partScrollEnd = values[2].end * scrollHeight;
       const partScrollHeight = partScrollEnd - partScrollStart;
@@ -398,7 +397,6 @@
     }
   }
 
-  // 애니매이션 담당하는 함수 / screenLoop에 다 담으면 복잡해서 따로 뺌
   function playAnimation() {
     const objs = sceneInfo[currentScene].objs;
     const values = sceneInfo[currentScene].values;
@@ -447,7 +445,6 @@
           // out
           objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
           objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
-          // objs.context.drawImage(objs.videoImages[470], 0, 0);
         }
         objs.profile_context.drawImage(objs.profileImg[0], 0, 0);
         if (scrollRatio <= 0.8) {
@@ -503,7 +500,6 @@
         } else {
           objs.this_div.style.transform = `translate3d(0, 0, 0) scale(${scale_section2_ratio})`;
         }
-        // objs.jump_canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${calcValues(values.jump_scale, currentYOffset)})`;
 
         if (scrollRatio <= 0.92) {
           objs.this_div.style.opacity = calcValues(values.this_in, currentYOffset);
