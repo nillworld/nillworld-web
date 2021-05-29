@@ -9,8 +9,9 @@ crawl_num = int(input('크롤링할 갯수 입력(최대 50개): '))
 url = baseUrl + quote_plus(plusUrl) # 한글 검색 자동 변환
 html = urlopen(url)
 soup = bs(html, "html.parser")
-img = soup.find_all(class_='_img')
-
+img = soup.find_all(class_="_image")
+for i in img:
+    print(i);
 n = 1
 for i in img:
     print(n)
@@ -28,3 +29,12 @@ print('Image Crawling is done.')
 
 ## pip install beautifulsoup4
 # https://bskyvision.com/721
+
+
+
+
+
+##############
+## it is not work! cuz, the page img work with js rendering. 
+## that is why, It need to ....
+### https://stackoverflow.com/questions/8049520/web-scraping-javascript-page-with-python
