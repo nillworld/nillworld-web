@@ -38,8 +38,8 @@ for image in images:
     try:
         image.click()
         time.sleep(2)
-        print(driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[1]/div/div/div/div/div[1]/span/div[1]/div[1]/div["+str(count)+"]/a[1]/div[1]/img").get_attribute("src"))
-        imgUrl = driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[1]/div/div/div/div/div[1]/span/div[1]/div[1]/div["+str(count)+"]/a[1]/div[1]/img").get_attribute("src")
+        print(driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img").get_attribute("src"))
+        imgUrl = driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img").get_attribute("src")
         print("b")
         opener=urllib.request.build_opener()
         print("c")
@@ -47,7 +47,7 @@ for image in images:
         print("d")
         urllib.request.install_opener(opener)
         print("e")
-        urllib.request.urlretrieve(imgUrl, str(count) + ".jpg")
+        urllib.request.urlretrieve(imgUrl, str(count) + ".png")
         count = count + 1
         print(count)
     except:
