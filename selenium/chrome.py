@@ -4,13 +4,13 @@ import time
 import urllib.request
 
 ###### google img search.
-
-search_keyword = ""
+crawl_num = int(input('크롤링할 갯수 입력: '))
+search_keyword = input('검색어 입력: ') 
 driver = webdriver.Chrome()
 driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
-# elem = driver.find_element_by_name("q")
-# elem.send_keys(search_keyword);
-# elem.send_keys(Keys.RETURN)
+elem = driver.find_element_by_name("q")
+elem.send_keys(search_keyword);
+elem.send_keys(Keys.RETURN)
 
 SCROLL_PAUSE_TIME = 1
 # Get scroll height
@@ -24,6 +24,7 @@ while True:
     new_height = driver.execute_script("return document.body.scrollHeight")
     if new_height == last_height:
         try:
+            time.sleep(SCROLL_PAUSE_TIME)
             driver.find_element_by_css_selector(".mye4qd").click()
         except:
             break
@@ -32,15 +33,23 @@ while True:
 images = driver.find_elements_by_css_selector(".rg_i.Q4LuWd")
 count = 1
 for image in images:
+    if  count > crawl_num:
+        break
     try:
         image.click()
         time.sleep(2)
-        imgUrl = driver.find_element_by_xpath('/html/body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/img').get_attribute("src")
+        print(driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[1]/div/div/div/div/div[1]/span/div[1]/div[1]/div["+str(count)+"]/a[1]/div[1]/img").get_attribute("src"))
+        imgUrl = driver.find_element_by_xpath("/html/body/div[2]/c-wiz/div[3]/div[1]/div/div/div/div/div[1]/span/div[1]/div[1]/div["+str(count)+"]/a[1]/div[1]/img").get_attribute("src")
+        print("b")
         opener=urllib.request.build_opener()
+        print("c")
         opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+        print("d")
         urllib.request.install_opener(opener)
+        print("e")
         urllib.request.urlretrieve(imgUrl, str(count) + ".jpg")
         count = count + 1
+        print(count)
     except:
         pass
 
