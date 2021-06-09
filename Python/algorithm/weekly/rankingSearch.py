@@ -1,12 +1,28 @@
 # https://programmers.co.kr/learn/courses/30/lessons/72412
 
 def solution(info, query):
-    k = ''
+
+    idx = 0
+    answer = [0]*len(query)
+    quadraticInfo = []
+    quadraticQuery = []
+
     for eachInfo in info:
-        k += eachInfo + ' '
+        quadraticInfo.append(list(eachInfo.split()))
+
     for eachQuery in query:
-        selectedQuery = eachQuery.split(' and ')
-    print ()
+        eachQuery = eachQuery.replace('and ', '')
+        quadraticQuery.append(list(eachQuery.split()))
+    
+    for qA,qB,qC,qD,qE in quadraticQuery:
+        for iA,iB,iC, iD,iE in quadraticInfo:
+            if (qA == iA or qA == '-') and (qB == iB or qB == '-') and (qC == iC or qC == '-') and (qD == iD or qD == '-') and int(qE) <= int(iE):
+                answer[idx] += 1
+        idx += 1
+    
+    print(answer)
+        
+        
     
     
 
