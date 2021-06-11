@@ -1,4 +1,6 @@
+# https://tech.kakao.com/2021/01/25/2021-kakao-recruitment-round-1/
 # https://programmers.co.kr/learn/courses/30/lessons/72412
+import numpy as np
 
 def solution(info, query):
 
@@ -15,7 +17,7 @@ def solution(info, query):
         quadraticQuery.append(list(eachQuery.split()))
     
     for qA,qB,qC,qD,qE in quadraticQuery:
-        for iA,iB,iC, iD,iE in quadraticInfo:
+        for iA,iB,iC,iD,iE in quadraticInfo:
             if (qA == iA or qA == '-') and (qB == iB or qB == '-') and (qC == iC or qC == '-') and (qD == iD or qD == '-') and int(qE) <= int(iE):
                 answer[idx] += 1
         idx += 1
