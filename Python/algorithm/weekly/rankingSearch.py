@@ -63,7 +63,7 @@ def solution2(info, query):
 
     for value in db.values():             # 딕셔너리 내 모든 값 정렬
         value.sort()
-        print(value)
+        print(db)
  
     for q in query:                       # query의 모든 조건에 대해서
         qry = [i for i in q.split() if i != 'and']
