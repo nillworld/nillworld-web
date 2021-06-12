@@ -50,7 +50,7 @@ def solution2(info, query):
         conditions = temp[:-1]       # 조건들만 모으고, 점수 따로
         score = int(temp[-1])  
         for n in range(5):           # 조건들에 대해 조합을 이용해서  
-            combi = list(combinations(range(4), n))
+            combi = list(combinations(range(4), n)) # p = permutation (n!/(n-r)!) / c = combination (n!/r!/(n-r)!)
             for c in combi:
                 t_c = conditions.copy()
                 for v in c:          # '-'를 포함한 새로운 조건을 만들어냄.
@@ -63,10 +63,12 @@ def solution2(info, query):
 
     for value in db.values():             # 딕셔너리 내 모든 값 정렬
         value.sort()
+        print(value)
  
     for q in query:                       # query의 모든 조건에 대해서
         qry = [i for i in q.split() if i != 'and']
         qry_cnd = '/'.join(qry[:-1])
+        print(qry_cnd)
         qry_score = int(qry[-1])
         if qry_cnd in db:                 # 딕셔너리 내에 값이 존재한다면,
             data = db[qry_cnd]
