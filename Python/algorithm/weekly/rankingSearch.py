@@ -142,3 +142,6 @@ def testCase():
     print(solution2(info, query))
 
 testCase()
+
+# they ask about expect salary and I said, that time they nodded.
+# But why today(after A week!) I got much less number, even there are already setted salary!!
