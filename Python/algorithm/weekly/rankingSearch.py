@@ -56,15 +56,15 @@ def solution2(info, query):
                 for v in c:          # '-'를 포함한 새로운 조건을 만들어냄.
                     t_c[v] = '-'
                 changed_t_c = '/'.join(t_c)
-                if changed_t_c in db:     # 모든 조건의 경우에 수에 대해 딕셔너리
-                    db[changed_t_c].append(score)
+                if changed_t_c in db:     # 모든 조건의 경우에 수에 대해 딕셔너리(파이썬의 맵핑 / list의 map함수와 혼동 주의)
+                    db[changed_t_c].append(score) #이미 등록된 조건이라면 score(value)만 append
                 else:
                     db[changed_t_c] = [score]
 
     for value in db.values():             # 딕셔너리 내 모든 값 정렬
         value.sort()
         print(db)
- 
+
     for q in query:                       # query의 모든 조건에 대해서
         qry = [i for i in q.split() if i != 'and']
         qry_cnd = '/'.join(qry[:-1])
