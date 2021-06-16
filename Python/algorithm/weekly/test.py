@@ -13,3 +13,6 @@ a = np.array([1,2,3])
 print(a, end='\n\n')
 print(np.c_[a], end='\n\n')
 print(a.reshape(3,1), end='\n\n')
+
+
+# test line
