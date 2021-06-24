@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs", // node.js 사용/ import, export 가능
+        "target": "ES2015",
+        "sourceMap": true
+    },
+
+    //어떤 파일들이 컴파일 과정에 포함되는지
+    "include":[
+        "index.ts" // 없어도 되는데?
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
