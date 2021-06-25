@@ -8,7 +8,7 @@
 
     //어떤 파일들이 컴파일 과정에 포함되는지
     "include":[
-        "src/**/*" // 없어도 되는데?
+        "src/**/*"
     ],
     "exclude": [
         "node_modules"
