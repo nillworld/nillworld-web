@@ -5,3 +5,5 @@ selenium/Lib
 selenium/Scripts
 Python/jupyter/Scripts
 Python/jupyter/Lib
+node_modules
+typeScript/typeChain/dist
