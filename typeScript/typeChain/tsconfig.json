@@ -1,16 +1,12 @@
 {
-    "compilerOptions": {
-        "module": "commonjs", // node.js 사용/ import, export 가능
-        "target": "ES2015",
-        "sourceMap": true,
-        "outDir": "dist"
-    },
+  "compilerOptions": {
+    "module": "commonjs", // node.js 사용/ import, export 가능
+    "target": "ES2015",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
 
-    //어떤 파일들이 컴파일 과정에 포함되는지
-    "include":[
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  //어떤 파일들이 컴파일 과정에 포함되는지
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
