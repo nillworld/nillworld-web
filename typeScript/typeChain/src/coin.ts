@@ -75,3 +75,10 @@ createNewBlock("fourth block");
 console.log(blockChain);
 
 export {};
+
+// 이건 block chain의 일부분.
+
+// TS는 예측가능한 함수인자, 함수 리턴 타입, static 등의 기능이 있어 개발할 때 편함
+// let blockChain: Block[] = [genesisBlock]; 처럼 배열같은 걸로 block이 아닌 것을 push 못하게 할 수 있음
+// 읽기 편하고 혼란스럽지 않기에 TS 씀.
+// React, Redux, Graph QL, node js(express)로 일 할 때 TS로 작업하면 편함.
