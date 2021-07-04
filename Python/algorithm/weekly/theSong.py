@@ -1,11 +1,16 @@
 def solution(m, musicinfos):
-  answer = len(m)
+  answer = ''
+  rememberM = len(m)
+  songLength = ''
+  eachMusic = []
+  playH = int(musicinfos[0][6]+musicinfos[0][7])-int(musicinfos[0][0]+musicinfos[0][1])
+  playM = int(musicinfos[0][9]+musicinfos[0][10])-int(musicinfos[0][3]+musicinfos[0][4]) + playH*60
+  playLength = playM //rememberM
 
-  print((musicinfos))
-  
-
-
-  return answer
+  for musicinfo in musicinfos:
+    eachMusic = list(musicinfo.split(","));
+    print(eachMusic)
+  return playLength
 
 
 
