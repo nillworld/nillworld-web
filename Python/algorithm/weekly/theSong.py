@@ -1,14 +1,9 @@
 # https://programmers.co.kr/learn/courses/30/lessons/17683
 
 def solution(m, musicinfos):
-  answer = ''
-  rememberM = len(m)
-  songLength = ''
+  answer = 'none'
+  playtheMusic = 0
   eachMusic = []
-  playH = int(musicinfos[0][6]+musicinfos[0][7])-int(musicinfos[0][0]+musicinfos[0][1])
-  playM = int(musicinfos[0][9]+musicinfos[0][10])-int(musicinfos[0][3]+musicinfos[0][4]) + playH*60
-  playLength = playM //rememberM
-
   for musicinfo in musicinfos:
     eachMusic = list(musicinfo.split(","));
     playHour = int(eachMusic[1][:2]) - int(eachMusic[0][:2])
@@ -19,20 +14,19 @@ def solution(m, musicinfos):
     else:
       k = playMinute// len(doubleMelody)
       l = playMinute % len(doubleMelody)
+      ## 이 부분에서 틀린 듯
       compareMelody = eachMusic[3]*k + eachMusic[3][:l]
     if m[len(m)-1] == '#':
       if m in compareMelody:
-        return eachMusic[2]
+        if playtheMusic < playMinute:
+          answer = eachMusic[2]
     else:
       if m in compareMelody:
-        ######### 3번째 마지막 C랑 C# 구별 안되고 있음
         if m + '#' not in compareMelody+ compareMelody[0]:
-          print(m)
-          return eachMusic[2]
+          if playtheMusic < playMinute:
+            answer = eachMusic[2]
       
-    if m in compareMelody:
-      return eachMusic[2]
-  return "none"
+  return answer
       
 
 
