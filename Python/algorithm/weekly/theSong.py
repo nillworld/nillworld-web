@@ -8,15 +8,15 @@ def solution(m, musicinfos):
     eachMusic = list(musicinfo.split(","));
     playHour = int(eachMusic[1][:2]) - int(eachMusic[0][:2])
     playMinute = int(eachMusic[1][3:]) - int(eachMusic[0][3:]) + playHour* 60
-    doubleMelody = eachMusic[3] * 2
-    if len(doubleMelody) >= playMinute:
-      compareMelody = doubleMelody[:playMinute]
+
+    if len(eachMusic[3]) < playMinute:
+      quotient = playMinute // len(eachMusic[3])
+      remainder = playMinute % len(eachMusic[3])
+      compareMelody = eachMusic[3]*quotient+eachMusic[3][:remainder]
     else:
-      k = playMinute// len(doubleMelody)
-      l = playMinute % len(doubleMelody)
-      ## 이 부분에서 틀린 듯
-      compareMelody = eachMusic[3]*k + eachMusic[3][:l]
-    if m[len(m)-1] == '#':
+      compareMelody = eachMusic[3][:playMinute]
+
+    if m[-1:] == '#':
       if m in compareMelody:
         if playtheMusic < playMinute:
           answer = eachMusic[2]
