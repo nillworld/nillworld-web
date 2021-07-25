@@ -10,6 +10,7 @@
   let rafState;
   let beforeInnerHeight = 0;
   let imgElemLoadedTotalCount = 0;
+  let section1imgLoadedCount = 0;
 
   //mobile check
   let mobilePlatform = false;
@@ -29,18 +30,35 @@
     var loadingBar = document.getElementById("loadingBar");
     var width = 10;
 
-    var id = setInterval(frame, 10);
+    var id = setInterval(frame2, 10);
     function frame() {
       if (width == 100) {
-        // document.body.classList.remove("before-load");
-        // document.querySelector(".loading").addEventListener("transitionend", (e) => {
-        //   document.querySelector(".language-check").removeChild(e.currentTarget);
-        // });
+        document.body.classList.remove("before-load");
+        document.querySelector(".loading").addEventListener("transitionend", (e) => {
+          document.querySelector(".language-check").removeChild(e.currentTarget);
+        });
         clearInterval(id);
         i = 0;
       } else {
         if (Math.round((imgElemLoadedTotalCount / 938) * 100) > 10) {
           width = Math.round((imgElemLoadedTotalCount / 938) * 100);
+        }
+        loadingBar.style.width = width + "%";
+        loadingBar.innerHTML = width + "%";
+      }
+    }
+
+    function frame2() {
+      if (width == 100) {
+        document.body.classList.remove("before-load");
+        document.querySelector(".loading").addEventListener("transitionend", (e) => {
+          document.querySelector(".language-check").removeChild(e.currentTarget);
+        });
+        clearInterval(id);
+        i = 0;
+      } else {
+        if (Math.round((section1imgLoadedCount / 371) * 100) > 10) {
+          width = Math.round((section1imgLoadedCount / 371) * 100);
         }
         loadingBar.style.width = width + "%";
         loadingBar.innerHTML = width + "%";
@@ -232,6 +250,7 @@
       sceneInfo[0].objs.videoImages.push(imgElem);
       imgElem.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
+        section1imgLoadedCount++;
       });
     }
 
