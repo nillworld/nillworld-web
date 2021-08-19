@@ -1,5 +1,5 @@
 # https://programmers.co.kr/learn/courses/30/lessons/17676
-import time
+from datetime import datetime
 def solution(lines):
   # 임의의 1초동안 잠시라도 겹치는 처리 중, 최대 처리량을 구하는 것
   answer = 0
@@ -12,8 +12,10 @@ def solution(lines):
     #term의 마지막 's' 떼어내고 숫자 변환
     term = float(term[:-1])
 
-    timeValue = time.strptime(timeString, '%Y-%m-%d %H:%M:%S.%f')
-    print(timeValue)
+    timeValue = datetime.strptime(timeString, '%Y-%m-%d %H:%M:%S.%f')
+
+    # 시간만 숫자로 변환
+    print((timeValue.hour * 60 + timeValue.minute)*60 + timeValue.second + timeValue.microsecond/1000000-term)
 
 
 
