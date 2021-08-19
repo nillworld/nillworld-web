@@ -3,7 +3,7 @@ from datetime import datetime
 def solution(lines):
   # 임의의 1초동안 잠시라도 겹치는 처리 중, 최대 처리량을 구하는 것
   answer = 0
-  k = 0
+  trafficList = {}
   for line in lines:
     # line의 시간을 계산하기 쉽게 나누기
     day, timeString, term = list(line.split())
@@ -14,8 +14,32 @@ def solution(lines):
 
     timeValue = datetime.strptime(timeString, '%Y-%m-%d %H:%M:%S.%f')
 
-    # 시간만 숫자로 변환
-    print((timeValue.hour * 60 + timeValue.minute)*60 + timeValue.second + timeValue.microsecond/1000000-term)
+    # 시간만 숫자로 변환 후 응답이 끝난 시간 셋팅
+    endTime = (timeValue.hour * 60 + timeValue.minute)*60 + timeValue.second + timeValue.microsecond/1000000
+    startTime = endTime-term+0.001
+
+    # 계산하기 쉽게 응답 시작과 끝 시간을 자연수로 변환
+    changedEndTime = int(endTime*1000)
+    changedStartTime = int(startTime*1000)
+
+    for i in range(changedStartTime, changedEndTime+1):
+      if(i in trafficList):
+        trafficList[i] = 1 + trafficList[i]
+        # print(i)
+      else:
+        trafficList[i] = 1
+
+
+
+    # if(trafficList.get(startTime)):
+    #   trafficList[startTime] += 1
+    # else:
+    #   trafficList[startTime] = 1
+    # 딕셔너리 이용 / startTime = key,  count = value
+
+  print(trafficList)
+
+
 
 
 
@@ -33,5 +57,6 @@ def solution(lines):
 # lines의 배열 길이는 최대 2000, 최소 1
 # 응답 완료 시간 S = 2016-09-15(고정) hh:mm:ss.sss
 # 처리시간 T = 0.321s(소수점 셋째 자리까지 끝에는 s로 끝남) /  0.001 <= T <= 3.000
-lines = ["2016-09-15 01:00:04.001 2.0s", "2016-09-15 01:00:07.000 2s"]
+lines = ["2016-09-15 01:00:04.002 2.0s",
+"2016-09-15 01:00:07.000 2s"]
 print(solution(lines));
