@@ -2,7 +2,7 @@
 from datetime import datetime
 
 def checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex):
-  if (checkIndex > 0 and trafficCheckTime <= trafficList[1][checkIndex-1] < trafficCheckTime + 1000):
+  if (checkIndex > 0 and (trafficCheckTime <= trafficList[1][checkIndex-1] < trafficCheckTime + 1000 or (trafficList[0][checkIndex-1] < trafficCheckTime and trafficList[1][checkIndex-1] > trafficCheckTime + 1000 ))):
     count += 1
     count = checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex-1)
   
@@ -10,7 +10,24 @@ def checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex):
   return count
 
 def checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex):
-  if (checkIndex < len(trafficList[0])-1 and trafficCheckTime <= trafficList[0][checkIndex+1] < trafficCheckTime + 1000):
+  if (checkIndex < len(trafficList[0])-1 and (trafficCheckTime <= trafficList[0][checkIndex+1] < trafficCheckTime + 1000 or (trafficList[0][checkIndex+1] < trafficCheckTime and trafficList[1][checkIndex+1] > trafficCheckTime + 1000 ))):
+    count += 1
+    count = checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex+1)
+  
+  print("checkAfterTraffic/// ",count, trafficCheckTime, checkIndex)
+  return count
+
+
+def checkBeforeTraffic2(count, trafficList, trafficCheckTime, checkIndex):
+  if (checkIndex > 0 and trafficCheckTime-1000 <= trafficList[1][checkIndex-1] < trafficCheckTime):
+    count += 1
+    count = checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex-1)
+  
+  print("checkBeforeTraffic/// ",count, trafficCheckTime, checkIndex)
+  return count
+
+def checkAfterTraffic2(count, trafficList, trafficCheckTime, checkIndex):
+  if (checkIndex < len(trafficList[0])-1 and trafficCheckTime - 1000 <= trafficList[0][checkIndex+1] < trafficCheckTime):
     count += 1
     count = checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex+1)
   
@@ -58,8 +75,8 @@ def solution(lines):
     
     count = 1
     trafficEndTime = trafficList[1][index]
-    count = checkBeforeTraffic(count, trafficList, trafficEndTime, index)
-    count = checkAfterTraffic(count, trafficList, trafficEndTime, index)
+    count = checkBeforeTraffic2(count, trafficList, trafficEndTime, index)
+    count = checkAfterTraffic2(count, trafficList, trafficEndTime, index)
     if (count > answer):
       answer = count
 
@@ -125,5 +142,14 @@ def solution(lines):
 # lines의 배열 길이는 최대 2000, 최소 1
 # 응답 완료 시간 S = 2016-09-15(고정) hh:mm:ss.sss
 # 처리시간 T = 0.321s(소수점 셋째 자리까지 끝에는 s로 끝남) /  0.001 <= T <= 3.000
-lines = ["2016-09-15 01:00:04.001 2.0s", "2016-09-15 01:00:07.000 2s"]
+lines = ["2016-09-15 20:59:57.421 0.351s",
+"2016-09-15 20:59:58.233 1.181s",
+"2016-09-15 20:59:58.299 0.8s",
+"2016-09-15 20:59:58.688 1.041s",
+"2016-09-15 20:59:59.591 1.412s",
+"2016-09-15 21:00:00.464 1.466s",
+"2016-09-15 21:00:00.741 1.581s",
+"2016-09-15 21:00:00.748 2.31s",
+"2016-09-15 21:00:00.966 0.381s",
+"2016-09-15 21:00:02.066 2.62s"]
 print(solution(lines));
