@@ -5,16 +5,12 @@ def checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex):
   if (checkIndex > 0 and (trafficCheckTime <= trafficList[1][checkIndex-1] < trafficCheckTime + 1000 or (trafficList[0][checkIndex-1] < trafficCheckTime and trafficList[1][checkIndex-1] > trafficCheckTime + 1000 ))):
     count += 1
     count = checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex-1)
-  
-  print("checkBeforeTraffic/// ",count, trafficCheckTime, checkIndex)
   return count
 
 def checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex):
   if (checkIndex < len(trafficList[0])-1 and (trafficCheckTime <= trafficList[0][checkIndex+1] < trafficCheckTime + 1000 or (trafficList[0][checkIndex+1] < trafficCheckTime and trafficList[1][checkIndex+1] > trafficCheckTime + 1000 ))):
     count += 1
     count = checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex+1)
-  
-  print("checkAfterTraffic/// ",count, trafficCheckTime, checkIndex)
   return count
 
 
@@ -22,16 +18,12 @@ def checkBeforeTraffic2(count, trafficList, trafficCheckTime, checkIndex):
   if (checkIndex > 0 and trafficCheckTime-1000 <= trafficList[1][checkIndex-1] < trafficCheckTime):
     count += 1
     count = checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex-1)
-  
-  print("checkBeforeTraffic/// ",count, trafficCheckTime, checkIndex)
   return count
 
 def checkAfterTraffic2(count, trafficList, trafficCheckTime, checkIndex):
   if (checkIndex < len(trafficList[0])-1 and trafficCheckTime - 1000 <= trafficList[0][checkIndex+1] < trafficCheckTime):
     count += 1
     count = checkAfterTraffic(count, trafficList, trafficCheckTime, checkIndex+1)
-  
-  print("checkAfterTraffic/// ",count, trafficCheckTime, checkIndex)
   return count
 
 
@@ -69,7 +61,6 @@ def solution(lines):
     count = 1
     count = checkBeforeTraffic(count, trafficList, trafficStartTime, index)
     count = checkAfterTraffic(count, trafficList, trafficStartTime, index)
-    print(count, "???")
     if (count > answer):
       answer = count
     
