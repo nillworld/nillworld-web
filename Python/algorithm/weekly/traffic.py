@@ -1,6 +1,30 @@
 # https://programmers.co.kr/learn/courses/30/lessons/17676
 from datetime import datetime
 
+
+
+
+
+
+
+
+# 안되는 이유
+
+# traffic 1: -------------------------------------------------
+# 
+# traffic 2:   ------ 
+# 
+# traffic 3:                        -------------
+# 
+# 
+#                                   ^이 구간에서 트래픽이 2개 잡혀 있다는 것을 재귀로 판별 못함.
+
+
+
+
+
+
+
 def checkBeforeTraffic(count, trafficList, trafficCheckTime, checkIndex):
   if (checkIndex > 0 and (trafficCheckTime <= trafficList[1][checkIndex-1] < trafficCheckTime + 1000 or (trafficList[0][checkIndex-1] < trafficCheckTime and trafficList[1][checkIndex-1] > trafficCheckTime + 1000 ))):
     count += 1
@@ -30,7 +54,7 @@ def checkAfterTraffic2(count, trafficList, trafficCheckTime, checkIndex):
 def solution(lines):
   # 임의의 1초동안 잠시라도 겹치는 처리 중, 최대 처리량을 구하는 것
   answer = 0
-  trafficList = [[],[]]
+  trafficList = []
   for line in lines:
     print(line)
     # line의 시간을 계산하기 쉽게 나누기
@@ -50,15 +74,16 @@ def solution(lines):
     changedEndTime = int(endTime*1000)
     changedStartTime = int(startTime*1000)
 
-    trafficList[0].append(changedStartTime)
-    trafficList[1].append(changedEndTime)
+    trafficList.append([changedStartTime, changedEndTime])
     
   # 트래픽 시작 시간 순으로 정렬
-  trafficList[0].sort()
-  print(trafficList)
+  trafficList[0].sort(key = lambda x:x[0])
+
   index = 0
-  for trafficStartTime in trafficList[0]:
+  for traffic in trafficList:
     count = 1
+    trafficStartTime = traffic[0]
+
     count = checkBeforeTraffic(count, trafficList, trafficStartTime, index)
     count = checkAfterTraffic(count, trafficList, trafficStartTime, index)
     if (count > answer):
