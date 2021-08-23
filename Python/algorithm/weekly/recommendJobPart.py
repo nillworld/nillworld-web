@@ -1,13 +1,20 @@
 # https://programmers.co.kr/learn/courses/30/lessons/84325
 
-# 점수	SI	CONTENTS	HARDWARE	PORTAL	GAME
-# 5	JAVA	JAVASCRIPT	C	JAVA	C++
-# 4	JAVASCRIPT	JAVA	C++	JAVASCRIPT	C#
-# 3	SQL	PYTHON	PYTHON	PYTHON	JAVASCRIPT
-# 2	PYTHON	SQL	JAVA	KOTLIN	C
-# 1	C#	C++	JAVASCRIPT	PHP	JAVA
+# 점수	SI	        CONTENTS	  HARDWARE  	PORTAL    	GAME
+# 5   	JAVA	      JAVASCRIPT	C         	JAVA	      C++
+# 4	    JAVASCRIPT	JAVA	      C++       	JAVASCRIPT	C#
+# 3	    SQL       	PYTHON	    PYTHON    	PYTHON	    JAVASCRIPT
+# 2	    PYTHON    	SQL       	JAVA      	KOTLIN	    C
+# 1	    C#         	C++	        JAVASCRIPT	PHP	        JAVA
 
 def solution(table, languages, preference):
+    dict = {}
+    for jobPart in table:
+        tableLine = list(jobPart.split())
+        # tableLine = tableLine.replace("\"","")
+        dict[tableLine[0]] = tableLine[1:]
+    print(dict)
+
     answer = ''
     return answer
 
