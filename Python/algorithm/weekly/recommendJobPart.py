@@ -12,7 +12,7 @@ def solution(table, languages, preference):
     for jobPart in table:
         tableLine = list(jobPart.split())
         # tableLine = tableLine.replace("\"","")
-        dict[tableLine[0]] = tableLine[1:]
+        dict[tableLine[0]] = list(reversed(tableLine[1:]))
     print(dict)
 
     answer = ''
