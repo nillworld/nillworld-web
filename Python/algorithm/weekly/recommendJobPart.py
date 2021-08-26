@@ -26,6 +26,9 @@ def solution(table, languages, preference):
         if (jobscore > score):
             score = jobscore
             answer = job
+        if (jobscore == score):
+            if(answer >  job):
+                answer = job
         print(score, job)
 
 
