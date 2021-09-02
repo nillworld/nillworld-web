@@ -20,7 +20,7 @@ def solution(sales, links):
 
 
 
-
+# check
     # dictionary = defaultdict(list)
     # for link in links:
     #     dictionary[link[0]-1].append(link[1]-1)
