@@ -6,16 +6,17 @@ def solution(sales, links):
     links.sort(key=lambda x: (x[0], x[1]))
     totalTeamNum = links[-1][0]
     print(totalTeamNum)
-    # 팀원으로 구성된 새로운 배열 초기화 / 팀장이 index 0
-    teams = [[i] for i in range(totalTeamNum)]
+    # 팀원으로 구성된 새로운 배열 초기화 / 팀장이 index 0, 팀장이 아니라도 하나의 팀으로 생각하여 배열 생성
+    teams = [[i] for i in range(len(sales))]
     print(teams)
     # sales랑 계산하기 쉽게 번호 1 씩 빼서 팀원들 배열에 넣기
     for link in links:
         teams[link[0]-1].append(link[1]-1)
     print(teams)
 
-    for team in teams:
-        
+    # 팀 연결관계 구하기
+    # for team in teams:
+    #     for leader in team
 
 
 
