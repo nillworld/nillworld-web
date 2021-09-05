@@ -2,6 +2,7 @@
 from collections import defaultdict
 
 def solution(sales, links):
+    realation = [] # [0]-상위 팀장 [1]-하위 팀장 [2]-매출 캐이스 차이 
     # links를 번호순으로 정렬
     links.sort(key=lambda x: (x[0], x[1]))
     totalTeamNum = links[-1][0]
@@ -15,8 +16,14 @@ def solution(sales, links):
     print(teams)
 
     # 팀 연결관계 구하기
-    # for team in teams:
-    #     for leader in team
+    for team in teams:
+        if len(team) != 1:
+            for i in range(len(team)):
+                if(team[i] == teams[i][0]):
+                    print(team[i], "check")
+                # realation.append([team[0], team[i]])
+    #             realation['3'+'5']= 3
+    print(realation)
 
 
 
