@@ -1,26 +1,12 @@
-# nillworld!
+# Nillworld
 
-## Nill World for learning
+<br/>
 
-매일 코드 정리 하는 것을 목표로, 학습한 내용들을 정리하는 공간입니다.
+### 매일 코드 정리 하는 것을 목표로, 학습한 내용들을 정리하는 공간입니다.<br/><br/>
 
-> #0.1-xx: VanillaJS-fortpolio
+[VanillaJS-fortpolio](./anillaJS/fortpolio)
+<br/>
+<br/>
 
-> #0.2-xx: Json
-
-> #0.3-xx: Python
-
-> #0.4-xx: VanillaJS-task
-
-> #0.5-xx: nodeJS
-
-> #0.6-xx: TypeScript
-
-> #0.7-xx: generator
-
-> #1.0-xx: ReactJS
-
-numbering 재정의 필요.
-(1.x = JS, 1.0 = vanilla, 1.1 = typescript etc)
-
-작업이 많아지고 언어가 다양해 짐에 따라 Repository 분리 하는 중..
+      다양한 언어와 프레임워크를 학습함에 따라 저상소 분리가 불가피하여 나누고 있습니다.
+      이 저장소에는 개인 웹 페이지 구축과 관련한 내용 위주로 정리하고 기록합니다.
