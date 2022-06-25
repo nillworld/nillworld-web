@@ -246,9 +246,10 @@
     let imgElem;
     let videoDir = "video";
 
-    if (mobilePlatform) {
+    // 이거 바꾸려면 video 스케일도 바꿔야함.
+    /* if (mobilePlatform) {
       videoDir = "video_mobile";
-    }
+    } */
 
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
