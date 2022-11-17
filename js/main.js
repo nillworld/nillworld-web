@@ -11,10 +11,11 @@
   let beforeInnerHeight = 0;
   let imgElemLoadedTotalCount = 0;
   let section1imgLoadedCount = 0;
+  let mobilePlatform = false;
 
   //mobile check
-  let mobilePlatform = false;
   let filter = "win16|win32|win64|mac|macintel";
+  // navigator.userAgentData.platform
   if (navigator.platform) {
     if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
       mobilePlatform = true;
@@ -243,10 +244,16 @@
 
   function setCanvasImages() {
     let imgElem;
+    let videoDir = "video";
+
+    // 이거 바꾸려면 video 스케일도 바꿔야함.
+    /* if (mobilePlatform) {
+      videoDir = "video_mobile";
+    } */
 
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
-      imgElem.src = `./video/01/Nill-code-${100 + i}.jpg`;
+      imgElem.src = `./${videoDir}/01/Nill-code-${100 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem);
       imgElem.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
@@ -275,7 +282,7 @@
     let imgElem4;
     for (let i = 0; i < sceneInfo[1].values.videoImageCount; i++) {
       imgElem4 = new Image();
-      imgElem4.src = `./video/02/jump-${i}.jpg`;
+      imgElem4.src = `./${videoDir}/02/jump-${i}.jpg`;
       sceneInfo[1].objs.videoImages.push(imgElem4);
       imgElem4.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
@@ -284,7 +291,7 @@
 
     let imgElem4_1;
     imgElem4_1 = new Image();
-    imgElem4_1.src = `./video/02/jump-25.jpg`;
+    imgElem4_1.src = `./${videoDir}/02/jump-25.jpg`;
     sceneInfo[2].objs.jumpImg.push(imgElem4_1);
     imgElem4_1.addEventListener("load", () => {
       imgElemLoadedTotalCount++;
@@ -293,7 +300,7 @@
     let imgElem5;
     for (let i = 0; i < sceneInfo[3].values.videoImageCount; i++) {
       imgElem5 = new Image();
-      imgElem5.src = `./video/03/sunset-${i}.jpg`;
+      imgElem5.src = `./${videoDir}/03/sunset-${i}.jpg`;
       sceneInfo[3].objs.videoImages.push(imgElem5);
       imgElem5.addEventListener("load", () => {
         imgElemLoadedTotalCount++;
